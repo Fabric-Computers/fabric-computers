@@ -8,13 +8,39 @@ import net.minecraft.screen.slot.Slot;
 
 public class DiskDriveSlot extends Slot {
 
-    public DiskDriveSlot(Inventory inventory, int index, int x, int y) {
+    DiskDriveBlockEntity entity;
+    FloppyDiskItem current;
+
+
+
+    public DiskDriveSlot(Inventory inventory, int index, int x, int y, DiskDriveBlockEntity entity) {
         super(inventory, index, x, y);
+
+        this.entity = entity;
     }
 
     @Override
-    protected void onTake(int amount) {
-        super.onTake(amount);
+    public ItemStack takeStack(int amount) {
+        if (this.entity != null) {
+            if (this.current != null) {
+                this.entity.diskRemoved(
+                        this.current.fileSystem.getUUIDOrRandom()
+                );
+                this.current = null;
+            }
+            System.out.println("Taken");
+        }
+
+        return super.takeStack(amount);
+    }
+
+    @Override
+    public ItemStack insertStack(ItemStack stack, int count) {
+        this.current = (FloppyDiskItem) stack.getItem();
+
+        System.out.println("Inserted");
+
+        return super.insertStack(stack, count);
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.lolzdev.fabriccomputers.blocks.Blocks;
 import com.lolzdev.fabriccomputers.common.ComputerScreenHandler;
 import com.lolzdev.fabriccomputers.common.DiskDriveScreenHandler;
 import com.lolzdev.fabriccomputers.common.KeyPressedPacket;
+import com.lolzdev.fabriccomputers.common.KeyUpPacket;
 import com.lolzdev.fabriccomputers.items.Items;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -29,5 +30,6 @@ public class FabricComputers implements ModInitializer {
         Items.init();
 
         ServerPlayNetworking.registerGlobalReceiver(KeyPressedPacket.ID, KeyPressedPacket::handle);
+        ServerPlayNetworking.registerGlobalReceiver(KeyUpPacket.ID, KeyUpPacket::handle);
     }
 }

@@ -1,6 +1,7 @@
 package com.lolzdev.fabriccomputers.client.screens;
 
 import com.lolzdev.fabriccomputers.common.KeyPressedPacket;
+import com.lolzdev.fabriccomputers.common.KeyUpPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -98,5 +99,13 @@ public class ComputerScreen extends HandledScreen<ScreenHandler> {
         KeyPressedPacket.send(keyCode);
 
         return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    @Override
+    public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+
+        KeyUpPacket.send(keyCode);
+
+        return super.keyReleased(keyCode, scanCode, modifiers);
     }
 }

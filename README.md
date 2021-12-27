@@ -10,6 +10,13 @@
 ### This mod is currently under development
 PRs and Issues are welcome, feel free to open a new issue if you discover a bug or if you want to suggest a new feature!
 
+### Want to help?
+If you want to contribute to the development of Fabric Computers consider joining the [Discord Server](https://discord.gg/SeC4hkhHxp). We need:
+- Testers
+- Lua developers
+- Texture artists
+- Java developers
+
 ### Notes
 - Computers run on a separate thread
 - Computer filesystems are saved on the **real drive**

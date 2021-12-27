@@ -2,9 +2,17 @@ _G.bios = {}
 
 fs:mount(computer:getId())
 
+
 function _G.bios.getScreenSize()
     local size = computer:getScreenSize()
     return size[1], size[2]
+end
+
+local width, height = bios.getScreenSize()
+for x=0, width-1 do
+    for y=0, height-1 do
+        computer:setPixel(x, y, 0x000000)
+    end
 end
 
 _G.fileSystems = fs:getFilesystems()

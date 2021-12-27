@@ -16,10 +16,10 @@ public class DiskDriveScreenHandler extends ScreenHandler {
     private final Inventory inventory;
 
     public DiskDriveScreenHandler(int syncId, PlayerInventory playerInventory) {
-        this(syncId, playerInventory, new SimpleInventory(1));
+        this(syncId, playerInventory, new SimpleInventory(1), null);
     }
 
-    public DiskDriveScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory) {
+    public DiskDriveScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, DiskDriveBlockEntity entity) {
         super(FabricComputers.DISK_DRIVE_SCREEN_HANDLER, syncId);
         checkSize(inventory, 1);
         this.inventory = inventory;
@@ -28,7 +28,8 @@ public class DiskDriveScreenHandler extends ScreenHandler {
         int m;
         int l;
 
-        this.addSlot(new DiskDriveSlot(inventory, 0, 80, 35));
+
+        this.addSlot(new DiskDriveSlot(inventory, 0, 80, 35, entity));
 
         //The player inventory
         for (m = 0; m < 3; ++m) {

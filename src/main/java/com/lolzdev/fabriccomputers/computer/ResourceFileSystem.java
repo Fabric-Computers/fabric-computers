@@ -1,33 +1,37 @@
 package com.lolzdev.fabriccomputers.computer;
 
 import net.fabricmc.loader.api.FabricLoader;
+import org.apache.commons.io.FileUtils;
 import org.luaj.vm2.LuaTable;
 import org.luaj.vm2.LuaValue;
-import org.luaj.vm2.ast.Str;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import org.luaj.vm2.lib.jse.JsePlatform;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
-public class FileSystem implements IFileSystem{
+public class ResourceFileSystem implements IFileSystem {
+    private final String res;
     public Path pcPath;
     boolean mounted;
     public final HashMap<String, IFileSystem> mountedFs;
     public String uuid;
 
+    public ResourceFileSystem(String res) {
+        this.res = res;
+        this.mounted = false;
+        this.mountedFs = new HashMap<>();
+    }
+
     @Override
     public boolean isMounted() {
         return mounted;
-    }
-
-    public FileSystem() {
-        this.mounted = false;
-        this.mountedFs = new HashMap<>();
     }
 
     @Override
@@ -66,13 +70,18 @@ public class FileSystem implements IFileSystem{
 
     @Override
     public void unmountFs(String fs) {
-        this.mountedFs.remove(fs);
+
+        for (String key : this.mountedFs.keySet()) {
+            if (Objects.equals(this.mountedFs.get(key).getUUIDOrRandom(), fs)) {
+                this.mountedFs.remove(fs);
+            }
+        }
     }
 
     @Override
     public void mount(String id) {
         Path path = FabricLoader.getInstance().getGameDir().resolve("fabriccomputers");
-        File dir = new File(path.toUri());
+        java.io.File dir = new java.io.File(path.toUri());
         if (!dir.exists()) {
             dir.mkdir();
         }
@@ -85,13 +94,15 @@ public class FileSystem implements IFileSystem{
             dir.mkdir();
         }
 
+        this.pcPath = pcPath;
+
         try {
-            Files.writeString(pcPath.resolve("test.lua"), "ciao");
-        } catch (IOException e) {
+            FileUtils.copyDirectory(new File(this.getClass().getResource("/assets/fabriccomputers/lua/" + this.res).toURI()), new File(this.pcPath.toUri()));
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
 
-        this.pcPath = pcPath;
+
         this.mounted = true;
     }
 

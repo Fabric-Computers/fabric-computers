@@ -1,5 +1,8 @@
 package com.lolzdev.fabriccomputers.computer;
 
+import com.lolzdev.fabriccomputers.blockentities.ComputerBlockEntity;
+import com.lolzdev.fabriccomputers.blockentities.DiskDriveBlockEntity;
+import com.lolzdev.fabriccomputers.items.FloppyDiskItem;
 import jdk.jfr.Timespan;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.impl.game.GameProvider;
@@ -10,6 +13,7 @@ import net.minecraft.resource.ResourceFactory;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaTable;
 import org.luaj.vm2.LuaValue;
@@ -21,6 +25,7 @@ import org.luaj.vm2.lib.jse.JsePlatform;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -37,14 +42,24 @@ public class Computer {
     public boolean halted;
     private final Queue<Event> queueEvents;
     private Thread executor;
+    private final HashMap<Integer, Boolean> keyCodes;
+    private ComputerBlockEntity blockEntity;
 
-    public Computer() {
+    public Computer(ComputerBlockEntity blockEntity) {
 
         this.fs = new FileSystem();
 
         this.halted = true;
         this.needSetup = true;
         this.queueEvents = new ArrayDeque<>(4);
+        this.keyCodes = new HashMap<>();
+        this.blockEntity = blockEntity;
+    }
+
+    public void reboot() {
+        this.queueEvent("interrupt", new Object[] {});
+        this.halted = true;
+        this.boot();
     }
 
     public void setId(UUID id) {
@@ -60,6 +75,18 @@ public class Computer {
         size.set(1, LuaValue.valueOf(245));
         size.set(2, LuaValue.valueOf(177));
         return size;
+    }
+
+    public void keyDown(int keyCode) {
+        this.keyCodes.put(keyCode, true);
+    }
+
+    public void keyUp(int keyCode) {
+        this.keyCodes.replace(keyCode, false);
+    }
+
+    public boolean isKeyDown(int keyCode) {
+        return this.keyCodes.getOrDefault(keyCode, false);
     }
 
     public void queueEvent(String name, Object[] args) {
@@ -113,28 +140,30 @@ public class Computer {
 
     public void setPixel(int x, int y, int color) {
 
-        int rgba = (((color) & 0xFF) << 16)
-                | (((color >> 8) & 0xFF) << 8)
-                | (((color >> 16) & 0xFF))
-                | (((25 & 0xFF) << 24));
+        if (x <= 244 && y <= 176) {
+            int rgba = (((color) & 0xFF) << 16)
+                    | (((color >> 8) & 0xFF) << 8)
+                    | (((color >> 16) & 0xFF))
+                    | (((25 & 0xFF) << 24));
 
-        this.pixels[x][y] = rgba;
+            this.pixels[x][y] = rgba;
 
-        if (x < this.changes[0]) {
-            this.changes[0] = x;
-        }
-        if (x > this.changes[1]) {
-            this.changes[1] = x;
-        }
+            if (x < this.changes[0]) {
+                this.changes[0] = x;
+            }
+            if (x > this.changes[1]) {
+                this.changes[1] = x;
+            }
 
-        if (y < this.changes[2]) {
-            this.changes[2] = y;
-        }
-        if (y > this.changes[3]) {
-            this.changes[3] = y;
-        }
+            if (y < this.changes[2]) {
+                this.changes[2] = y;
+            }
+            if (y > this.changes[3]) {
+                this.changes[3] = y;
+            }
 
-        this.shouldUpdate = true;
+            this.shouldUpdate = true;
+        }
     }
 
     public void sleep(int nanos) {
@@ -145,6 +174,58 @@ public class Computer {
                 e.printStackTrace();
             }
         }
+    }
+
+    public IFileSystem getFloppyFs(int index) {
+        DiskDriveBlockEntity entity = null;
+
+        switch (index) {
+            case 0 -> {
+                if (this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(1, 0, 0)) instanceof DiskDriveBlockEntity)  {
+                    entity = (DiskDriveBlockEntity) this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(1, 0, 0));
+                }
+            }
+
+            case 1 -> {
+                if (this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(-1, 0, 0)) instanceof DiskDriveBlockEntity)  {
+                    entity = (DiskDriveBlockEntity) this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(-1, 0, 0));
+                }
+            }
+
+            case 2 -> {
+                if (this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(0, 0, 1)) instanceof DiskDriveBlockEntity)  {
+                    entity = (DiskDriveBlockEntity) this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(0, 0, 1));
+                }
+            }
+
+            case 3 -> {
+                if (this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(0, 0, -1)) instanceof DiskDriveBlockEntity)  {
+                    entity = (DiskDriveBlockEntity) this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(0, 0, -1));
+                }
+            }
+
+            case 4 -> {
+                if (this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(0, 1, 0)) instanceof DiskDriveBlockEntity)  {
+                    entity = (DiskDriveBlockEntity) this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(0, 1, 0));
+                }
+            }
+
+            case 5 -> {
+                if (this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(0, -1, 0)) instanceof DiskDriveBlockEntity)  {
+                    entity = (DiskDriveBlockEntity) this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(0, -1, 0));
+                }
+            }
+        }
+
+        if (entity != null) {
+            if (entity.getItems().get(0).getItem() instanceof FloppyDiskItem) {
+                FloppyDiskItem disk = (FloppyDiskItem) entity.getItems().get(0).getItem();
+
+                return disk.fileSystem;
+            }
+        }
+
+        return null;
     }
 
     public void update() {

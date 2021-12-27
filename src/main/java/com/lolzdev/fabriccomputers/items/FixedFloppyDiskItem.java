@@ -1,12 +1,12 @@
 package com.lolzdev.fabriccomputers.items;
 
-public class FixedFloppyDiskItem extends FloppyDiskItem{
+import com.lolzdev.fabriccomputers.computer.ResourceFileSystem;
 
-    public String resource;
+public class FixedFloppyDiskItem extends FloppyDiskItem{
 
     public FixedFloppyDiskItem(String resource) {
         super();
 
-        this.resource = resource;
+        this.fileSystem = new ResourceFileSystem(resource);
     }
 }

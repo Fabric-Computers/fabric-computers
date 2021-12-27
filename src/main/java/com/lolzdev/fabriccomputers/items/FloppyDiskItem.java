@@ -1,6 +1,7 @@
 package com.lolzdev.fabriccomputers.items;
 
 import com.lolzdev.fabriccomputers.computer.FileSystem;
+import com.lolzdev.fabriccomputers.computer.IFileSystem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -10,10 +11,10 @@ import net.minecraft.nbt.NbtCompound;
 import java.util.UUID;
 
 public class FloppyDiskItem extends Item {
-    public FileSystem fileSystem;
+    public IFileSystem fileSystem;
 
     public FloppyDiskItem() {
-        super(new FabricItemSettings().group(ItemGroup.REDSTONE));
+        super(new FabricItemSettings().group(ItemGroup.REDSTONE).maxCount(1));
 
         this.fileSystem = new FileSystem();
     }

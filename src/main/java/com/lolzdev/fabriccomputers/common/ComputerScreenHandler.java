@@ -40,8 +40,20 @@ public class ComputerScreenHandler extends ScreenHandler {
         }
     }
 
+    public void keyUp(int keyCode) {
+        if (this.computer != null) {
+
+            this.computer.computer.keyUp(keyCode);
+
+            this.computer.computer.queueEvent("key_up", new Object[] {keyCode});
+        }
+    }
+
     public void keyDown(int keyCode) {
         if (this.computer != null) {
+
+            this.computer.computer.keyDown(keyCode);
+
             this.computer.computer.queueEvent("key_down", new Object[] {keyCode});
         }
     }

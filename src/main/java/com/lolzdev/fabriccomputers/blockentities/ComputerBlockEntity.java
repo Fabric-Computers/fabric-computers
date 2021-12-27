@@ -33,7 +33,7 @@ public class ComputerBlockEntity extends BlockEntity implements ExtendedScreenHa
     public ComputerBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntities.COMPUTER_BLOCK_ENTITY, pos, state);
 
-        this.computer = new Computer();
+        this.computer = new Computer(this);
         this.players = new ArrayList<>();
     }
 
@@ -80,39 +80,16 @@ public class ComputerBlockEntity extends BlockEntity implements ExtendedScreenHa
     }
 
     private void initFloppy(DiskDriveBlockEntity entity) {
-        if (entity.getItems().get(0).getItem() instanceof FixedFloppyDiskItem) {
-            FixedFloppyDiskItem fixedDisk = (FixedFloppyDiskItem) entity.getItems().get(0).getItem();
-
-            if (entity.getItems().get(0).hasNbt()) {
-                if (entity.getItems().get(0).getNbt().getString("uuid") != null) {
-                    fixedDisk.fileSystem.uuid = entity.getItems().get(0).getNbt().getString("uuid");
-                }
-            } else {
-                entity.getItems().get(0).getOrCreateNbt().putString("uuid", UUID.randomUUID().toString());
-                fixedDisk.fileSystem.uuid = entity.getItems().get(0).getNbt().getString("uuid");
-            }
-
-
-            fixedDisk.fileSystem.mount(fixedDisk.fileSystem.getUUIDOrRandom());
-            try {
-                Path path = Path.of(this.getClass().getResource("/assets/fabriccomputers/lua/" + fixedDisk.resource).toURI());
-                FileUtils.copyDirectory(new File(path.toUri()), new File(fixedDisk.fileSystem.pcPath.toUri()));
-            } catch (URISyntaxException | IOException e) {
-                e.printStackTrace();
-            }
-
-            this.computer.fs.mountFs(fixedDisk.fileSystem);
-
-        } else if (entity.getItems().get(0).getItem() instanceof FloppyDiskItem) {
+        if (entity.getItems().get(0).getItem() instanceof FloppyDiskItem) {
             FloppyDiskItem disk = (FloppyDiskItem) entity.getItems().get(0).getItem();
 
             if (entity.getItems().get(0).hasNbt()) {
                 if (entity.getItems().get(0).getNbt().getString("uuid") != null) {
-                    disk.fileSystem.uuid = entity.getItems().get(0).getNbt().getString("uuid");
+                    disk.fileSystem.setUUID(entity.getItems().get(0).getNbt().getString("uuid"));
                 }
             } else {
                 entity.getItems().get(0).getOrCreateNbt().putString("uuid", UUID.randomUUID().toString());
-                disk.fileSystem.uuid = entity.getItems().get(0).getNbt().getString("uuid");
+                disk.fileSystem.setUUID(entity.getItems().get(0).getNbt().getString("uuid"));
             }
 
 
@@ -128,6 +105,11 @@ public class ComputerBlockEntity extends BlockEntity implements ExtendedScreenHa
             if(blockEntity.computer.needSetup) {
                 blockEntity.computer.setup();
             }
+            if(blockEntity.computer.isKeyDown(341) && blockEntity.computer.isKeyDown(82)) {
+                System.out.println("rebooting");
+                blockEntity.computer.reboot();
+            }
+
             for (PlayerEntity player : blockEntity.players) {
                 PixelBufferChangePacket.send(player, blockEntity.computer.changes[0], blockEntity.computer.changes[1], blockEntity.computer.changes[2], blockEntity.computer.changes[3], blockEntity.computer.getPixelBufferAsInt(), blockEntity.computer.shouldUpdate);
             }

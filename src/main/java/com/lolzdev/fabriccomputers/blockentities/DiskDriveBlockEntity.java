@@ -19,13 +19,66 @@ import net.minecraft.util.math.BlockPos;
 public class DiskDriveBlockEntity extends BlockEntity implements NamedScreenHandlerFactory, ImplementedInventory {
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
 
+    public void diskRemoved(String id) {
+        ComputerBlockEntity entity;
+        System.out.println("Unmounting: " + id);
+        if (this.world.getBlockEntity(this.pos.add(1, 0, 0)) instanceof ComputerBlockEntity)  {
+            entity = (ComputerBlockEntity) world.getBlockEntity(this.pos.add(1, 0, 0));
+
+            if (entity.computer != null) {
+                entity.computer.queueEvent("disk_unmounted", new Object[] {id});
+            }
+        }
+
+        if (this.world.getBlockEntity(this.pos.add(-1, 0, 0)) instanceof ComputerBlockEntity)  {
+            entity = (ComputerBlockEntity) world.getBlockEntity(this.pos.add(-1, 0, 0));
+
+            if (entity.computer != null) {
+                entity.computer.queueEvent("disk_unmounted", new Object[] {id});
+            }
+        }
+
+        if (this.world.getBlockEntity(this.pos.add(0, 0, 1)) instanceof ComputerBlockEntity)  {
+            entity = (ComputerBlockEntity) world.getBlockEntity(this.pos.add(0, 0, 1));
+
+            if (entity.computer != null) {
+                entity.computer.queueEvent("disk_unmounted", new Object[] {id});
+            }
+        }
+
+        if (this.world.getBlockEntity(this.pos.add(0, 0, -1)) instanceof ComputerBlockEntity)  {
+            entity = (ComputerBlockEntity) world.getBlockEntity(this.pos.add(0, 0, -1));
+
+            if (entity.computer != null) {
+                entity.computer.queueEvent("disk_unmounted", new Object[] {id});
+            }
+        }
+
+        if (this.world.getBlockEntity(this.pos.add(0, 1, 0)) instanceof ComputerBlockEntity)  {
+            entity = (ComputerBlockEntity) world.getBlockEntity(this.pos.add(0, 1, 0));
+
+            if (entity.computer != null) {
+                entity.computer.queueEvent("disk_unmounted", new Object[] {id});
+            }
+        }
+
+        if (this.world.getBlockEntity(this.pos.add(0, -1, 0)) instanceof ComputerBlockEntity)  {
+
+            entity = (ComputerBlockEntity) world.getBlockEntity(this.pos.add(0, -1, 0));
+
+            if (entity.computer != null) {
+                entity.computer.queueEvent("disk_unmounted", new Object[] {id});
+            }
+        }
+    }
+
     public DiskDriveBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntities.DISK_DRIVE_BLOCK_ENTITY, pos, state);
     }
 
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
-        return new DiskDriveScreenHandler(syncId, playerInventory, this);
+        return new DiskDriveScreenHandler(syncId, playerInventory, this, this);
     }
 
     @Override
