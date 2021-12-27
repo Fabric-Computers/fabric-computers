@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "fabric-computers",
+  "version": "${version}",
+  "name": "Fabric Computers",
+  "description": "A mod that brings working computers to Minecraft.",
+  "authors": [
+    "LolzDEV"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/fabric-computers/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "com.lolzdev.fabriccomputers.client.FabricComputersClient"
+    ],
+    "main": [
+      "com.lolzdev.fabriccomputers.FabricComputers"
+    ]
+  },
+  "mixins": [
+    "fabric-computers.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.12.12",
+    "fabric": "*",
+    "minecraft": "1.18.1"
+  }
+}

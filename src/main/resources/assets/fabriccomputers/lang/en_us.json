@@ -1,0 +1,7 @@
+{
+  "item.fabriccomputers.fos_disk": "Fabric OS",
+  "item.fabriccomputers.floppy_disk": "Floppy Disk",
+
+  "block.fabriccomputers.computer": "Computer",
+  "block.fabriccomputers.disk_drive": "Disk Drive"
+}
