@@ -22,7 +22,9 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    implementation 'org.luaj:luaj-jse:3.0.1'
+
+    // LuaJ
+    modImplementation 'org.luaj:luaj-jse:3.0.1'
 }
 
 processResources {
