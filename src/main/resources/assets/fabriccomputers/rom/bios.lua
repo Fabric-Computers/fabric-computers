@@ -21,6 +21,8 @@ for key, value in pairs(_G.fileSystems) do
     value:mount(value:getUUIDOrRandom())
     value:writeFile("isDisk", "yes")
 
+    print(value:readFile("init.lua"))
+
     if value:exists("init.lua") then
         local init = value:readFile("init.lua")
         local func, err = load(init)

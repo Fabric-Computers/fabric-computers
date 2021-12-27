@@ -25,6 +25,8 @@ dependencies {
 
     // LuaJ
     modImplementation 'org.luaj:luaj-jse:3.0.1'
+
+    include 'org.luaj:luaj-jse:3.0.1'
 }
 
 processResources {

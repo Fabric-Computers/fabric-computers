@@ -17,28 +17,11 @@ loadLibrary("thread")
 
 _G.print = io.print
 
-thread.create(function()
-    while true do
-        local name, key = event.pollEvents()
-        if name == "interrupt" then
-            break
-        elseif name == "key_down" then
-            print("Key Pressed2!")
-        end
+while true do
+    local name, key = event.pollEvents()
+    if name == "interrupt" then
+        break
+    elseif name == "key_down" then
+        print("Key Pressed2!")
     end
-
-end)
-
-thread.create(function()
-    while true do
-        local name, key = event.pollEvents()
-        if name == "interrupt" then
-            break
-        elseif name == "key_down" then
-            print("Key Pressed1!")
-        end
-    end
-
-end)
-
-thread.waitForAll()
+end
