@@ -1,26 +1,14 @@
 package com.lolzdev.fabriccomputers.computer;
 
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.resource.ResourceManager;
-import org.apache.commons.io.FileUtils;
 import org.luaj.vm2.LuaTable;
-import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
-import org.luaj.vm2.lib.jse.JsePlatform;
-
 import java.io.*;
-import java.io.File;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.CodeSource;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.zip.ZipInputStream;
 
 public class ResourceFileSystem implements IFileSystem {
     private final String res;
@@ -166,5 +154,10 @@ public class ResourceFileSystem implements IFileSystem {
     @Override
     public void setUUID(String uuid) {
         this.uuid = uuid;
+    }
+
+    @Override
+    public boolean makeDir(String path) {
+        return false;
     }
 }

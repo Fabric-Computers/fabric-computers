@@ -16,4 +16,5 @@ public interface IFileSystem {
     boolean exists(String path);
     Path getPcPath();
     void setUUID(String uuid);
+    boolean makeDir(String path);
 }

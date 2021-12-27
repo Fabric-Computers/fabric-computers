@@ -1,6 +1,10 @@
-local fos = _G.fileSystems["storage0"]:readFile("fos.lua")
+local fileSystem = fs
 
-local init = _G.fileSystems["storage0"]:readFile("fos.lua")
+if _G.isDisk then
+    fileSystem = computer:getFloppyFs(_G.diskIndex)
+end
+
+local init = fileSystem:readFile("fos.lua")
 local func, err = load(init)
 if func then
     local ok, i = pcall(func)

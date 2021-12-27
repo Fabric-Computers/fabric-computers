@@ -1,4 +1,4 @@
-io = {}
+local io = {}
 
 function io.setPixel(x, y, color)
     computer:setPixel(x, y, color)
@@ -512,14 +512,26 @@ function io.print(s)
     io.currentLine = io.currentLine + maxHeight + 1
 end
 
+function io.writeFile(path, content)
+    fs:writeFile(path, content)
+end
+
+function io.readFile(path)
+    return fs:readFile(path)
+end
+
+function io.makeDir(path)
+    fs:makeDir(path)
+end
+
 function io.write(s)
     local maxHeight = 0
-    local lenght = 0
+    local length = 0
     local prevWidth = 0
     for i=0, #s do
         if charMap[s:sub(i, i)] then
             prevWidth = charMap[s:sub(i, i)]["width"]
-            lenght = lenght + prevWidth + 1
+            length = length + prevWidth + 1
             if charMap[s:sub(i, i)]["height"] > maxHeight then
                 maxHeight = charMap[s:sub(i, i)]["height"]
             end
@@ -553,3 +565,5 @@ function io.setCursor(x, y)
     io.currentLine = y
     io.currentColumn = x
 end
+
+return io

@@ -14,6 +14,7 @@ import net.minecraft.resource.ResourceManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.WorldChunk;
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaTable;
 import org.luaj.vm2.LuaValue;
@@ -21,6 +22,7 @@ import org.luaj.vm2.Varargs;
 import org.luaj.vm2.ast.Str;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import org.luaj.vm2.lib.jse.JsePlatform;
+import org.spongepowered.asm.mixin.injection.Coerce;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -57,7 +59,9 @@ public class Computer {
     }
 
     public void reboot() {
-        this.queueEvent("interrupt", new Object[] {});
+        if (this.executor.isAlive()) {
+            this.queueEvent("interrupt", new Object[]{});
+        }
         this.halted = true;
         this.boot();
     }
@@ -176,56 +180,83 @@ public class Computer {
         }
     }
 
-    public IFileSystem getFloppyFs(int index) {
-        DiskDriveBlockEntity entity = null;
-
+    public LuaValue getFloppyFs(int index) {
         switch (index) {
             case 0 -> {
-                if (this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(1, 0, 0)) instanceof DiskDriveBlockEntity)  {
-                    entity = (DiskDriveBlockEntity) this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(1, 0, 0));
+                if (this.blockEntity.getWorld().getWorldChunk(this.blockEntity.getPos().add(1, 0, 0)).getBlockEntity(this.blockEntity.getPos().add(1, 0, 0), WorldChunk.CreationType.IMMEDIATE) instanceof DiskDriveBlockEntity)  {
+                    DiskDriveBlockEntity entity = (DiskDriveBlockEntity) this.blockEntity.getWorld().getWorldChunk(this.blockEntity.getPos().add(1, 0, 0)).getBlockEntity(this.blockEntity.getPos().add(1, 0, 0), WorldChunk.CreationType.IMMEDIATE);
+
+                    if (entity != null) {
+                        if (entity.getItems().get(0).getItem() instanceof FloppyDiskItem disk) {
+                            return CoerceJavaToLua.coerce(disk.fileSystem);
+                        }
+                    }
                 }
             }
 
             case 1 -> {
-                if (this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(-1, 0, 0)) instanceof DiskDriveBlockEntity)  {
-                    entity = (DiskDriveBlockEntity) this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(-1, 0, 0));
+
+                if (this.blockEntity.getWorld().getWorldChunk(this.blockEntity.getPos().add(-1, 0, 0)).getBlockEntity(this.blockEntity.getPos().add(-1, 0, 0), WorldChunk.CreationType.IMMEDIATE) instanceof DiskDriveBlockEntity)  {
+                    DiskDriveBlockEntity entity = (DiskDriveBlockEntity) this.blockEntity.getWorld().getWorldChunk(this.blockEntity.getPos().add(-1, 0, 0)).getBlockEntity(this.blockEntity.getPos().add(-1, 0, 0), WorldChunk.CreationType.IMMEDIATE);
+
+                    if (entity != null) {
+                        if (entity.getItems().get(0).getItem() instanceof FloppyDiskItem disk) {
+                            return CoerceJavaToLua.coerce(disk.fileSystem);
+                        }
+                    }
                 }
             }
 
             case 2 -> {
-                if (this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(0, 0, 1)) instanceof DiskDriveBlockEntity)  {
-                    entity = (DiskDriveBlockEntity) this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(0, 0, 1));
+                if (this.blockEntity.getWorld().getWorldChunk(this.blockEntity.getPos().add(0, 0, 1)).getBlockEntity(this.blockEntity.getPos().add(0, 0, 1), WorldChunk.CreationType.IMMEDIATE) instanceof DiskDriveBlockEntity)  {
+                    DiskDriveBlockEntity entity = (DiskDriveBlockEntity) this.blockEntity.getWorld().getWorldChunk(this.blockEntity.getPos().add(0, 0, 1)).getBlockEntity(this.blockEntity.getPos().add(0, 0, 1), WorldChunk.CreationType.IMMEDIATE);
+
+                    if (entity != null) {
+                        if (entity.getItems().get(0).getItem() instanceof FloppyDiskItem disk) {
+                            return CoerceJavaToLua.coerce(disk.fileSystem);
+                        }
+                    }
                 }
             }
 
             case 3 -> {
-                if (this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(0, 0, -1)) instanceof DiskDriveBlockEntity)  {
-                    entity = (DiskDriveBlockEntity) this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(0, 0, -1));
+                if (this.blockEntity.getWorld().getWorldChunk(this.blockEntity.getPos().add(0, 0, -1)).getBlockEntity(this.blockEntity.getPos().add(0, 0, -1), WorldChunk.CreationType.IMMEDIATE) instanceof DiskDriveBlockEntity)  {
+                    DiskDriveBlockEntity entity = (DiskDriveBlockEntity) this.blockEntity.getWorld().getWorldChunk(this.blockEntity.getPos().add(0, 0, -1)).getBlockEntity(this.blockEntity.getPos().add(0, 0, -1), WorldChunk.CreationType.IMMEDIATE);
+
+                    if (entity != null) {
+                        if (entity.getItems().get(0).getItem() instanceof FloppyDiskItem disk) {
+                            return CoerceJavaToLua.coerce(disk.fileSystem);
+                        }
+                    }
                 }
             }
 
             case 4 -> {
-                if (this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(0, 1, 0)) instanceof DiskDriveBlockEntity)  {
-                    entity = (DiskDriveBlockEntity) this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(0, 1, 0));
+                if (this.blockEntity.getWorld().getWorldChunk(this.blockEntity.getPos().add(0, 1, 0)).getBlockEntity(this.blockEntity.getPos().add(0, 1, 0), WorldChunk.CreationType.IMMEDIATE) instanceof DiskDriveBlockEntity)  {
+                    DiskDriveBlockEntity entity = (DiskDriveBlockEntity) this.blockEntity.getWorld().getWorldChunk(this.blockEntity.getPos().add(0, 1, 0)).getBlockEntity(this.blockEntity.getPos().add(0, 1, 0), WorldChunk.CreationType.IMMEDIATE);
+
+                    if (entity != null) {
+                        if (entity.getItems().get(0).getItem() instanceof FloppyDiskItem disk) {
+                            return CoerceJavaToLua.coerce(disk.fileSystem);
+                        }
+                    }
                 }
             }
 
             case 5 -> {
-                if (this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(0, -1, 0)) instanceof DiskDriveBlockEntity)  {
-                    entity = (DiskDriveBlockEntity) this.blockEntity.getWorld().getBlockEntity(this.blockEntity.getPos().add(0, -1, 0));
+                if (this.blockEntity.getWorld().getWorldChunk(this.blockEntity.getPos().add(0, -1, 0)).getBlockEntity(this.blockEntity.getPos().add(0, -1, 0), WorldChunk.CreationType.IMMEDIATE) instanceof DiskDriveBlockEntity)  {
+                    DiskDriveBlockEntity entity = (DiskDriveBlockEntity) this.blockEntity.getWorld().getWorldChunk(this.blockEntity.getPos().add(0, -1, 0)).getBlockEntity(this.blockEntity.getPos().add(0, -1, 0), WorldChunk.CreationType.IMMEDIATE);
+
+                    if (entity != null) {
+                        if (entity.getItems().get(0).getItem() instanceof FloppyDiskItem disk) {
+                            return CoerceJavaToLua.coerce(disk.fileSystem);
+                        }
+                    }
                 }
             }
         }
 
-        if (entity != null) {
-            if (entity.getItems().get(0).getItem() instanceof FloppyDiskItem) {
-                FloppyDiskItem disk = (FloppyDiskItem) entity.getItems().get(0).getItem();
-
-                return disk.fileSystem;
-            }
-        }
-
-        return null;
+        return LuaValue.NIL;
     }
 
     public void update() {

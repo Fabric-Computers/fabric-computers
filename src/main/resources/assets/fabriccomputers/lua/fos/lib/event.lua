@@ -1,14 +1,16 @@
-event = {}
+local event = {}
 
 function event.pollEvents()
-    local event = computer:pollEvent()
-    while not event do
-        event = computer:pollEvent()
+    local ev = computer:pollEvent()
+    while not ev do
+        ev = computer:pollEvent()
     end
 
-    return table.unpack(event)
+    return table.unpack(ev)
 end
 
 function event.queueEvent(name, ...)
     computer:queueEvent(name, {...})
 end
+
+return event

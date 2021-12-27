@@ -15,27 +15,31 @@ for x=0, width-1 do
     end
 end
 
-_G.fileSystems = fs:getFilesystems()
+for i=0, 5 do
+    local k = computer:getFloppyFs(i)
+    if k then
+        k:mount(k:getUUIDOrRandom())
+        k:writeFile("isDisk", "yes")
 
-for key, value in pairs(_G.fileSystems) do
-    value:mount(value:getUUIDOrRandom())
-    value:writeFile("isDisk", "yes")
-
-    print(value:readFile("init.lua"))
-
-    if value:exists("init.lua") then
-        local init = value:readFile("init.lua")
-        local func, err = load(init)
-        if func then
-            local ok, i = pcall(func)
-            if not ok then
-                print("Failed to run: ", i)
+        if k:exists("init.lua") then
+            local init = k:readFile("init.lua")
+            local func, err = load(init)
+            _G.isDisk = true
+            _G.diskIndex = i
+            if func then
+                local ok, i = pcall(func)
+                if not ok then
+                    print("Failed to run: ", i)
+                end
+            else
+                print("Failed to run: ", err)
             end
-        else
-            print("Failed to run: ", err)
         end
     end
 end
+
+_G.isDisk = false
+_G.diskIndex = 0
 
 if fs:exists("init.lua") then
     local init = fs:readFile("init.lua")

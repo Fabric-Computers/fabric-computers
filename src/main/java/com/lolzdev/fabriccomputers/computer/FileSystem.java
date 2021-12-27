@@ -148,4 +148,12 @@ public class FileSystem implements IFileSystem{
     public void setUUID(String uuid) {
         this.uuid = uuid;
     }
+
+    @Override
+    public boolean makeDir(String path) {
+        Path filePath = this.pcPath.resolve(path);
+
+        File file = new File(filePath.toUri());
+        return file.mkdir();
+    }
 }
