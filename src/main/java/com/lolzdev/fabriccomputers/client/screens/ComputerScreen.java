@@ -25,6 +25,7 @@ public class ComputerScreen extends HandledScreen<ScreenHandler> {
 
     public ComputerScreen(ScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
+        this.texture = new NativeImageBackedTexture(245, 178, false);
     }
 
     @Override
@@ -43,10 +44,6 @@ public class ComputerScreen extends HandledScreen<ScreenHandler> {
         int y = (height - backgroundHeight) / 2;
         drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
 
-        NativeImage image = new NativeImage(245, 178, false);
-
-        int terminalWidth = 243, terminalHeight = 176;
-
         int cur = 0;
 
         if (this.pixels != null) {
@@ -54,15 +51,14 @@ public class ComputerScreen extends HandledScreen<ScreenHandler> {
             for (int xPos = 0; xPos < 245; xPos++) {
                 for (int yPos = 0; yPos < 177; yPos++) {
                     int p = pixels[cur];
-                    image.setColor(xPos, yPos, p);
+                    this.texture.getImage().setColor(xPos, yPos, p);
 
                     cur++;
 
                 }
             }
 
-            this.texture = new NativeImageBackedTexture(image);
-            image.close();
+            this.texture.upload();
             RenderSystem.setShaderTexture(0, texture.getGlId());
 
             x += 6;
@@ -72,9 +68,6 @@ public class ComputerScreen extends HandledScreen<ScreenHandler> {
             drawTexture(matrices, x, y, 0, 0, 244, 177);
 
         }
-
-
-
 
     }
 

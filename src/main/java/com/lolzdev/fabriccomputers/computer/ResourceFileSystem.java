@@ -1,26 +1,20 @@
 package com.lolzdev.fabriccomputers.computer;
 
-import org.luaj.vm2.LuaTable;
-import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Objects;
 import java.util.UUID;
 
 public class ResourceFileSystem implements IFileSystem {
     private final String res;
     public Path pcPath;
     boolean mounted;
-    public final HashMap<String, IFileSystem> mountedFs;
     public String uuid;
 
     public ResourceFileSystem(String res) {
         this.res = res;
         this.mounted = false;
-        this.mountedFs = new HashMap<>();
     }
 
     @Override
@@ -34,83 +28,10 @@ public class ResourceFileSystem implements IFileSystem {
     }
 
     @Override
-    public LuaTable getFilesystems() {
-        LuaTable table = new LuaTable();
-
-        for (String key : this.mountedFs.keySet()) {
-            table.set(key, CoerceJavaToLua.coerce(this.mountedFs.get(key)));
-        }
-
-        return table;
-    }
-
-    @Override
-    public String mountFs(IFileSystem fs) {
-        String fsName = String.format("storage%d", this.mountedFs.size());
-
-        int c = 0;
-        for (String i : this.mountedFs.keySet()) {
-            if (fs.getPcPath() == this.mountedFs.get(i).getPcPath()) {
-                return String.format("storage%d", c);
-            }
-            c++;
-        }
-        LuaTable table = new LuaTable();
-
-        this.mountedFs.put(fsName, fs);
-
-        return fsName;
-    }
-
-    @Override
-    public void unmountFs(String fs) {
-
-        for (String key : this.mountedFs.keySet()) {
-            if (Objects.equals(this.mountedFs.get(key).getUUIDOrRandom(), fs)) {
-                this.mountedFs.remove(fs);
-            }
-        }
-    }
-
-    @Override
     public void mount(String id) {
         this.uuid = id;
 
         this.pcPath = Path.of(this.res);
-
-
-        /*
-        Path path = FabricLoader.getInstance().getGameDir().resolve("fabriccomputers");
-        java.io.File dir = new java.io.File(path.toUri());
-        if (!dir.exists()) {
-            dir.mkdir();
-        }
-
-        Path pcPath = path.resolve(id);
-        dir = new File(pcPath.toUri());
-        if (!dir.exists()) {
-            dir.mkdir();
-        }
-
-        this.pcPath = pcPath;
-
-
-        try {
-            File file = new File(this.pcPath.toUri());
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-            FileUtils.copyInputStreamToFile(this.getClass().getResource("/assets/fabriccomputers/lua/" + this.res).openStream(), new File(this.pcPath.toUri()).createNewFile());
-            FileUtils.copyDirectory(new File(this.getClass().getResource("/assets/fabriccomputers/lua/" + this.res).toURI()), new File(this.pcPath.toUri()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-            this.pcPath = path;
-         */
-
-
-
 
         this.mounted = true;
     }

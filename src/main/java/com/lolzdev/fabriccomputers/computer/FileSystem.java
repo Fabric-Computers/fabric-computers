@@ -17,7 +17,6 @@ import java.util.UUID;
 public class FileSystem implements IFileSystem{
     public Path pcPath;
     boolean mounted;
-    public final HashMap<String, IFileSystem> mountedFs;
     public String uuid;
 
     @Override
@@ -27,46 +26,11 @@ public class FileSystem implements IFileSystem{
 
     public FileSystem() {
         this.mounted = false;
-        this.mountedFs = new HashMap<>();
     }
 
     @Override
     public String getUUIDOrRandom () {
         return this.uuid == null ? UUID.randomUUID().toString() : this.uuid;
-    }
-
-    @Override
-    public LuaTable getFilesystems() {
-        LuaTable table = new LuaTable();
-
-        for (String key : this.mountedFs.keySet()) {
-            table.set(key, CoerceJavaToLua.coerce(this.mountedFs.get(key)));
-        }
-
-        return table;
-    }
-
-    @Override
-    public String mountFs(IFileSystem fs) {
-        String fsName = String.format("storage%d", this.mountedFs.size());
-
-        int c = 0;
-        for (String i : this.mountedFs.keySet()) {
-            if (fs.getPcPath() == this.mountedFs.get(i).getPcPath()) {
-                return String.format("storage%d", c);
-            }
-            c++;
-        }
-        LuaTable table = new LuaTable();
-
-        this.mountedFs.put(fsName, fs);
-
-        return fsName;
-    }
-
-    @Override
-    public void unmountFs(String fs) {
-        this.mountedFs.remove(fs);
     }
 
     @Override
@@ -97,12 +61,6 @@ public class FileSystem implements IFileSystem{
 
     @Override
     public String readFile(String path) {
-        if (path.startsWith("storage")) {
-            if (this.mountedFs.containsKey(path.split("/")[0])) {
-                return this.mountedFs.get(path.split("/")[0]).readFile(path.replace(path.split("/")[0], ""));
-            }
-        }
-
         Path filePath = this.pcPath.resolve(path);
 
         try {
@@ -114,14 +72,6 @@ public class FileSystem implements IFileSystem{
 
     @Override
     public void writeFile(String path, String content) {
-        if (path.startsWith("storage")) {
-            System.out.println(path.split("/")[0]);
-            if (this.mountedFs.containsKey(path.split("/")[0])) {
-                this.mountedFs.get(path.split("/")[0]).writeFile(path.replace(path.split("/")[0], ""), content);
-                return;
-            }
-        }
-
         Path filePath = this.pcPath.resolve(path);
 
         try {

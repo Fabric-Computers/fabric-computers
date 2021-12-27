@@ -37,71 +37,9 @@ public class ComputerBlockEntity extends BlockEntity implements ExtendedScreenHa
         this.players = new ArrayList<>();
     }
 
-    public void checkForDrives() {
-        DiskDriveBlockEntity entity;
-        if (this.world.getBlockEntity(this.pos.add(1, 0, 0)) instanceof DiskDriveBlockEntity)  {
-            entity = (DiskDriveBlockEntity) world.getBlockEntity(this.pos.add(1, 0, 0));
-
-            initFloppy(entity);
-        }
-
-        if (this.world.getBlockEntity(this.pos.add(-1, 0, 0)) instanceof DiskDriveBlockEntity)  {
-            entity = (DiskDriveBlockEntity) world.getBlockEntity(this.pos.add(-1, 0, 0));
-
-            initFloppy(entity);
-        }
-
-        if (this.world.getBlockEntity(this.pos.add(0, 0, 1)) instanceof DiskDriveBlockEntity)  {
-            entity = (DiskDriveBlockEntity) world.getBlockEntity(this.pos.add(0, 0, 1));
-
-            initFloppy(entity);
-        }
-
-        if (this.world.getBlockEntity(this.pos.add(0, 0, -1)) instanceof DiskDriveBlockEntity)  {
-            entity = (DiskDriveBlockEntity) world.getBlockEntity(this.pos.add(0, 0, -1));
-
-            initFloppy(entity);
-        }
-
-        if (this.world.getBlockEntity(this.pos.add(0, 1, 0)) instanceof DiskDriveBlockEntity)  {
-            entity = (DiskDriveBlockEntity) world.getBlockEntity(this.pos.add(0, 1, 0));
-
-            initFloppy(entity);
-        }
-
-        if (this.world.getBlockEntity(this.pos.add(0, -1, 0)) instanceof DiskDriveBlockEntity)  {
-
-            entity = (DiskDriveBlockEntity) world.getBlockEntity(this.pos.add(0, -1, 0));
-
-            initFloppy(entity);
-        }
-
-
-    }
-
-    private void initFloppy(DiskDriveBlockEntity entity) {
-        if (entity.getItems().get(0).getItem() instanceof FloppyDiskItem) {
-            FloppyDiskItem disk = (FloppyDiskItem) entity.getItems().get(0).getItem();
-
-            if (entity.getItems().get(0).hasNbt()) {
-                if (entity.getItems().get(0).getNbt().getString("uuid") != null) {
-                    disk.fileSystem.setUUID(entity.getItems().get(0).getNbt().getString("uuid"));
-                }
-            } else {
-                entity.getItems().get(0).getOrCreateNbt().putString("uuid", UUID.randomUUID().toString());
-                disk.fileSystem.setUUID(entity.getItems().get(0).getNbt().getString("uuid"));
-            }
-
-
-
-            this.computer.fs.mountFs(disk.fileSystem);
-        }
-    }
-
     public static void tick(ComputerBlockEntity blockEntity) {
 
         if (blockEntity.world != null && !blockEntity.world.isClient()) {
-            blockEntity.checkForDrives();
             if(blockEntity.computer.needSetup) {
                 blockEntity.computer.setup();
             }
