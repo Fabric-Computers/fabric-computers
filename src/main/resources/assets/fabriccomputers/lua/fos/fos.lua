@@ -29,7 +29,7 @@ local thread = os.loadLibrary("thread")
 
 _G.print = io.print
 
-local redstone
+local redstones = {}
 local output = 1
 
 print("Gaming pc")
@@ -38,11 +38,13 @@ for i=0, 5 do
     local k = computer:getComponent(i)
     if k then
         if k:getComponentType() == "redstone" then
-            redstone = k
+            table.insert(redstones, k)
             print("Redstone component found")
         end
     end
 end
+
+
 
 thread.create(function()
     while true do
@@ -51,7 +53,7 @@ thread.create(function()
             thread.done = true
             break
         end
-        computer:sleep(200)
+        computer:sleep(2000)
         coroutine.yield()
     end
 end)
@@ -60,13 +62,15 @@ thread.create(function()
 
 
     while true do
-        if redstone then
-            redstone:setOutput(output)
-
-            output = output + 1
-            if output > 15 then
-                output = 0
+        for i, redstone in pairs(redstones) do
+            if redstone then
+                redstone:setOutput(output)
             end
+
+        end
+        output = output + 1
+        if output > 15 then
+            output = 0
         end
         coroutine.yield()
     end

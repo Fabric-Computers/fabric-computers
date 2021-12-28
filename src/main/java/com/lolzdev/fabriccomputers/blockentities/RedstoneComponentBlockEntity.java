@@ -7,23 +7,37 @@ import net.minecraft.util.math.BlockPos;
 import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 
+import java.util.ArrayDeque;
+import java.util.Queue;
+
 public class RedstoneComponentBlockEntity extends BlockEntity implements IComponent {
 
     public int output;
+    public Queue<Integer> outputQueue;
 
     public RedstoneComponentBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntities.REDSTONE_COMPONENT_BLOCK_ENTITY, pos, state);
 
         this.output = 0;
+        this.outputQueue = new ArrayDeque<>(5);
     }
 
     public void setOutput(int output) {
-        this.output = output;
+        this.outputQueue.offer(output);
 
-        System.out.println("Output: " + this.output);
 
-        world.updateNeighbors(this.pos, this.world.getBlockState(this.pos).getBlock());
-        world.updateNeighbor(this.pos, this.world.getBlockState(this.pos).getBlock(), this.pos);
+    }
+
+    public static void tick(RedstoneComponentBlockEntity blockEntity) {
+
+        if (!blockEntity.outputQueue.isEmpty()) {
+            blockEntity.output = blockEntity.outputQueue.poll();
+
+
+            blockEntity.world.updateNeighbors(blockEntity.pos, blockEntity.world.getBlockState(blockEntity.pos).getBlock());
+            blockEntity.world.updateNeighbor(blockEntity.pos, blockEntity.world.getBlockState(blockEntity.pos).getBlock(), blockEntity.pos);
+            blockEntity.world.updateComparators(blockEntity.pos, blockEntity.world.getBlockState(blockEntity.pos).getBlock());
+        }
 
     }
 
