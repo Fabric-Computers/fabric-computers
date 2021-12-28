@@ -122,13 +122,8 @@ public class Computer {
     }
 
     public void sleep(int nanos) {
-        if (this.executor != null) {
-            try {
-                this.executor.wait(0, nanos);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+        long startTime = System.nanoTime();
+        while(System.nanoTime() - startTime < nanos){}
     }
 
     public LuaValue getComponent(int index) {
