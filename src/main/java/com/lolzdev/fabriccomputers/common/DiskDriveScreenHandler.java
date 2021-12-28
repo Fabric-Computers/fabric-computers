@@ -12,7 +12,6 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 
 public class DiskDriveScreenHandler extends ScreenHandler {
-
     private final Inventory inventory;
 
     public DiskDriveScreenHandler(int syncId, PlayerInventory playerInventory) {
@@ -27,7 +26,6 @@ public class DiskDriveScreenHandler extends ScreenHandler {
 
         int m;
         int l;
-
 
         this.addSlot(new DiskDriveSlot(inventory, 0, 80, 35, entity));
 

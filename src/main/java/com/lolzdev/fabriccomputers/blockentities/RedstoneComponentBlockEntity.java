@@ -11,7 +11,6 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 public class RedstoneComponentBlockEntity extends BlockEntity implements IComponent {
-
     public int output;
     public Queue<Integer> outputQueue;
 
@@ -24,21 +23,16 @@ public class RedstoneComponentBlockEntity extends BlockEntity implements ICompon
 
     public void setOutput(int output) {
         this.outputQueue.offer(output);
-
-
     }
 
     public static void tick(RedstoneComponentBlockEntity blockEntity) {
-
         if (!blockEntity.outputQueue.isEmpty()) {
             blockEntity.output = blockEntity.outputQueue.poll();
-
 
             blockEntity.world.updateNeighbors(blockEntity.pos, blockEntity.world.getBlockState(blockEntity.pos).getBlock());
             blockEntity.world.updateNeighbor(blockEntity.pos, blockEntity.world.getBlockState(blockEntity.pos).getBlock(), blockEntity.pos);
             blockEntity.world.updateComparators(blockEntity.pos, blockEntity.world.getBlockState(blockEntity.pos).getBlock());
         }
-
     }
 
     @Override

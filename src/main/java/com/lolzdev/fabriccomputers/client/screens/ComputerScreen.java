@@ -1,11 +1,10 @@
 package com.lolzdev.fabriccomputers.client.screens;
 
-import com.lolzdev.fabriccomputers.common.KeyPressedPacket;
-import com.lolzdev.fabriccomputers.common.KeyUpPacket;
+import com.lolzdev.fabriccomputers.common.packets.KeyPressedPacket;
+import com.lolzdev.fabriccomputers.common.packets.KeyUpPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.render.*;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.NativeImageBackedTexture;
 import net.minecraft.client.util.math.MatrixStack;
@@ -13,19 +12,31 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Matrix4f;
 
 public class ComputerScreen extends HandledScreen<ScreenHandler> {
-
     private static final Identifier TEXTURE = new Identifier("fabriccomputers", "textures/gui/computer.png");
-    private static final Identifier PIXEL = new Identifier("fabriccomputers", "textures/gui/pixel.png");
-    public int startX = 0, endX = 0, startY = 0, endY = 0;
-    public int[] pixels;
-    public boolean shouldUpdate;
-    public NativeImageBackedTexture texture;
+
+    private NativeImageBackedTexture texture;
 
     public ComputerScreen(ScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
-        this.texture = new NativeImageBackedTexture(245, 178, false);
+
+        backgroundWidth = 256;
+        backgroundHeight = 187;
+    }
+
+    public void initTexture(int screenWidth, int screenHeight) {
+        if (texture != null) throw new IllegalStateException("initTexture() called twice one the same ComputerScreen instance");
+
+        texture = new NativeImageBackedTexture(screenWidth, screenHeight, false);
+    }
+
+    @Override
+    public void onClose() {
+        texture.close();
+
+        super.onClose();
     }
 
     @Override
@@ -34,57 +45,52 @@ public class ComputerScreen extends HandledScreen<ScreenHandler> {
 
     @Override
     public void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
-
+        // Draw outline
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, TEXTURE);
-        backgroundWidth = 256;
-        backgroundHeight = 187;
+
         int x = (width - backgroundWidth) / 2;
         int y = (height - backgroundHeight) / 2;
         drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
 
-        int cur = 0;
-
-        if (this.pixels != null) {
-
-            for (int xPos = 0; xPos < 245; xPos++) {
-                for (int yPos = 0; yPos < 177; yPos++) {
-                    int p = pixels[cur];
-                    this.texture.getImage().setColor(xPos, yPos, p);
-
-                    cur++;
-
-                }
-            }
-
-            this.texture.upload();
+        // Draw screen
+        if (texture != null) {
             RenderSystem.setShaderTexture(0, texture.getGlId());
-
-            x += 6;
-            y += 6;
-
-            RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-            drawTexture(matrices, x, y, 0, 0, 244, 177);
-
+            drawTexturedQuad(matrices, x + 6, y + 6, 245, 177);
         }
+    }
 
+    private void drawTexturedQuad(MatrixStack matrices, int x, int y, int width, int height) {
+        Matrix4f matrix = matrices.peek().getPositionMatrix();
+        BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+
+        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
+        bufferBuilder.vertex(matrix, x, y + height, 0).texture(0, 1).next();
+        bufferBuilder.vertex(matrix, x + width, y + height, 0).texture(1, 1).next();
+        bufferBuilder.vertex(matrix, x + width, y, 0).texture(1, 0).next();
+        bufferBuilder.vertex(matrix, x, y, 0).texture(0, 0).next();
+        bufferBuilder.end();
+
+        BufferRenderer.draw(bufferBuilder);
     }
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         renderBackground(matrices);
         super.render(matrices, mouseX, mouseY, delta);
-
     }
 
-    @Override
-    protected void init() {
-        super.init();
+    public void updateScreen(int[] pixels, int startX, int startY, int endX, int endY) {
+        NativeImage image = texture.getImage();
 
-        this.endX = 245;
-        this.endY = 177;
-        this.shouldUpdate = true;
+        for (int x = startX; x <= endX; x++) {
+            for (int y = startY; y <= endY; y++) {
+                image.setColor(x, y, pixels[x * image.getHeight() + y]);
+            }
+        }
+
+        texture.upload();
     }
 
     @Override
@@ -96,7 +102,6 @@ public class ComputerScreen extends HandledScreen<ScreenHandler> {
 
     @Override
     public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
-
         KeyUpPacket.send(keyCode);
 
         return super.keyReleased(keyCode, scanCode, modifiers);
