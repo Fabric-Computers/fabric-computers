@@ -3,41 +3,30 @@ package com.lolzdev.fabriccomputers.computer;
 import com.lolzdev.fabriccomputers.api.IComponent;
 import com.lolzdev.fabriccomputers.blockentities.ComputerBlockEntity;
 import com.lolzdev.fabriccomputers.blockentities.DiskDriveBlockEntity;
+import com.lolzdev.fabriccomputers.common.packets.PixelBufferChangePacket;
 import com.lolzdev.fabriccomputers.items.FloppyDiskItem;
-import jdk.jfr.Timespan;
-import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.impl.game.GameProvider;
-import net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.resource.Resource;
-import net.minecraft.resource.ResourceFactory;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.chunk.WorldChunk;
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaTable;
 import org.luaj.vm2.LuaValue;
-import org.luaj.vm2.Varargs;
-import org.luaj.vm2.ast.Str;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import org.luaj.vm2.lib.jse.JsePlatform;
-import org.spongepowered.asm.mixin.injection.Coerce;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.Duration;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.HashMap;
+import java.util.Queue;
+import java.util.UUID;
 
 public class Computer {
-    public int[][] pixels = new int[245][177];
-    public int[] changes = new int[] {0, 0, 0, 0};
+    public final int screenWidth, screenHeight;
+    private final int[][] pixels;
+    public int changesStartX, changesStartY, changesEndX, changesEndY;
+
     public boolean shouldUpdate = true;
     public FileSystem fs;
     public UUID id;
@@ -52,8 +41,11 @@ public class Computer {
 
 
     public Computer(ComputerBlockEntity blockEntity) {
-
         this.fs = new FileSystem();
+
+        this.screenWidth = 245;
+        this.screenHeight = 177;
+        this.pixels = new int[screenWidth][screenHeight];
 
         this.halted = true;
         this.needSetup = true;
@@ -73,6 +65,7 @@ public class Computer {
         if (this.executor != null && this.executor.isAlive()) {
             this.queueEvent("interrupted", new Object[] {});
         }
+
         this.halted = true;
     }
 
@@ -90,8 +83,8 @@ public class Computer {
 
     public LuaTable getScreenSize() {
         LuaTable size = new LuaTable();
-        size.set(1, LuaValue.valueOf(245));
-        size.set(2, LuaValue.valueOf(177));
+        size.set(1, LuaValue.valueOf(screenWidth));
+        size.set(2, LuaValue.valueOf(screenHeight));
         return size;
     }
 
@@ -157,30 +150,19 @@ public class Computer {
     }
 
     public void setPixel(int x, int y, int color) {
-
-        if (x <= 244 && y <= 176) {
-            int rgba = (((color) & 0xFF) << 16)
+        if (x >= 0 && x < screenWidth && y >= 0 && y < screenHeight) {
+            pixels[x][y] = (((color) & 0xFF) << 16)
                     | (((color >> 8) & 0xFF) << 8)
                     | (((color >> 16) & 0xFF))
                     | (((25 & 0xFF) << 24));
 
-            this.pixels[x][y] = rgba;
+            if (x < changesStartX) changesStartX = x;
+            else if (x > changesEndX) changesEndX = x;
 
-            if (x < this.changes[0]) {
-                this.changes[0] = x;
-            }
-            if (x > this.changes[1]) {
-                this.changes[1] = x;
-            }
+            if (y < changesStartY) changesStartY = y;
+            else if (y > changesEndY) changesEndY = y;
 
-            if (y < this.changes[2]) {
-                this.changes[2] = y;
-            }
-            if (y > this.changes[3]) {
-                this.changes[3] = y;
-            }
-
-            this.shouldUpdate = true;
+            shouldUpdate = true;
         }
     }
 
@@ -195,7 +177,6 @@ public class Computer {
     }
 
     public LuaValue getComponent(int index) {
-
         switch (index) {
             case 0 -> {
                 if (this.blockEntity.getWorld().getWorldChunk(this.blockEntity.getPos().add(1, 0, 0)).getBlockEntity(this.blockEntity.getPos().add(1, 0, 0), WorldChunk.CreationType.IMMEDIATE) instanceof IComponent entity)  {
@@ -318,22 +299,26 @@ public class Computer {
     }
 
     public void update() {
-        this.shouldUpdate = false;
-    }
+        if (shouldUpdate && blockEntity.players.size() > 0) {
+            int[] buffer = getPixelBuffer();
 
-    public int[] getPixelBufferAsInt() {
-        int[] result = new int[245 * 177];
-
-        int cur = 0;
-        for (int x = 0; x < 245; x++) {
-            for (int y = 0; y < 177; y++) {
-                result[cur] = pixels[x][y];
-
-                cur++;
+            for (PlayerEntity player : blockEntity.players) {
+                PixelBufferChangePacket.send(player, buffer, changesStartX, changesStartY, changesEndX, changesEndY);
             }
         }
 
-        return result;
+        changesStartX = changesStartY = changesEndX = changesEndY = 0;
+        shouldUpdate = false;
+    }
+
+    public int[] getPixelBuffer() {
+        int[] buffer = new int[screenWidth * screenHeight];
+
+        for (int x = 0; x < screenWidth; x++) {
+            System.arraycopy(pixels[x], 0, buffer, screenHeight * x, screenHeight);
+        }
+
+        return buffer;
     }
 
     public void loadBios() {

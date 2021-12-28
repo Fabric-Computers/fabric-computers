@@ -1,0 +1,43 @@
+{
+	"credit": "Made with Blockbench by magistermaks",
+	"parent": "block/block",
+	"textures": {
+		"1": "fabriccomputers:block/computer/vent",
+		"2": "fabriccomputers:block/computer/casing",
+		"3": "fabriccomputers:block/computer/drive",
+		"5": "fabriccomputers:block/computer/layer/on",
+		"particle": "fabriccomputers:block/computer/vent"
+	},
+	"jmx": {
+		"materials": {
+			"glow": { "layers": [ { "layer": "cutout", "emissive": true } ] }
+		}
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#3"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#1"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#2"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#1"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#2"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#2"}
+			}
+		},
+		{
+			"from": [0, 0, -0.1],
+			"to": [16, 16, -0.1],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 6.9]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#5", "jmx_material": "#glow"},
+				"east": {"uv": [0, 0, 0, 16], "texture": "#5", "jmx_material": "#glow"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#5", "jmx_material": "#glow"},
+				"west": {"uv": [0, 0, 0, 16], "texture": "#5", "jmx_material": "#glow"},
+				"up": {"uv": [0, 0, 16, 0], "texture": "#5", "jmx_material": "#glow"},
+				"down": {"uv": [0, 0, 16, 0], "texture": "#5", "jmx_material": "#glow"}
+			}
+		}
+	]
+}
