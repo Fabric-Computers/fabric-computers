@@ -1,10 +1,7 @@
 package com.lolzdev.fabriccomputers.blockentities;
 
 import com.lolzdev.fabriccomputers.common.ComputerScreenHandler;
-import com.lolzdev.fabriccomputers.common.PixelBufferChangePacket;
 import com.lolzdev.fabriccomputers.computer.Computer;
-import com.lolzdev.fabriccomputers.items.FixedFloppyDiskItem;
-import com.lolzdev.fabriccomputers.items.FloppyDiskItem;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -16,12 +13,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
-import org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -38,18 +30,15 @@ public class ComputerBlockEntity extends BlockEntity implements ExtendedScreenHa
     }
 
     public static void tick(ComputerBlockEntity blockEntity) {
-
         if (blockEntity.world != null && !blockEntity.world.isClient()) {
-            if(blockEntity.computer.needSetup) {
+            if (blockEntity.computer.needSetup) {
                 blockEntity.computer.setup();
             }
-            if(blockEntity.computer.isKeyDown(341) && blockEntity.computer.isKeyDown(82)) {
+
+            if (blockEntity.computer.isKeyDown(341) && blockEntity.computer.isKeyDown(82)) {
                 blockEntity.computer.reboot();
             }
 
-            for (PlayerEntity player : blockEntity.players) {
-                PixelBufferChangePacket.send(player, blockEntity.computer.changes[0], blockEntity.computer.changes[1], blockEntity.computer.changes[2], blockEntity.computer.changes[3], blockEntity.computer.getPixelBufferAsInt(), blockEntity.computer.shouldUpdate);
-            }
             blockEntity.computer.update();
         }
     }

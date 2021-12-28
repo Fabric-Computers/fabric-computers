@@ -1,6 +1,9 @@
 package com.lolzdev.fabriccomputers.blocks;
 
 import com.lolzdev.fabriccomputers.blockentities.ComputerBlockEntity;
+import com.lolzdev.fabriccomputers.common.packets.PixelBufferChangePacket;
+import com.lolzdev.fabriccomputers.common.packets.ScreenSizePacket;
+import com.lolzdev.fabriccomputers.computer.Computer;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -49,17 +52,17 @@ public class ComputerBlock extends BlockWithEntity {
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient) {
             NamedScreenHandlerFactory screenHandlerFactory = state.createScreenHandlerFactory(world, pos);
-
-            if (screenHandlerFactory != null) {
-                player.openHandledScreen(screenHandlerFactory);
-            }
-
-
             ComputerBlockEntity entity = (ComputerBlockEntity) world.getBlockEntity(pos);
-            if (entity != null && entity.computer != null && entity.computer.halted) {
-                entity.computer.boot();
-            }
 
+            if (entity != null && entity.computer != null && screenHandlerFactory != null) {
+                Computer computer = entity.computer;
+                player.openHandledScreen(screenHandlerFactory);
+
+                ScreenSizePacket.send(player, computer);
+                PixelBufferChangePacket.send(player, computer.getPixelBuffer(), 0, 0, computer.screenWidth - 1, computer.screenHeight - 1);
+
+                if (computer.halted) computer.boot();
+            }
         }
 
         return ActionResult.SUCCESS;
@@ -68,7 +71,6 @@ public class ComputerBlock extends BlockWithEntity {
     @Override
     public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
         return (NamedScreenHandlerFactory) world.getBlockEntity(pos);
-
     }
 
     @Override
@@ -83,6 +85,5 @@ public class ComputerBlock extends BlockWithEntity {
                 }
             }
         }
-
     }
 }

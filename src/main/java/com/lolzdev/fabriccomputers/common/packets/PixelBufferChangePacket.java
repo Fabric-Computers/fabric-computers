@@ -1,6 +1,7 @@
-package com.lolzdev.fabriccomputers.common;
+package com.lolzdev.fabriccomputers.common.packets;
 
 import com.lolzdev.fabriccomputers.client.screens.ComputerScreen;
+import com.lolzdev.fabriccomputers.computer.Computer;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -14,35 +15,26 @@ import net.minecraft.util.Identifier;
 public class PixelBufferChangePacket {
     public static final Identifier ID = new Identifier("fabriccomputers", "pixel_buffer_change");
 
-    public static void send(PlayerEntity user, int startX, int endX, int startY, int endY, int[] pixels, boolean shouldUpdate) {
+    public static void send(PlayerEntity user, int[] pixels, int startX, int startY, int endX, int endY) {
         PacketByteBuf data = PacketByteBufs.create();
-        data.writeInt(startX);
-        data.writeInt(endX);
-        data.writeInt(startY);
-        data.writeInt(endY);
         data.writeIntArray(pixels);
-        data.writeBoolean(shouldUpdate);
+        data.writeInt(startX);
+        data.writeInt(startY);
+        data.writeInt(endX);
+        data.writeInt(endY);
 
         ServerPlayNetworking.send((ServerPlayerEntity) user, ID, data);
     }
 
     public static void handle(MinecraftClient client, ClientPlayNetworkHandler network, PacketByteBuf buf, PacketSender sender) {
-        int startX = buf.readInt();
-        int endX = buf.readInt();
-        int startY = buf.readInt();
-        int endY = buf.readInt();
         int[] pixels = buf.readIntArray();
-        boolean shouldUpdate = buf.readBoolean();
+        int startX = buf.readInt();
+        int startY = buf.readInt();
+        int endX = buf.readInt();
+        int endY = buf.readInt();
 
         client.execute(() -> {
-            if (client.currentScreen instanceof ComputerScreen) {
-                ((ComputerScreen) client.currentScreen).startX = startX;
-                ((ComputerScreen) client.currentScreen).startY = startY;
-                ((ComputerScreen) client.currentScreen).endX = endX;
-                ((ComputerScreen) client.currentScreen).endY = endY;
-                ((ComputerScreen) client.currentScreen).pixels = pixels;
-                ((ComputerScreen) client.currentScreen).shouldUpdate = shouldUpdate;
-            }
+            if (client.currentScreen instanceof ComputerScreen screen) screen.updateScreen(pixels, startX, startY, endX, endY);
         });
     }
 }
