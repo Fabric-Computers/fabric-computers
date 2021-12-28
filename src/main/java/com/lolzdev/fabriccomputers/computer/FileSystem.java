@@ -1,20 +1,17 @@
 package com.lolzdev.fabriccomputers.computer;
 
+import com.lolzdev.fabriccomputers.api.IFileSystem;
 import net.fabricmc.loader.api.FabricLoader;
-import org.luaj.vm2.LuaTable;
 import org.luaj.vm2.LuaValue;
-import org.luaj.vm2.ast.Str;
-import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import org.luaj.vm2.lib.jse.JsePlatform;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.UUID;
 
-public class FileSystem implements IFileSystem{
+public class FileSystem implements IFileSystem {
     public Path pcPath;
     boolean mounted;
     public String uuid;

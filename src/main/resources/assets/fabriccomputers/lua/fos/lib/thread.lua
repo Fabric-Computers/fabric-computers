@@ -32,4 +32,24 @@ function thread.waitForAll()
     end
 end
 
+function thread.waitForAny()
+    if #thread.threads == 0 then
+        thread.done = true
+    end
+    while not thread.done do
+        for i, t in pairs(thread.threads) do
+            if coroutine.status(t) == "dead" then
+                table.remove(thread.threads, i)
+                thread.done = true
+                thread.threads = {}
+                print("Done!")
+                break
+            else
+                done = false
+                coroutine.resume(t)
+            end
+        end
+    end
+end
+
 return thread

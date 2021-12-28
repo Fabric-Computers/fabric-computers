@@ -27,10 +27,15 @@ for i=0, 5 do
             _G.isDisk = true
             _G.diskIndex = i
             if func then
-                local ok, i = pcall(func)
-                if not ok then
-                    print("Failed to run: ", i)
-                end
+                local thread = coroutine.create(function()
+                    local ok, i = pcall(func)
+                    if not ok then
+                        print("Failed to run: ", i)
+                    end
+                end)
+                hook = function() if computer:isInterrupted() then error("Interrupted") end end
+                debug.sethook(thread, hook, '', 5)
+                coroutine.resume(thread)
             else
                 print("Failed to run: ", err)
             end

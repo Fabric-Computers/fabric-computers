@@ -27,19 +27,19 @@ local io = os.loadLibrary("io")
 local event = os.loadLibrary("event")
 local thread = os.loadLibrary("thread")
 
-_G.print = io.print
+--_G.print = io.print
 
 local redstones = {}
 local output = 1
 
-print("Gaming pc")
+io.print("Gaming pc")
 
 for i=0, 5 do
     local k = computer:getComponent(i)
     if k then
         if k:getComponentType() == "redstone" then
             table.insert(redstones, k)
-            print("Redstone component found")
+            io.print("Redstone component found")
         end
     end
 end
@@ -49,29 +49,26 @@ end
 thread.create(function()
     while true do
         local name = event.pollEventsParallel()
-        if name == "interrupt" then
-            thread.done = true
+        if name == "interrupted" then
+            print("Interrupting")
             break
         end
-        computer:sleep(2000)
         coroutine.yield()
     end
 end)
 
 thread.create(function()
-
-
     while true do
         for i, redstone in pairs(redstones) do
             if redstone then
                 redstone:setOutput(output)
             end
-
         end
         output = output + 1
         if output > 15 then
             output = 0
         end
+        --computer:sleep(2000)
         coroutine.yield()
     end
 end)

@@ -1,7 +1,7 @@
 package com.lolzdev.fabriccomputers.items;
 
 import com.lolzdev.fabriccomputers.computer.FileSystem;
-import com.lolzdev.fabriccomputers.computer.IFileSystem;
+import com.lolzdev.fabriccomputers.api.IFileSystem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;

@@ -1,5 +1,7 @@
 package com.lolzdev.fabriccomputers.computer;
 
+import com.lolzdev.fabriccomputers.api.IFileSystem;
+
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;

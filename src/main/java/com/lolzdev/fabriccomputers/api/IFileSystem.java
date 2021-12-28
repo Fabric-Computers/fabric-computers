@@ -1,6 +1,4 @@
-package com.lolzdev.fabriccomputers.computer;
-
-import org.luaj.vm2.LuaTable;
+package com.lolzdev.fabriccomputers.api;
 
 import java.nio.file.Path;
 

@@ -47,6 +47,9 @@ public class Computer {
     private Thread executor;
     private final HashMap<Integer, Boolean> keyCodes;
     private ComputerBlockEntity blockEntity;
+    public boolean interrupted;
+
+
 
     public Computer(ComputerBlockEntity blockEntity) {
 
@@ -57,14 +60,24 @@ public class Computer {
         this.queueEvents = new ArrayDeque<>(4);
         this.keyCodes = new HashMap<>();
         this.blockEntity = blockEntity;
+        this.interrupted = true;
     }
 
     public void reboot() {
-        if (this.executor.isAlive()) {
-            this.queueEvent("interrupt", new Object[]{});
+        this.shudown();
+        this.boot();
+    }
+
+    public void shudown() {
+        this.interrupted = true;
+        if (this.executor != null && this.executor.isAlive()) {
+            this.queueEvent("interrupted", new Object[] {});
         }
         this.halted = true;
-        this.boot();
+    }
+
+    public boolean isInterrupted() {
+        return interrupted;
     }
 
     public void setId(UUID id) {
@@ -324,12 +337,18 @@ public class Computer {
     }
 
     public void loadBios() {
+
+        this.interrupted = false;
+
         this.executor = new Thread(() -> {
             try {
-                Globals globals = JsePlatform.standardGlobals();
+                Globals globals = JsePlatform.debugGlobals();
                 globals.set("computer", CoerceJavaToLua.coerce(this));
                 globals.set("fs", CoerceJavaToLua.coerce(this.fs));
-                globals.load(Files.readString(Path.of(this.getClass().getResource("/assets/fabriccomputers/rom/bios.lua").toURI()))).call();
+                LuaValue chunk = globals.load(Files.readString(Path.of(this.getClass().getResource("/assets/fabriccomputers/rom/bios.lua").toURI())));
+                LuaValue interrupted = globals.get("interrupted");
+                System.out.println(interrupted);
+                chunk.call();
             } catch (IOException | URISyntaxException e) {
                 e.printStackTrace();
             }
