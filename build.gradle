@@ -28,11 +28,9 @@ dependencies {
 
     // FREX (required by JMX for now)
     modImplementation "io.vram:frex-fabric-${project.mc_tag}:${project.frex_version}.+"
-    include "io.vram:frex-fabric-${project.mc_tag}:${project.frex_version}.+:fat"
 
     // JMX
     modImplementation "io.vram:jmx-fabric-${project.mc_tag}:${project.jmx_version}.+"
-    include "io.vram:jmx-fabric-${project.mc_tag}:${project.jmx_version}.+"
 
     include 'org.luaj:luaj-jse:3.0.1'
 }
