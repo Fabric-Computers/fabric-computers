@@ -45,32 +45,16 @@ for i=0, 5 do
 end
 
 
-
-thread.create(function()
-    while true do
-        local name = event.pollEventsParallel()
-        if name == "interrupted" then
-            print("Interrupting")
-            break
+while true do
+    for i, redstone in pairs(redstones) do
+        if redstone then
+            redstone:setOutput(output)
         end
-        coroutine.yield()
     end
-end)
-
-thread.create(function()
-    while true do
-        for i, redstone in pairs(redstones) do
-            if redstone then
-                redstone:setOutput(output)
-            end
-        end
-        output = output + 1
-        if output > 15 then
-            output = 0
-        end
-        --computer:sleep(2000)
-        coroutine.yield()
+    output = output + 1
+    if output > 15 then
+        output = 0
     end
-end)
-
-thread.waitForAll()
+    print(output)
+    --computer:sleep(2000)
+end

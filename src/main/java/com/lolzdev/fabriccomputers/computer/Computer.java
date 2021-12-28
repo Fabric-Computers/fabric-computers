@@ -4,12 +4,16 @@ import com.lolzdev.fabriccomputers.api.IComponent;
 import com.lolzdev.fabriccomputers.blockentities.ComputerBlockEntity;
 import com.lolzdev.fabriccomputers.blockentities.DiskDriveBlockEntity;
 import com.lolzdev.fabriccomputers.common.packets.PixelBufferChangePacket;
+import com.lolzdev.fabriccomputers.computer.luaj.ComputerDebugLib;
 import com.lolzdev.fabriccomputers.items.FloppyDiskItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.chunk.WorldChunk;
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaTable;
+import org.luaj.vm2.LuaThread;
 import org.luaj.vm2.LuaValue;
+import org.luaj.vm2.lib.DebugLib;
+import org.luaj.vm2.lib.ZeroArgFunction;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import org.luaj.vm2.lib.jse.JsePlatform;
 
@@ -62,9 +66,6 @@ public class Computer {
 
     public void shudown() {
         this.interrupted = true;
-        if (this.executor != null && this.executor.isAlive()) {
-            this.queueEvent("interrupted", new Object[] {});
-        }
 
         this.halted = true;
     }
@@ -328,12 +329,15 @@ public class Computer {
         this.executor = new Thread(() -> {
             try {
                 Globals globals = JsePlatform.debugGlobals();
+                globals.load(new ComputerDebugLib(this));
                 globals.set("computer", CoerceJavaToLua.coerce(this));
                 globals.set("fs", CoerceJavaToLua.coerce(this.fs));
                 LuaValue chunk = globals.load(Files.readString(Path.of(this.getClass().getResource("/assets/fabriccomputers/rom/bios.lua").toURI())));
-                LuaValue interrupted = globals.get("interrupted");
-                System.out.println(interrupted);
-                chunk.call();
+
+                try {
+                    chunk.call();
+                } catch (Exception ignored) {}
+
             } catch (IOException | URISyntaxException e) {
                 e.printStackTrace();
             }
