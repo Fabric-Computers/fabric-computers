@@ -38,6 +38,7 @@ for i=0, 5 do
         k:writeFile("isDisk", "yes")
 
         if k:exists("init.lua") then
+            _G.fileSystem = k
             local init = k:readFile("init.lua")
             local func, err = load(init)
             _G.isDisk = true
@@ -58,6 +59,7 @@ _G.isDisk = false
 _G.diskIndex = 0
 
 if fs:exists("init.lua") then
+    _G.fileSystem = fs
     local init = fs:readFile("init.lua")
     local func, err = load(init)
     if func then

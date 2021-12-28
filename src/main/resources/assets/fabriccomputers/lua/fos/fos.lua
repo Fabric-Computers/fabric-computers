@@ -23,30 +23,22 @@ function os.loadLibrary(lib)
     end
 end
 
+function os.run(bin)
+    local content = fileSystem:readFile("bin/"..bin..".lua")
+    local func, err = load(content)
+    if func then
+        local ok, i = pcall(func)
+        if not ok then
+            print("Cannot run program: ", i)
+        end
+    else
+        print("Cannot run program: ", err)
+    end
+end
+
 local io = os.loadLibrary("io")
-local event = os.loadLibrary("event")
-local thread = os.loadLibrary("thread")
 
 --_G.print = io.print
 _G.error = io.error
 
-local redstones = {}
-local output = 1
-
-io.print("Gaming pc")
-
-for i=0, 5 do
-    local k = computer:getComponent(i)
-    if k then
-        if k:getComponentType() == "redstone" then
-            table.insert(redstones, k)
-            io.print("Redstone component found")
-        end
-    end
-end
-
-thread.waitForAny(
-        function() while true do io.print("Thread1") computer:sleep(5e+9) coroutine.yield() end end,
-        function()
-            while true do io.print("Thread") computer:sleep(5e+9) coroutine.yield()  end
-        end)
+os.run("shell")

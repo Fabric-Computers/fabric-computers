@@ -1,3 +1,6 @@
+local event = os.loadLibrary("event")
+local keys = os.loadLibrary("keys")
+
 local io = {}
 
 io.screen = nil
@@ -469,6 +472,16 @@ charMap["1"]["1 5"] = true
 charMap["1"]["3 5"] = true
 charMap["1"]["1 2"] = true
 
+charMap[">"] = {}
+
+charMap[">"]["width"] = 3
+charMap[">"]["height"] = 5
+charMap[">"]["1 1"] = true
+charMap[">"]["1 5"] = true
+charMap[">"]["2 2"] = true
+charMap[">"]["2 4"] = true
+charMap[">"]["3 3"] = true
+
 function io.putChar(character, xPos, yPos, foreground, background)
     if charMap[character] then
         for x=0, charMap[character]["width"]-1 do
@@ -557,19 +570,77 @@ function io.write(s)
 
     io.writeString(s, io.currentColumn, io.currentLine, io.currentForeground, io.currentBackground)
 
-    io.currentColumn = io.currentColumn + lenght
-    io.currentLine = io.currentLine + maxHeight + 1
+    io.currentColumn = io.currentColumn + length
 end
 
 function io.clear(color)
     if screen then
-        local width, height = screen:getScreenSize()
-        for x=0, width do
-            for y=0, height do
+        local size = screen:getScreenSize()
+        print(tostring(size[1]).." "..tostring(size[2]))
+        for x=0, size[1] do
+            for y=0, size[2] do
                 io.setPixel(x, y, color)
             end
         end
     end
+end
+
+function io.getStringSize(s)
+    s = s:upper()
+
+    local maxHeight = 0
+    local width = 0
+
+    for i=0, #s do
+        local c = s:sub(i, i)
+        if charMap[c] then
+            if charMap[c]["height"] > maxHeight then
+                maxHeight = charMap[c]["height"]
+            end
+
+            width = width + charMap[c]["width"] + 1
+        end
+    end
+
+    return width, maxHeight
+end
+
+function io.readLine()
+    local x = io.currentColumn
+    local y = io.currentLine
+    local result = ""
+    while true do
+        eventName, key = event.pollEvents()
+        if eventName == "key_down" then
+            if key >= keys.A and key <= keys.Z then
+                result = result .. string.char(key)
+                io.setCursor(x, y)
+                io.print(result)
+            elseif key == keys.SPACE then
+                result = result .. " "
+                io.setCursor(x, y)
+                io.print(result)
+            elseif key == keys.BACKSPACE then
+                local width, height = io.getStringSize(result)
+                print(width)
+                for xPos=0, width do
+                    for yPos=0, height do
+                        io.setPixel(x+xPos, y+yPos, io.backgroundColor)
+                    end
+                end
+
+                result = result:sub(1, -2)
+                io.setCursor(x, y)
+                io.print(result)
+            elseif key == keys.ENTER then
+                return result
+            end
+        end
+    end
+end
+
+function io.exists(path)
+    return _G.fileSystem:exists(path)
 end
 
 function io.error(message)
