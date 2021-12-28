@@ -9,7 +9,11 @@
     "MineGame159",
     "magistermaks"
   ],
-  "contact": {},
+  "contact": {
+    "homepage": "https://github.com/LolzDEV/fabric-computers",
+    "issues": "https://github.com/LolzDEV/fabric-computers/issues",
+    "sources": "https://github.com/LolzDEV/fabric-computers"
+  },
   "license": "MIT",
   "icon": "assets/fabriccomputers/icon.png",
   "environment": "*",

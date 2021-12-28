@@ -13,24 +13,24 @@
 
 
 ### This mod is currently under development
-PRs and Issues are welcome, feel free to open a new issue if you discover a bug or if you want to suggest a new feature!
+PRs and issues are welcome, feel free to open a new issue if you discover a bug or if you want to suggest a new feature!
 
 ### Want to help?
 If you want to contribute to the development of Fabric Computers consider joining the [Discord Server](https://discord.gg/SeC4hkhHxp). We need:
 - Testers
 - Lua developers
-- Texture artists
 - Java developers
 
 ### Notes
 - Computers run on a separate thread
 - Computer filesystems are saved on the **real drive**
 - Computers can execute Lua code thanks to the LuaJ library
-- Computer screens are pixel buffers, you can have full control on the value of each pixel if needed!
+- Screens are pixel buffers, you can have full control on the value of each pixel if needed!
 
 ### Screenshots
 **Note that these are taken from the *indev* environment**
-![Alpha FOS](assets/alpha_fos.png)
+![Showcase](assets/showcase.png)
+![New FOS](assets/new_fos.png)
 
 ### License
 This mod is under the [MIT license](LICENSE)
