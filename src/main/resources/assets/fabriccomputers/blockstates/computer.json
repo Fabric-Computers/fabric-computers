@@ -1,8 +1,13 @@
 {
   "variants": {
-    "facing=north": {"model": "fabriccomputers:block/computer"},
-    "facing=south": {"model": "fabriccomputers:block/computer", "y": 180},
-    "facing=west": {"model": "fabriccomputers:block/computer", "y": 270},
-    "facing=east": {"model": "fabriccomputers:block/computer", "y": 90}
+    "facing=north,powered=true": {"model": "fabriccomputers:block/computer/on"},
+    "facing=south,powered=true": {"model": "fabriccomputers:block/computer/on", "y": 180},
+    "facing=west,powered=true": {"model": "fabriccomputers:block/computer/on", "y": 270},
+    "facing=east,powered=true": {"model": "fabriccomputers:block/computer/on", "y": 90},
+
+    "facing=north,powered=false": {"model": "fabriccomputers:block/computer/off"},
+    "facing=south,powered=false": {"model": "fabriccomputers:block/computer/off", "y": 180},
+    "facing=west,powered=false": {"model": "fabriccomputers:block/computer/off", "y": 270},
+    "facing=east,powered=false": {"model": "fabriccomputers:block/computer/off", "y": 90}
   }
 }

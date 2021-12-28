@@ -7,11 +7,11 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-    // Add repositories to retrieve artifacts from in here.
-    // You should only use this when depending on other mods because
-    // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
-    // for more information about repositories.
+
+    maven {
+        url = "https://maven.vram.io"
+    }
+
 }
 
 dependencies {
@@ -25,6 +25,14 @@ dependencies {
 
     // LuaJ
     modImplementation 'org.luaj:luaj-jse:3.0.1'
+
+    // FREX (required by JMX for now)
+    modImplementation "io.vram:frex-fabric-${project.mc_tag}:${project.frex_version}.+"
+    include "io.vram:frex-fabric-${project.mc_tag}:${project.frex_version}.+:fat"
+
+    // JMX
+    modImplementation "io.vram:jmx-fabric-${project.mc_tag}:${project.jmx_version}.+"
+    include "io.vram:jmx-fabric-${project.mc_tag}:${project.jmx_version}.+"
 
     include 'org.luaj:luaj-jse:3.0.1'
 }

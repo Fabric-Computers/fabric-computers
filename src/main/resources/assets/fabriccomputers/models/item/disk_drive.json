@@ -1,3 +1,3 @@
 {
-  "parent": "fabriccomputers:block/disk_drive"
+  "parent": "fabriccomputers:block/disk_drive/off"
 }

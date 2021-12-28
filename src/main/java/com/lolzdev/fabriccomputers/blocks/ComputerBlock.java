@@ -28,12 +28,12 @@ public class ComputerBlock extends BlockWithEntity {
 
     public ComputerBlock() {
         super(FabricBlockSettings.of(Material.METAL));
-        setDefaultState( getDefaultState().with(Properties.HORIZONTAL_FACING, Direction.NORTH) );
+        setDefaultState( getDefaultState().with(Properties.HORIZONTAL_FACING, Direction.NORTH).with(Properties.POWERED, false) );
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(Properties.HORIZONTAL_FACING);
+        builder.add(Properties.HORIZONTAL_FACING, Properties.POWERED);
     }
 
     @Override
