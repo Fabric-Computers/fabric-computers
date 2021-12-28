@@ -1,6 +1,5 @@
 package com.lolzdev.fabriccomputers.blockentities;
 
-import com.lolzdev.fabriccomputers.common.ComputerScreenHandler;
 import com.lolzdev.fabriccomputers.computer.Computer;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
@@ -18,15 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ComputerBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory {
+public class ComputerBlockEntity extends BlockEntity {
     public Computer computer;
-    public List<PlayerEntity> players;
 
     public ComputerBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntities.COMPUTER_BLOCK_ENTITY, pos, state);
 
         this.computer = new Computer(this);
-        this.players = new ArrayList<>();
     }
 
     public static void tick(ComputerBlockEntity blockEntity) {
@@ -34,27 +31,8 @@ public class ComputerBlockEntity extends BlockEntity implements ExtendedScreenHa
             if (blockEntity.computer.needSetup) {
                 blockEntity.computer.setup();
             }
-
-            if (blockEntity.computer.isKeyDown(341) && blockEntity.computer.isKeyDown(82)) {
-                blockEntity.computer.reboot();
-            }
-
-            blockEntity.computer.update();
         }
     }
-
-    @Override
-    public Text getDisplayName() {
-        return Text.of("Computer");
-    }
-
-    @Override
-    public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return new ComputerScreenHandler(syncId, inv, this);
-    }
-
-    @Override
-    public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {}
 
     @Override
     public void readNbt(NbtCompound nbt) {

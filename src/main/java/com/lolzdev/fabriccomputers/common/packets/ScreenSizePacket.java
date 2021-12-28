@@ -1,7 +1,7 @@
 package com.lolzdev.fabriccomputers.common.packets;
 
-import com.lolzdev.fabriccomputers.client.screens.ComputerScreen;
-import com.lolzdev.fabriccomputers.computer.Computer;
+import com.lolzdev.fabriccomputers.blockentities.ScreenComponentBlockEntity;
+import com.lolzdev.fabriccomputers.client.screens.ScreenComponentScreen;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -15,10 +15,10 @@ import net.minecraft.util.Identifier;
 public class ScreenSizePacket {
     public static final Identifier ID = new Identifier("fabriccomputers", "screen_size");
 
-    public static void send(PlayerEntity player, Computer computer) {
+    public static void send(PlayerEntity player, ScreenComponentBlockEntity screen) {
         PacketByteBuf data = PacketByteBufs.create();
-        data.writeInt(computer.screenWidth);
-        data.writeInt(computer.screenHeight);
+        data.writeInt(screen.screenWidth);
+        data.writeInt(screen.screenHeight);
 
         ServerPlayNetworking.send((ServerPlayerEntity) player, ID, data);
     }
@@ -28,7 +28,7 @@ public class ScreenSizePacket {
         int height = buf.readInt();
 
         client.execute(() -> {
-            if (client.currentScreen instanceof ComputerScreen screen) screen.initTexture(width, height);
+            if (client.currentScreen instanceof ScreenComponentScreen screen) screen.initTexture(width, height);
         });
     }
 }

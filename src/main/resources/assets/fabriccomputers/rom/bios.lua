@@ -2,16 +2,32 @@ _G.bios = {}
 
 fs:mount(computer:getId())
 
+local screen
+
+for i=0, 5 do
+    local component = computer:getComponent(i)
+    if component then
+        if component:getComponentType() == "screen" then
+            screen = component
+        end
+    end
+end
 
 function _G.bios.getScreenSize()
-    local size = computer:getScreenSize()
-    return size[1], size[2]
+    if screen then
+        local size = screen:getScreenSize()
+        return size[1], size[2]
+    end
+    return 0, 0
 end
 
 local width, height = bios.getScreenSize()
+
 for x=0, width-1 do
     for y=0, height-1 do
-        computer:setPixel(x, y, 0x000000)
+        if screen then
+            screen:setPixel(x, y, 0x000000)
+        end
     end
 end
 

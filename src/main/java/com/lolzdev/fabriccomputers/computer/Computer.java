@@ -27,9 +27,6 @@ import java.util.Queue;
 import java.util.UUID;
 
 public class Computer {
-    public final int screenWidth, screenHeight;
-    private final int[][] pixels;
-    public int changesStartX, changesStartY, changesEndX, changesEndY;
 
     public boolean shouldUpdate = true;
     public FileSystem fs;
@@ -38,7 +35,6 @@ public class Computer {
     public boolean halted;
     private final Queue<Event> queueEvents;
     private Thread executor;
-    private final HashMap<Integer, Boolean> keyCodes;
     private ComputerBlockEntity blockEntity;
     public boolean interrupted;
 
@@ -47,14 +43,9 @@ public class Computer {
     public Computer(ComputerBlockEntity blockEntity) {
         this.fs = new FileSystem();
 
-        this.screenWidth = 245;
-        this.screenHeight = 177;
-        this.pixels = new int[screenWidth][screenHeight];
-
         this.halted = true;
         this.needSetup = true;
         this.queueEvents = new ArrayDeque<>(4);
-        this.keyCodes = new HashMap<>();
         this.blockEntity = blockEntity;
         this.interrupted = true;
     }
@@ -80,25 +71,6 @@ public class Computer {
 
     public String getId() {
         return this.id.toString();
-    }
-
-    public LuaTable getScreenSize() {
-        LuaTable size = new LuaTable();
-        size.set(1, LuaValue.valueOf(screenWidth));
-        size.set(2, LuaValue.valueOf(screenHeight));
-        return size;
-    }
-
-    public void keyDown(int keyCode) {
-        this.keyCodes.put(keyCode, true);
-    }
-
-    public void keyUp(int keyCode) {
-        this.keyCodes.replace(keyCode, false);
-    }
-
-    public boolean isKeyDown(int keyCode) {
-        return this.keyCodes.getOrDefault(keyCode, false);
     }
 
     public void queueEvent(String name, Object[] args) {
@@ -130,11 +102,6 @@ public class Computer {
     }
 
     public void setup() {
-        for (int x = 0; x < 245; x++) {
-            for (int y = 0; y < 177; y++) {
-                setPixel(x, y, 0x000000);
-            }
-        }
 
         if (this.id == null) {
             this.setId(UUID.randomUUID());
@@ -146,25 +113,12 @@ public class Computer {
     }
 
     public void boot() {
+
+        System.out.println("Booting");
+        this.interrupted = false;
+
         this.loadBios();
         this.halted = false;
-    }
-
-    public void setPixel(int x, int y, int color) {
-        if (x >= 0 && x < screenWidth && y >= 0 && y < screenHeight) {
-            pixels[x][y] = (((color) & 0xFF) << 16)
-                    | (((color >> 8) & 0xFF) << 8)
-                    | (((color >> 16) & 0xFF))
-                    | (((25 & 0xFF) << 24));
-
-            if (x < changesStartX) changesStartX = x;
-            else if (x > changesEndX) changesEndX = x;
-
-            if (y < changesStartY) changesStartY = y;
-            else if (y > changesEndY) changesEndY = y;
-
-            shouldUpdate = true;
-        }
     }
 
     public void sleep(int nanos) {
@@ -299,32 +253,7 @@ public class Computer {
         return LuaValue.NIL;
     }
 
-    public void update() {
-        if (shouldUpdate && blockEntity.players.size() > 0) {
-            int[] buffer = getPixelBuffer();
-
-            for (PlayerEntity player : blockEntity.players) {
-                PixelBufferChangePacket.send(player, buffer, changesStartX, changesStartY, changesEndX, changesEndY);
-            }
-        }
-
-        changesStartX = changesStartY = changesEndX = changesEndY = 0;
-        shouldUpdate = false;
-    }
-
-    public int[] getPixelBuffer() {
-        int[] buffer = new int[screenWidth * screenHeight];
-
-        for (int x = 0; x < screenWidth; x++) {
-            System.arraycopy(pixels[x], 0, buffer, screenHeight * x, screenHeight);
-        }
-
-        return buffer;
-    }
-
     public void loadBios() {
-
-        this.interrupted = false;
 
         this.executor = new Thread(() -> {
             try {
@@ -336,7 +265,9 @@ public class Computer {
 
                 try {
                     chunk.call();
-                } catch (Exception ignored) {}
+                } catch (RuntimeException e) {
+                    e.printStackTrace();
+                }
 
             } catch (IOException | URISyntaxException e) {
                 e.printStackTrace();

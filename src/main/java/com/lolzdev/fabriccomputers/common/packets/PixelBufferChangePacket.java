@@ -1,7 +1,6 @@
 package com.lolzdev.fabriccomputers.common.packets;
 
-import com.lolzdev.fabriccomputers.client.screens.ComputerScreen;
-import com.lolzdev.fabriccomputers.computer.Computer;
+import com.lolzdev.fabriccomputers.client.screens.ScreenComponentScreen;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -34,7 +33,7 @@ public class PixelBufferChangePacket {
         int endY = buf.readInt();
 
         client.execute(() -> {
-            if (client.currentScreen instanceof ComputerScreen screen) screen.updateScreen(pixels, startX, startY, endX, endY);
+            if (client.currentScreen instanceof ScreenComponentScreen screen) screen.updateScreen(pixels, startX, startY, endX, endY);
         });
     }
 }

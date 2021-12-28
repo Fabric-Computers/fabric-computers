@@ -44,7 +44,6 @@ for i=0, 5 do
     end
 end
 
-
 while true do
     for i, redstone in pairs(redstones) do
         if redstone then
@@ -55,6 +54,5 @@ while true do
     if output > 15 then
         output = 0
     end
-    print(output)
     --computer:sleep(2000)
 end

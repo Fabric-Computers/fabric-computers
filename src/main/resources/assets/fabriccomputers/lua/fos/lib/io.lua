@@ -1,7 +1,20 @@
 local io = {}
 
+io.screen = nil
+
+for i=0, 5 do
+    local component = computer:getComponent(i)
+    if component then
+        if component:getComponentType() == "screen" then
+            io.screen = component
+        end
+    end
+end
+
 function io.setPixel(x, y, color)
-    computer:setPixel(x, y, color)
+    if io.screen then
+        io.screen:setPixel(x, y, color)
+    end
 end
 
 local charMap = {}
@@ -462,10 +475,14 @@ function io.putChar(character, xPos, yPos, foreground, background)
             for y=0, charMap[character]["height"]-1 do
                 if charMap[character][tostring(x+1).." "..tostring(y+1)] then
                     if charMap[character][tostring(x+1).." "..tostring(y+1)] then
-                        computer:setPixel(xPos + x, yPos + y, foreground)
+                        if io.screen then
+                            io.screen:setPixel(xPos + x, yPos + y, foreground)
+                        end
                     end
                 else
-                    computer:setPixel(xPos + x, yPos + y, background)
+                    if io.screen then
+                        io.screen:setPixel(xPos + x, yPos + y, background)
+                    end
                 end
             end
         end

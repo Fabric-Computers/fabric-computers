@@ -1,6 +1,6 @@
 package com.lolzdev.fabriccomputers.common.packets;
 
-import com.lolzdev.fabriccomputers.common.ComputerScreenHandler;
+import com.lolzdev.fabriccomputers.common.ScreenComponentScreenHandler;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
@@ -24,8 +24,8 @@ public class KeyUpPacket {
         int keyCode = buf.readInt();
 
         minecraftServer.execute(() -> {
-            if (serverPlayerEntity.currentScreenHandler instanceof ComputerScreenHandler) {
-                ((ComputerScreenHandler) serverPlayerEntity.currentScreenHandler).keyUp(keyCode);
+            if (serverPlayerEntity.currentScreenHandler instanceof ScreenComponentScreenHandler) {
+                ((ScreenComponentScreenHandler) serverPlayerEntity.currentScreenHandler).keyUp(keyCode);
             }
         });
     }

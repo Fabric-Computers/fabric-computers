@@ -19,7 +19,7 @@ public class ComputerDebugLib extends DebugLib {
         super.onInstruction(pc, v, top);
 
         if (this.computer == null || this.computer.isInterrupted()) {
-            this.get("error").invoke(LuaValue.valueOf("Terminated"));
+            throw new RuntimeException("Terminated");
         }
     }
 }

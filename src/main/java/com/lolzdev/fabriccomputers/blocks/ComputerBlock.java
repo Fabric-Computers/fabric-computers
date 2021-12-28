@@ -61,15 +61,10 @@ public class ComputerBlock extends BlockWithEntity {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient) {
-            NamedScreenHandlerFactory screenHandlerFactory = state.createScreenHandlerFactory(world, pos);
             ComputerBlockEntity entity = (ComputerBlockEntity) world.getBlockEntity(pos);
 
-            if (entity != null && entity.computer != null && screenHandlerFactory != null) {
+            if (entity != null && entity.computer != null) {
                 Computer computer = entity.computer;
-                player.openHandledScreen(screenHandlerFactory);
-
-                ScreenSizePacket.send(player, computer);
-                PixelBufferChangePacket.send(player, computer.getPixelBuffer(), 0, 0, computer.screenWidth - 1, computer.screenHeight - 1);
 
                 if (computer.halted) computer.boot();
             }
@@ -78,12 +73,6 @@ public class ComputerBlock extends BlockWithEntity {
         return ActionResult.SUCCESS;
     }
 
-    @Override
-    public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
-        return (NamedScreenHandlerFactory) world.getBlockEntity(pos);
-    }
-
-    @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         BlockState state = super.getPlacementState(ctx);

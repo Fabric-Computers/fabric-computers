@@ -14,12 +14,12 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Matrix4f;
 
-public class ComputerScreen extends HandledScreen<ScreenHandler> {
+public class ScreenComponentScreen extends HandledScreen<ScreenHandler> {
     private static final Identifier TEXTURE = new Identifier("fabriccomputers", "textures/gui/computer.png");
 
     private NativeImageBackedTexture texture;
 
-    public ComputerScreen(ScreenHandler handler, PlayerInventory inventory, Text title) {
+    public ScreenComponentScreen(ScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
 
         backgroundWidth = 256;

@@ -2,8 +2,8 @@ package com.lolzdev.fabriccomputers;
 
 import com.lolzdev.fabriccomputers.blockentities.BlockEntities;
 import com.lolzdev.fabriccomputers.blocks.Blocks;
-import com.lolzdev.fabriccomputers.common.ComputerScreenHandler;
 import com.lolzdev.fabriccomputers.common.DiskDriveScreenHandler;
+import com.lolzdev.fabriccomputers.common.ScreenComponentScreenHandler;
 import com.lolzdev.fabriccomputers.common.packets.KeyPressedPacket;
 import com.lolzdev.fabriccomputers.common.packets.KeyUpPacket;
 import com.lolzdev.fabriccomputers.items.Items;
@@ -15,11 +15,11 @@ import net.minecraft.util.Identifier;
 
 public class FabricComputers implements ModInitializer {
 
-    public static final ScreenHandlerType<ComputerScreenHandler> COMPUTER_SCREEN_HANDLER;
+    public static final ScreenHandlerType<ScreenComponentScreenHandler> SCREEN_COMPONENT_SCREEN_HANDLER;
     public static final ScreenHandlerType<DiskDriveScreenHandler> DISK_DRIVE_SCREEN_HANDLER;
 
     static {
-        COMPUTER_SCREEN_HANDLER = ScreenHandlerRegistry.registerExtended(new Identifier("fabriccomputers", "computer"), ComputerScreenHandler::new);
+        SCREEN_COMPONENT_SCREEN_HANDLER = ScreenHandlerRegistry.registerExtended(new Identifier("fabriccomputers", "screen_component"), ScreenComponentScreenHandler::new);
         DISK_DRIVE_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(new Identifier("fabriccomputers", "disk_drive"), DiskDriveScreenHandler::new);
     }
 
