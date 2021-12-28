@@ -1,5 +1,6 @@
 package com.lolzdev.fabriccomputers.computer;
 
+import com.lolzdev.fabriccomputers.api.IComponent;
 import com.lolzdev.fabriccomputers.blockentities.ComputerBlockEntity;
 import com.lolzdev.fabriccomputers.blockentities.DiskDriveBlockEntity;
 import com.lolzdev.fabriccomputers.items.FloppyDiskItem;
@@ -178,6 +179,50 @@ public class Computer {
                 e.printStackTrace();
             }
         }
+    }
+
+    public LuaValue getComponent(int index) {
+
+        switch (index) {
+            case 0 -> {
+                if (this.blockEntity.getWorld().getWorldChunk(this.blockEntity.getPos().add(1, 0, 0)).getBlockEntity(this.blockEntity.getPos().add(1, 0, 0), WorldChunk.CreationType.IMMEDIATE) instanceof IComponent entity)  {
+                    return  entity.getComponent();
+                }
+            }
+
+            case 1 -> {
+
+                if (this.blockEntity.getWorld().getWorldChunk(this.blockEntity.getPos().add(-1, 0, 0)).getBlockEntity(this.blockEntity.getPos().add(-1, 0, 0), WorldChunk.CreationType.IMMEDIATE) instanceof IComponent entity)  {
+                    return  entity.getComponent();
+                }
+            }
+
+            case 2 -> {
+                if (this.blockEntity.getWorld().getWorldChunk(this.blockEntity.getPos().add(0, 0, 1)).getBlockEntity(this.blockEntity.getPos().add(0, 0, 1), WorldChunk.CreationType.IMMEDIATE) instanceof IComponent entity)  {
+                    return  entity.getComponent();
+                }
+            }
+
+            case 3 -> {
+                if (this.blockEntity.getWorld().getWorldChunk(this.blockEntity.getPos().add(0, 0, -1)).getBlockEntity(this.blockEntity.getPos().add(0, 0, -1), WorldChunk.CreationType.IMMEDIATE) instanceof IComponent entity)  {
+                    return  entity.getComponent();
+                }
+            }
+
+            case 4 -> {
+                if (this.blockEntity.getWorld().getWorldChunk(this.blockEntity.getPos().add(0, 1, 0)).getBlockEntity(this.blockEntity.getPos().add(0, 1, 0), WorldChunk.CreationType.IMMEDIATE) instanceof IComponent entity)  {
+                    return  entity.getComponent();
+                }
+            }
+
+            case 5 -> {
+                if (this.blockEntity.getWorld().getWorldChunk(this.blockEntity.getPos().add(0, -1, 0)).getBlockEntity(this.blockEntity.getPos().add(0, -1, 0), WorldChunk.CreationType.IMMEDIATE) instanceof IComponent entity)  {
+                    return  entity.getComponent();
+                }
+            }
+        }
+
+        return LuaValue.NIL;
     }
 
     public LuaValue getFloppyFs(int index) {

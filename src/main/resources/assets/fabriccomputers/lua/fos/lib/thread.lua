@@ -1,7 +1,8 @@
-thread = {}
+local thread = {}
 
 thread.threads = {}
 thread.sleepTimer = 0
+thread.done = false
 
 function thread.create(func)
     if func then
@@ -16,11 +17,10 @@ function thread.sleep(seconds)
 end
 
 function thread.waitForAll()
-    local done = false
     if #thread.threads == 0 then
-        done = true
+        thread.done = true
     end
-    while not done do
+    while not thread.done do
         for i, t in pairs(thread.threads) do
             if coroutine.status(t) == "dead" then
                 table.remove(thread.threads, i)
@@ -31,3 +31,5 @@ function thread.waitForAll()
         end
     end
 end
+
+return thread
