@@ -90,6 +90,8 @@ public class ScreenComponentBlockEntity extends BlockEntity implements IComponen
                     }
                 }
             }
+
+            blockEntity.update();
         }
     }
 

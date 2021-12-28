@@ -1,7 +1,6 @@
 package com.lolzdev.fabriccomputers.computer.luaj;
 
 import com.lolzdev.fabriccomputers.computer.Computer;
-import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.Varargs;
 import org.luaj.vm2.lib.DebugLib;
 

@@ -1,55 +1,67 @@
+-- Heavily inspired by https://github.com/cc-tweaked/CC-Tweaked/blob/mc-1.16.x/src/main/resources/data/computercraft/lua/rom/apis/parallel.lua
+
 local thread = {}
 
-thread.threads = {}
-thread.sleepTimer = 0
-thread.done = false
+local function create(...)
+    local functions = table.pack(...)
+    local coroutines = {}
 
-function thread.create(func)
-    if func then
-        table.insert(thread.threads, coroutine.create(func))
+    for i = 1, functions.n do
+        coroutines[i] = coroutine.create(functions[i])
     end
+
+    return coroutines
 end
 
-function thread.sleep(seconds)
-    thread.sleepTimer = seconds * 20
-    local cur = 0
-    while cur < sleepTimer do cur = cur + 1 end
-end
+local function run(coroutines, limit)
+    local count = #coroutines
+    local living = count
 
-function thread.waitForAll()
-    if #thread.threads == 0 then
-        thread.done = true
-    end
-    while not thread.done do
-        for i, t in pairs(thread.threads) do
-            if coroutine.status(t) == "dead" then
-                table.remove(thread.threads, i)
-            else
-                done = false
-                coroutine.resume(t)
+    local filters = {}
+    local event = {}
+
+    while true do
+        for i = 1, count do
+            local c = coroutines[i]
+
+            if c then
+                if filters[c] == nil or filters[c] == event[1] then
+                    local ok, param = coroutine.resume(c, event)
+
+                    if ok then
+                        filters[c] = param
+                    else
+                        error(param, 0)
+                    end
+
+                    if coroutine.status(c) == "dead" then
+                        coroutines[i] = nil
+                        living = living - 1
+
+                        if living <= limit then
+                            return
+                        end
+                    end
+                end
             end
         end
+
+        event = computer:pollEvent()
     end
 end
 
-function thread.waitForAny()
-    if #thread.threads == 0 then
-        thread.done = true
-    end
-    while not thread.done do
-        for i, t in pairs(thread.threads) do
-            if coroutine.status(t) == "dead" then
-                table.remove(thread.threads, i)
-                thread.done = true
-                thread.threads = {}
-                print("Done!")
-                break
-            else
-                done = false
-                coroutine.resume(t)
-            end
-        end
-    end
+function thread.waitForAny(...)
+    local coroutines = create(...)
+    run(coroutines, #coroutines - 1)
+end
+
+function thread.waitForAll(...)
+    local coroutines = create(...)
+    run(coroutines, 0)
+end
+
+function thread.pollEvent(name)
+    return coroutine.yield(name)
 end
 
 return thread

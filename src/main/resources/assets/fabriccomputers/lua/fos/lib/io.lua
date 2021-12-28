@@ -562,12 +562,24 @@ function io.write(s)
 end
 
 function io.clear(color)
-    local width, height = computer:getScreenSize()
-    for x=0, width do
-        for y=0, height do
-            io.setPixel(x, y, color)
+    if screen then
+        local width, height = screen:getScreenSize()
+        for x=0, width do
+            for y=0, height do
+                io.setPixel(x, y, color)
+            end
         end
     end
+end
+
+function io.error(message)
+    local foregroundColor = io.currentForeground
+    local backgroundColor = io.backgroundColor
+    io.setBackground(0x000000)
+    io.setForeground(0xFFFFFF)
+    io.print(message)
+    io.setForeground(foregroundColor)
+    io.setBackground(backgroundColor)
 end
 
 function io.setForeground(color)

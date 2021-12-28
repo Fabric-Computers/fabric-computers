@@ -28,6 +28,7 @@ local event = os.loadLibrary("event")
 local thread = os.loadLibrary("thread")
 
 --_G.print = io.print
+_G.error = io.error
 
 local redstones = {}
 local output = 1
@@ -44,15 +45,8 @@ for i=0, 5 do
     end
 end
 
-while true do
-    for i, redstone in pairs(redstones) do
-        if redstone then
-            redstone:setOutput(output)
-        end
-    end
-    output = output + 1
-    if output > 15 then
-        output = 0
-    end
-    --computer:sleep(2000)
-end
+thread.waitForAny(
+        function() while true do io.print("Thread1") computer:sleep(5e+9) coroutine.yield() end end,
+        function()
+            while true do io.print("Thread") computer:sleep(5e+9) coroutine.yield()  end
+        end)
