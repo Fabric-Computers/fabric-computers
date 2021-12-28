@@ -1,5 +1,13 @@
 {
   "variants": {
-    "": {"model": "fabriccomputers:block/disk_drive"}
+    "facing=north,powered=true": {"model": "fabriccomputers:block/disk_drive/on"},
+    "facing=south,powered=true": {"model": "fabriccomputers:block/disk_drive/on", "y": 180},
+    "facing=west,powered=true": {"model": "fabriccomputers:block/disk_drive/on", "y": 270},
+    "facing=east,powered=true": {"model": "fabriccomputers:block/disk_drive/on", "y": 90},
+
+    "facing=north,powered=false": {"model": "fabriccomputers:block/disk_drive/off"},
+    "facing=south,powered=false": {"model": "fabriccomputers:block/disk_drive/off", "y": 180},
+    "facing=west,powered=false": {"model": "fabriccomputers:block/disk_drive/off", "y": 270},
+    "facing=east,powered=false": {"model": "fabriccomputers:block/disk_drive/off", "y": 90}
   }
 }
