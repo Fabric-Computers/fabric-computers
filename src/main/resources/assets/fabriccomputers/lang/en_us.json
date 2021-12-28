@@ -5,5 +5,7 @@
   "block.fabriccomputers.computer": "Computer",
   "block.fabriccomputers.disk_drive": "Disk Drive",
   "block.fabriccomputers.redstone_component": "Redstone Component",
-  "block.fabriccomputers.screen_component": "Screen"
+  "block.fabriccomputers.screen_component": "Screen",
+
+  "itemGroup.fabriccomputers.main": "Fabric Computers"
 }

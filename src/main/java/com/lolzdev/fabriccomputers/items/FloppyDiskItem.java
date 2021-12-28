@@ -1,5 +1,6 @@
 package com.lolzdev.fabriccomputers.items;
 
+import com.lolzdev.fabriccomputers.FabricComputers;
 import com.lolzdev.fabriccomputers.computer.FileSystem;
 import com.lolzdev.fabriccomputers.api.IFileSystem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -14,7 +15,7 @@ public class FloppyDiskItem extends Item {
     public IFileSystem fileSystem;
 
     public FloppyDiskItem() {
-        super(new FabricItemSettings().group(ItemGroup.REDSTONE).maxCount(1));
+        super(new FabricItemSettings().group(FabricComputers.ITEM_GROUP).maxCount(1));
 
         this.fileSystem = new FileSystem();
     }
