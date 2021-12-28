@@ -9,6 +9,16 @@ function event.pollEvents()
     return table.unpack(ev)
 end
 
+function event.pollEventsParallel()
+    local ev = computer:pollEvent()
+    while not ev do
+        ev = computer:pollEvent()
+        coroutine.yield()
+    end
+
+    return table.unpack(ev)
+end
+
 function event.queueEvent(name, ...)
     computer:queueEvent(name, {...})
 end

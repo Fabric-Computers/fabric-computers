@@ -44,7 +44,6 @@ public class ComputerBlockEntity extends BlockEntity implements ExtendedScreenHa
                 blockEntity.computer.setup();
             }
             if(blockEntity.computer.isKeyDown(341) && blockEntity.computer.isKeyDown(82)) {
-                System.out.println("rebooting");
                 blockEntity.computer.reboot();
             }
 

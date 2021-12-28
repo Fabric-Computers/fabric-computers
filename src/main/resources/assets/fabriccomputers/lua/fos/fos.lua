@@ -25,14 +25,51 @@ end
 
 local io = os.loadLibrary("io")
 local event = os.loadLibrary("event")
+local thread = os.loadLibrary("thread")
 
 _G.print = io.print
 
-while true do
-    local name, key = event.pollEvents()
-    if name == "interrupt" then
-        break
-    elseif name == "key_down" then
-        print("Key Pressed2!")
+local redstone
+local output = 1
+
+print("Gaming pc")
+
+for i=0, 5 do
+    local k = computer:getComponent(i)
+    if k then
+        if k:getComponentType() == "redstone" then
+            redstone = k
+            print("Redstone component found")
+        end
     end
 end
+
+thread.create(function()
+    while true do
+        local name = event.pollEventsParallel()
+        if name == "interrupt" then
+            thread.done = true
+            break
+        end
+        computer:sleep(200)
+        coroutine.yield()
+    end
+end)
+
+thread.create(function()
+
+
+    while true do
+        if redstone then
+            redstone:setOutput(output)
+
+            output = output + 1
+            if output > 15 then
+                output = 0
+            end
+        end
+        coroutine.yield()
+    end
+end)
+
+thread.waitForAll()

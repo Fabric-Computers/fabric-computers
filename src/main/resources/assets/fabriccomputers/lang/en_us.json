@@ -3,5 +3,6 @@
   "item.fabriccomputers.floppy_disk": "Floppy Disk",
 
   "block.fabriccomputers.computer": "Computer",
-  "block.fabriccomputers.disk_drive": "Disk Drive"
+  "block.fabriccomputers.disk_drive": "Disk Drive",
+  "block.fabriccomputers.redstone_component": "Redstone Component"
 }

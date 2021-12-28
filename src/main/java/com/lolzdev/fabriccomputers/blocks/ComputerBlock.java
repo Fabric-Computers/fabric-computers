@@ -50,7 +50,6 @@ public class ComputerBlock extends BlockWithEntity {
         if (!world.isClient) {
             NamedScreenHandlerFactory screenHandlerFactory = state.createScreenHandlerFactory(world, pos);
 
-            System.out.println(player.getActiveItem().getItem());
             if (screenHandlerFactory != null) {
                 player.openHandledScreen(screenHandlerFactory);
             }
@@ -59,7 +58,6 @@ public class ComputerBlock extends BlockWithEntity {
             ComputerBlockEntity entity = (ComputerBlockEntity) world.getBlockEntity(pos);
             if (entity != null && entity.computer != null && entity.computer.halted) {
                 entity.computer.boot();
-                System.out.println("Booting");
             }
 
         }
