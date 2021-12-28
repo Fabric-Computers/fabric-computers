@@ -2,24 +2,33 @@ package com.lolzdev.fabriccomputers.blocks;
 
 import com.lolzdev.fabriccomputers.blockentities.DiskDriveBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
-import net.minecraft.block.Material;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 public class DiskDriveBlock extends BlockWithEntity {
+
     public DiskDriveBlock() {
         super(FabricBlockSettings.of(Material.METAL));
+        setDefaultState( getDefaultState().with(Properties.HORIZONTAL_FACING, Direction.NORTH) );
+    }
+
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(Properties.HORIZONTAL_FACING);
     }
 
     @Override
@@ -43,6 +52,17 @@ public class DiskDriveBlock extends BlockWithEntity {
             }
         }
         return ActionResult.SUCCESS;
+    }
+
+    @Nullable
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        BlockState state = super.getPlacementState(ctx);
+        if( ctx.getPlayer() != null && state != null ) {
+            return state.with(Properties.HORIZONTAL_FACING, ctx.getPlayer().getHorizontalFacing().getOpposite());
+        }else{
+            return getDefaultState();
+        }
     }
 
     @Override

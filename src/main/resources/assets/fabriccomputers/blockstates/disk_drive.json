@@ -1,5 +1,8 @@
 {
   "variants": {
-    "": {"model": "fabriccomputers:block/disk_drive"}
+    "facing=north": {"model": "fabriccomputers:block/disk_drive"},
+    "facing=south": {"model": "fabriccomputers:block/disk_drive", "y": 180},
+    "facing=west": {"model": "fabriccomputers:block/disk_drive", "y": 270},
+    "facing=east": {"model": "fabriccomputers:block/disk_drive", "y": 90}
   }
 }

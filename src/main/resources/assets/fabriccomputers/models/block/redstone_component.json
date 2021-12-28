@@ -1,6 +1,22 @@
 {
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "fabriccomputers:block/redstone_component"
-  }
+	"credit": "Made with Blockbench by magistermaks",
+	"parent": "block/block",
+	"textures": {
+		"5": "fabriccomputers:block/computer/redstone",
+		"particle": "fabriccomputers:block/computer/redstone"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#5"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#5"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#5"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#5"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#5"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#5"}
+			}
+		}
+	]
 }

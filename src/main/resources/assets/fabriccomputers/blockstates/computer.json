@@ -1,5 +1,8 @@
 {
   "variants": {
-    "": {"model": "fabriccomputers:block/computer"}
+    "facing=north": {"model": "fabriccomputers:block/computer"},
+    "facing=south": {"model": "fabriccomputers:block/computer", "y": 180},
+    "facing=west": {"model": "fabriccomputers:block/computer", "y": 270},
+    "facing=east": {"model": "fabriccomputers:block/computer", "y": 90}
   }
 }
