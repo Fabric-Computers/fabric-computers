@@ -5,11 +5,13 @@
   "name": "Fabric Computers",
   "description": "A mod that brings working computers to Minecraft.",
   "authors": [
-    "LolzDEV"
+    "LolzDEV",
+    "MineGame159",
+    "magistermaks"
   ],
   "contact": {},
   "license": "MIT",
-  "icon": "assets/fabric-computers/icon.png",
+  "icon": "assets/fabriccomputers/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [

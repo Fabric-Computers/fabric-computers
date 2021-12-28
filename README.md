@@ -1,4 +1,8 @@
 # Fabric Computers
+<p align="center">
+  <img width="200" src="assets/icon.png">
+</p>
+
 ![Minecraft Version](https://img.shields.io/badge/minecraft-1.18.1-blue)
 ![Status](https://img.shields.io/badge/satatus-wip-yellow)
 ![Environment](https://img.shields.io/badge/environment-both-4caf50?style=flat-square)
