@@ -52,19 +52,13 @@ public class FileSystem implements IFileSystem {
             dir.mkdir();
         }
 
-        try {
-            Files.writeString(pcPath.resolve("test.lua"), "ciao");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         this.pcPath = pcPath;
         this.mounted = true;
     }
 
     @Override
     public String readFile(String path) {
-        Path filePath = this.pcPath.resolve(path);
+        Path filePath = Path.of(this.pcPath.toString(), Path.of(path).toString());
 
         try {
             return Files.readString(filePath);
@@ -75,7 +69,7 @@ public class FileSystem implements IFileSystem {
 
     @Override
     public void writeFile(String path, String content) {
-        Path filePath = this.pcPath.resolve(path);
+        Path filePath = Path.of(this.pcPath.toString(), Path.of(path).toString());
 
         try {
             Files.writeString(filePath, content);
@@ -87,9 +81,7 @@ public class FileSystem implements IFileSystem {
 
     @Override
     public boolean exists(String path) {
-        Path filePath = this.pcPath.resolve(path);
-
-        return new File(filePath.toUri()).exists();
+        return new File(Path.of(this.pcPath.toString(), Path.of(path).toString()).toUri()).exists();
     }
 
     @Override
@@ -104,20 +96,29 @@ public class FileSystem implements IFileSystem {
 
     @Override
     public boolean makeDir(String path) {
-        Path filePath = this.pcPath.resolve(path);
-
-        File file = new File(filePath.toUri());
-        return file.mkdir();
+        return new File(Path.of(this.pcPath.toString(), Path.of(path).toString()).toUri()).mkdir();
     }
 
     @Override
     public LuaTable list(String path) {
-        List<String> entries = Stream.of(new File(path.equals("/") ? this.pcPath.toUri() : this.pcPath.resolve(path).toUri()).listFiles())
+        List<String> entries = Stream.of(new File(Path.of(this.pcPath.toString(), Path.of(path).toString()).toUri()).listFiles())
                 .map(File::getName).toList();
         LuaTable result = new LuaTable();
         for (int i=0; i < entries.size(); i++)  {
             result.insert(i+1, LuaValue.valueOf(entries.get(i)));
         }
         return result;
+    }
+
+
+
+    @Override
+    public boolean isDir(String path) {
+        return new File(Path.of(this.pcPath.toString(), Path.of(path).toString()).toUri()).isDirectory();
+    }
+
+    @Override
+    public boolean remove(String path) {
+        return new File(Path.of(this.pcPath.toString(), Path.of(path).toString()).toUri()).delete();
     }
 }

@@ -94,4 +94,14 @@ public class ResourceFileSystem implements IFileSystem {
     public LuaTable list(String path) {
         return new LuaTable();
     }
+
+    @Override
+    public boolean isDir(String path) {
+        return false;
+    }
+
+    @Override
+    public boolean remove(String path) {
+        return false;
+    }
 }

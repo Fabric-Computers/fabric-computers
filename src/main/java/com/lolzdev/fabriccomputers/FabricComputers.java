@@ -4,6 +4,7 @@ import com.lolzdev.fabriccomputers.blockentities.BlockEntities;
 import com.lolzdev.fabriccomputers.blocks.Blocks;
 import com.lolzdev.fabriccomputers.common.DiskDriveScreenHandler;
 import com.lolzdev.fabriccomputers.common.ScreenComponentScreenHandler;
+import com.lolzdev.fabriccomputers.common.packets.CharTypedPacket;
 import com.lolzdev.fabriccomputers.common.packets.KeyPressedPacket;
 import com.lolzdev.fabriccomputers.common.packets.KeyUpPacket;
 import com.lolzdev.fabriccomputers.items.Items;
@@ -15,6 +16,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
+import org.apache.logging.log4j.core.jmx.Server;
 
 public class FabricComputers implements ModInitializer {
 
@@ -36,5 +38,6 @@ public class FabricComputers implements ModInitializer {
 
         ServerPlayNetworking.registerGlobalReceiver(KeyPressedPacket.ID, KeyPressedPacket::handle);
         ServerPlayNetworking.registerGlobalReceiver(KeyUpPacket.ID, KeyUpPacket::handle);
+        ServerPlayNetworking.registerGlobalReceiver(CharTypedPacket.ID, CharTypedPacket::handle);
     }
 }

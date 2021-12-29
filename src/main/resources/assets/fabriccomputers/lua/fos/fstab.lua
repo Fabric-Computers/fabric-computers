@@ -34,7 +34,22 @@ fstab["bin"]["content"]["clear.lua"]["isDirectory"] = false
 fstab["bin"]["content"]["ls.lua"] = {}
 fstab["bin"]["content"]["ls.lua"]["isDirectory"] = false
 
+fstab["bin"]["content"]["cd.lua"] = {}
+fstab["bin"]["content"]["cd.lua"]["isDirectory"] = false
+
+fstab["bin"]["content"]["mkdir.lua"] = {}
+fstab["bin"]["content"]["mkdir.lua"]["isDirectory"] = false
+
 fstab["bin"]["content"]["shell.lua"] = {}
 fstab["bin"]["content"]["shell.lua"]["isDirectory"] = false
+
+fstab["bin"]["content"]["rm.lua"] = {}
+fstab["bin"]["content"]["rm.lua"]["isDirectory"] = false
+
+fstab["bin"]["content"]["touch.lua"] = {}
+fstab["bin"]["content"]["touch.lua"]["isDirectory"] = false
+
+fstab["bin"]["content"]["nano.lua"] = {}
+fstab["bin"]["content"]["nano.lua"]["isDirectory"] = false
 
 return fstab

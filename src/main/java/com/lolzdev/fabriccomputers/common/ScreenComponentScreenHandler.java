@@ -48,6 +48,12 @@ public class ScreenComponentScreenHandler extends ScreenHandler {
         }
     }
 
+    public void charTyped(int charcode) {
+        if (this.screen != null) {
+            this.screen.queueEvent("char", new Object[] {charcode});
+        }
+    }
+
     public void keyDown(int keyCode) {
         if (this.screen != null) {
             this.screen.keyDown(keyCode);

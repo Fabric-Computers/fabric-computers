@@ -38,11 +38,11 @@ function os.loadLibrary(lib)
     end
 end
 
-function os.run(bin)
+function os.run(bin, ...)
     local content = fileSystem:readFile("bin/"..bin..".lua")
     local func, err = load(content, "bin/" .. bin .. ".lua")
     if func then
-        local ok, i = pcall(func)
+        local ok, i = pcall(func, ...)
         if not ok then
             error(i)
         end
@@ -51,11 +51,16 @@ function os.run(bin)
     end
 end
 
-function os.runScript(bin)
+function os.runScript(bin, ...)
     local content = fileSystem:readFile(bin)
     local func, err = load(content, "bin")
     if func then
-        local ok, i = pcall(func)
+        local ok, i
+        if args then
+            ok, i = pcall(func, ...)
+        else
+            ok, i = pcall(func)
+        end
         if not ok then
             error(i)
         end

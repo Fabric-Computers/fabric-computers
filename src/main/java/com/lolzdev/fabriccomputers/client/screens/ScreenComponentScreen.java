@@ -1,5 +1,6 @@
 package com.lolzdev.fabriccomputers.client.screens;
 
+import com.lolzdev.fabriccomputers.common.packets.CharTypedPacket;
 import com.lolzdev.fabriccomputers.common.packets.KeyPressedPacket;
 import com.lolzdev.fabriccomputers.common.packets.KeyUpPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -13,6 +14,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Matrix4f;
+import org.lwjgl.glfw.GLFW;
 
 public class ScreenComponentScreen extends HandledScreen<ScreenHandler> {
     private static final Identifier TEXTURE = new Identifier("fabriccomputers", "textures/gui/computer.png");
@@ -95,15 +97,29 @@ public class ScreenComponentScreen extends HandledScreen<ScreenHandler> {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        KeyPressedPacket.send(keyCode);
-
-        return super.keyPressed(keyCode, scanCode, modifiers);
+        if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
+            return super.keyPressed(keyCode, scanCode, modifiers);
+        } else {
+            KeyPressedPacket.send(keyCode);
+            return true;
+        }
     }
 
     @Override
     public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
-        KeyUpPacket.send(keyCode);
+        if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
+            return super.keyReleased(keyCode, scanCode, modifiers);
+        } else {
+            KeyUpPacket.send(keyCode);
+            return true;
+        }
+    }
 
-        return super.keyReleased(keyCode, scanCode, modifiers);
+    @Override
+    public boolean charTyped(char chr, int modifiers) {
+
+        CharTypedPacket.send(chr);
+
+        return super.charTyped(chr, modifiers);
     }
 }

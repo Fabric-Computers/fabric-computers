@@ -119,6 +119,21 @@ charMap["|"] = {w=8, h=8, b={0x18, 0x18, 0x18, 0x00, 0x18, 0x18, 0x18, 0x00}}
 charMap["}"] = {w=8, h=8, b={0x07, 0x0C, 0x0C, 0x38, 0x0C, 0x0C, 0x07, 0x00}}
 charMap["~"] = {w=8, h=8, b={0x6E, 0x3B, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}}
 
+function io.getGlyphSize(g)
+    local maxHeight = 0
+    local width = 0
+
+    if charMap[g] then
+        if charMap[g]["h"] > maxHeight then
+            maxHeight = charMap[g]["h"]
+        end
+
+        width = width + charMap[g]["w"] + 1
+    end
+
+    return width, maxHeight
+end
+
 function io.putChar(character, xPos, yPos, foreground, background)
     if charMap[character] and io.screen then
         local glyph = charMap[character]
@@ -186,7 +201,11 @@ function io.readFile(path)
 end
 
 function io.makeDir(path)
-    fs:makeDir(path)
+    return fs:makeDir(path)
+end
+
+function io.remove(path)
+    return fs:remove(path)
 end
 
 function io.write(s)
@@ -246,17 +265,8 @@ function io.readLine()
     while true do
         eventName, key = event.pollEvents()
         if eventName == "key_down" then
-            if key >= keys.A and key <= keys.Z then
-                result = result .. string.char(key)
-                io.setCursor(x, y)
-                io.print(result)
-            elseif key == keys.SPACE then
-                result = result .. " "
-                io.setCursor(x, y)
-                io.print(result)
-            elseif key == keys.BACKSPACE then
+            if key == keys.BACKSPACE then
                 local width, height = io.getStringSize(result)
-                print(width)
                 for xPos=0, width do
                     for yPos=0, height do
                         io.setPixel(x+xPos, y+yPos, io.backgroundColor)
@@ -269,6 +279,10 @@ function io.readLine()
             elseif key == keys.ENTER then
                 return result
             end
+        elseif eventName == "char" then
+            result = result .. string.char(key)
+            io.setCursor(x, y)
+            io.print(result)
         end
     end
 end

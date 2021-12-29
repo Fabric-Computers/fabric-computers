@@ -15,4 +15,6 @@ public interface IFileSystem {
     void setUUID(String uuid);
     boolean makeDir(String path);
     LuaTable list(String path);
+    boolean isDir(String path);
+    boolean remove(String path);
 }
