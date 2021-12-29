@@ -65,9 +65,21 @@ if fs:exists("init.lua") then
     if func then
         local ok, i = pcall(func)
         if not ok then
-            print("Failed to run: ", i)
+            for x=0, width-1 do
+                for y=0, height-1 do
+                    if screen then
+                        screen:setPixel(x, y, 0x0000FF)
+                    end
+                end
+            end
         end
     else
-        print("Failed to run: ", err)
+        for x=0, width-1 do
+            for y=0, height-1 do
+                if screen then
+                    screen:setPixel(x, y, 0x0000FF)
+                end
+            end
+        end
     end
 end
