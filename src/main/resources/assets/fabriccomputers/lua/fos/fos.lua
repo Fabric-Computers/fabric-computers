@@ -23,44 +23,44 @@ end
 
 function os.loadLibrary(lib)
     local content = fileSystem:readFile("lib/"..lib..".lua")
-    local func, err = load(content)
+    local func, err = load(content, "lib/"..lib..".lua")
     if func then
         local ok, i = pcall(func)
         if not ok then
-            print("Cannot load library: ", i)
+            error(i)
             return nil
         else
             return i
         end
     else
-        print("Cannot load library: ", err)
+        error(err)
         return nil
     end
 end
 
 function os.run(bin)
     local content = fileSystem:readFile("bin/"..bin..".lua")
-    local func, err = load(content)
+    local func, err = load(content, "bin/" .. bin .. ".lua")
     if func then
         local ok, i = pcall(func)
         if not ok then
-            print("Cannot run program: ", i)
+            error(i)
         end
     else
-        print("Cannot run program: ", err)
+        error(err)
     end
 end
 
 function os.runScript(bin)
     local content = fileSystem:readFile(bin)
-    local func, err = load(content)
+    local func, err = load(content, "bin")
     if func then
         local ok, i = pcall(func)
         if not ok then
-            print("Cannot run program: ", i)
+            error(i)
         end
     else
-        print("Cannot run program: ", err)
+        error(err)
     end
 end
 

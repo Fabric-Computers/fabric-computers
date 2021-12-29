@@ -40,7 +40,7 @@ for i=0, 5 do
         if k:exists("init.lua") then
             _G.fileSystem = k
             local init = k:readFile("init.lua")
-            local func, err = load(init)
+            local func, err = load(init, "init.lua")
             _G.isDisk = true
             _G.diskIndex = i
             if func then
@@ -61,7 +61,7 @@ _G.diskIndex = 0
 if fs:exists("init.lua") then
     _G.fileSystem = fs
     local init = fs:readFile("init.lua")
-    local func, err = load(init)
+    local func, err = load(init, "init.lua")
     if func then
         local ok, i = pcall(func)
         if not ok then
@@ -71,4 +71,3 @@ if fs:exists("init.lua") then
         print("Failed to run: ", err)
     end
 end
-

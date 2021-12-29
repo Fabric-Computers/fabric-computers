@@ -5,12 +5,12 @@ if _G.isDisk then
 end
 
 local init = fileSystem:readFile("fos.lua")
-local func, err = load(init)
+local func, err = load(init, "fos.lua")
 if func then
     local ok, i = pcall(func)
     if not ok then
-        print("Failed to run: ", i)
+        error("Failed to run: ", i)
     end
 else
-    print("Failed to run: ", err)
+    error("Failed to run: ", err)
 end

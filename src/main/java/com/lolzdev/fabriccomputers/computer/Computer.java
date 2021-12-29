@@ -256,12 +256,12 @@ public class Computer {
                 globals.load(new ComputerDebugLib(this));
                 globals.set("computer", CoerceJavaToLua.coerce(this));
                 globals.set("fs", CoerceJavaToLua.coerce(this.fs));
-                LuaValue chunk = globals.load(Files.readString(Path.of(this.getClass().getResource("/assets/fabriccomputers/rom/bios.lua").toURI())));
+                LuaValue chunk = globals.load(Files.readString(Path.of(this.getClass().getResource("/assets/fabriccomputers/rom/bios.lua").toURI())), "bios.lua");
 
                 try {
                     chunk.call();
                 } catch (RuntimeException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
 
             } catch (IOException | URISyntaxException e) {

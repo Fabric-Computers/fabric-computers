@@ -578,7 +578,6 @@ end
 function io.clear(color)
     if screen then
         local size = screen:getScreenSize()
-        print(tostring(size[1]).." "..tostring(size[2]))
         for x=0, size[1] do
             for y=0, size[2] do
                 io.setPixel(x, y, color)
