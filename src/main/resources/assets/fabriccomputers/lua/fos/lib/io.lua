@@ -502,8 +502,10 @@ function io.putChar(character, xPos, yPos, foreground, background)
     end
 end
 
-io.currentLine = 0
-io.currentColumn = 0
+if not _G.currentLine then
+    _G.currentLine = 0
+    _G.currentColumn = 0
+end
 io.currentForeground = 0xFFFFFF
 io.currentBackground = 0x000000
 
@@ -537,9 +539,9 @@ function io.print(s)
         end
     end
 
-    io.writeString(s, io.currentColumn, io.currentLine, io.currentForeground, io.currentBackground)
+    io.writeString(s, _G.currentColumn, _G.currentLine, io.currentForeground, io.currentBackground)
 
-    io.currentLine = io.currentLine + maxHeight + 1
+    _G.currentLine = _G.currentLine + maxHeight + 1
 end
 
 function io.writeFile(path, content)
@@ -568,9 +570,9 @@ function io.write(s)
         end
     end
 
-    io.writeString(s, io.currentColumn, io.currentLine, io.currentForeground, io.currentBackground)
+    io.writeString(s, _G.currentColumn, _G.currentLine, io.currentForeground, io.currentBackground)
 
-    io.currentColumn = io.currentColumn + length
+    _G.currentColumn = _G.currentColumn + length
 end
 
 function io.clear(color)
@@ -606,8 +608,8 @@ function io.getStringSize(s)
 end
 
 function io.readLine()
-    local x = io.currentColumn
-    local y = io.currentLine
+    local x = _G.currentColumn
+    local y = _G.currentLine
     local result = ""
     while true do
         eventName, key = event.pollEvents()
@@ -662,8 +664,8 @@ function io.setBackground(color)
 end
 
 function io.setCursor(x, y)
-    io.currentLine = y
-    io.currentColumn = x
+    _G.currentLine = y
+    _G.currentColumn = x
 end
 
 return io

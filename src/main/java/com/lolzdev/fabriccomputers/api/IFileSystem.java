@@ -1,5 +1,7 @@
 package com.lolzdev.fabriccomputers.api;
 
+import org.luaj.vm2.LuaTable;
+
 import java.nio.file.Path;
 
 public interface IFileSystem {
@@ -12,4 +14,5 @@ public interface IFileSystem {
     Path getPcPath();
     void setUUID(String uuid);
     boolean makeDir(String path);
+    LuaTable list(String path);
 }

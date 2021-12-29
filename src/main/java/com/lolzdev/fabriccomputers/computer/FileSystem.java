@@ -2,6 +2,7 @@ package com.lolzdev.fabriccomputers.computer;
 
 import com.lolzdev.fabriccomputers.api.IFileSystem;
 import net.fabricmc.loader.api.FabricLoader;
+import org.luaj.vm2.LuaTable;
 import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.jse.JsePlatform;
 
@@ -9,7 +10,12 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FileSystem implements IFileSystem {
     public Path pcPath;
@@ -102,5 +108,16 @@ public class FileSystem implements IFileSystem {
 
         File file = new File(filePath.toUri());
         return file.mkdir();
+    }
+
+    @Override
+    public LuaTable list(String path) {
+        List<String> entries = Stream.of(new File(path.equals("/") ? this.pcPath.toUri() : this.pcPath.resolve(path).toUri()).listFiles())
+                .map(File::getName).toList();
+        LuaTable result = new LuaTable();
+        for (int i=0; i < entries.size(); i++)  {
+            result.insert(i+1, LuaValue.valueOf(entries.get(i)));
+        }
+        return result;
     }
 }

@@ -4,6 +4,21 @@ _G.os = {}
 
 if _G.isDisk then
     fileSystem = computer:getFloppyFs(_G.diskIndex)
+    local fstab = load(fileSystem:readFile("fstab.lua"))()
+    for k, v in pairs(fstab) do
+        if not v["isDirectory"] then
+            fs:writeFile(k, fileSystem:readFile(k))
+        else
+            fs:makeDir(k)
+            for k1, v1 in pairs(fstab[k]["content"]) do
+                if not v1["isDirectory"] then
+                    fs:writeFile(k .. "/" .. k1, fileSystem:readFile(k .. "/" .. k1))
+                end
+            end
+        end
+    end
+
+    return
 end
 
 function os.loadLibrary(lib)
@@ -25,6 +40,19 @@ end
 
 function os.run(bin)
     local content = fileSystem:readFile("bin/"..bin..".lua")
+    local func, err = load(content)
+    if func then
+        local ok, i = pcall(func)
+        if not ok then
+            print("Cannot run program: ", i)
+        end
+    else
+        print("Cannot run program: ", err)
+    end
+end
+
+function os.runScript(bin)
+    local content = fileSystem:readFile(bin)
     local func, err = load(content)
     if func then
         local ok, i = pcall(func)

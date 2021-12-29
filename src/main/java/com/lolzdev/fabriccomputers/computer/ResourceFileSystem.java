@@ -1,12 +1,18 @@
 package com.lolzdev.fabriccomputers.computer;
 
 import com.lolzdev.fabriccomputers.api.IFileSystem;
+import org.luaj.vm2.LuaTable;
 
 import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.util.Enumeration;
 import java.util.UUID;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 public class ResourceFileSystem implements IFileSystem {
     private final String res;
@@ -82,5 +88,10 @@ public class ResourceFileSystem implements IFileSystem {
     @Override
     public boolean makeDir(String path) {
         return false;
+    }
+
+    @Override
+    public LuaTable list(String path) {
+        return new LuaTable();
     }
 }
