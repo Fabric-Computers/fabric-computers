@@ -272,4 +272,19 @@ public class Computer {
         this.executor.start();
 
     }
+
+    /**
+     * This would ideally be split into parts, and moved to some math lib for lua to use
+     * currently this is needed for the font rasterizer in fos/lib/io.lua
+     * Doing this in lua it very inefficient as that language (for some reason) doesn't have bit operations
+     *
+     * @param value - font row data encoded as an int value where each bit represents a pixel
+     * @param offset - the offset into the pixel data row
+     *
+     * @return true is the pixel should be set, and false otherwise
+     */
+    public boolean crazyBitHack(int value, int offset) {
+        return ((value >> offset) & 1) == 1;
+    }
+
 }
