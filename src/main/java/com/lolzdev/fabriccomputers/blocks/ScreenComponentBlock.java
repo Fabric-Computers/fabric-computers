@@ -1,10 +1,8 @@
 package com.lolzdev.fabriccomputers.blocks;
 
-import com.lolzdev.fabriccomputers.blockentities.ComputerBlockEntity;
 import com.lolzdev.fabriccomputers.blockentities.ScreenComponentBlockEntity;
 import com.lolzdev.fabriccomputers.common.packets.PixelBufferChangePacket;
 import com.lolzdev.fabriccomputers.common.packets.ScreenSizePacket;
-import com.lolzdev.fabriccomputers.computer.Computer;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -21,14 +19,13 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 public class ScreenComponentBlock extends BlockWithEntity {
 
     protected ScreenComponentBlock() {
         super(FabricBlockSettings.of(Material.METAL));
 
-        setDefaultState( getDefaultState().with(Properties.HORIZONTAL_FACING, Direction.NORTH) );
+        setDefaultState( getDefaultState().with(Properties.HORIZONTAL_FACING, Direction.SOUTH) );
     }
 
     @Override
