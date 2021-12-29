@@ -22,480 +22,113 @@ end
 
 local charMap = {}
 
-charMap["A"] = {}
-
-charMap["A"]["width"] = 4
-charMap["A"]["height"] = 5
-charMap["A"]["2 1"] = true
-charMap["A"]["3 1"] = true
-charMap["A"]["1 2"] = true
-charMap["A"]["1 3"] = true
-charMap["A"]["1 4"] = true
-charMap["A"]["1 5"] = true
-charMap["A"]["2 3"] = true
-charMap["A"]["3 3"] = true
-charMap["A"]["4 2"] = true
-charMap["A"]["4 3"] = true
-charMap["A"]["4 4"] = true
-charMap["A"]["4 5"] = true
-
-charMap["B"] = {}
-
-charMap["B"]["width"] = 4
-charMap["B"]["height"] = 5
-charMap["B"]["1 1"] = true
-charMap["B"]["1 2"] = true
-charMap["B"]["1 3"] = true
-charMap["B"]["1 4"] = true
-charMap["B"]["1 5"] = true
-charMap["B"]["2 1"] = true
-charMap["B"]["3 1"] = true
-charMap["B"]["4 2"] = true
-charMap["B"]["3 3"] = true
-charMap["B"]["2 3"] = true
-charMap["B"]["4 4"] = true
-charMap["B"]["3 5"] = true
-charMap["B"]["2 5"] = true
-
-charMap["C"] = {}
-
-charMap["C"]["width"] = 4
-charMap["C"]["height"] = 5
-charMap["C"]["2 1"] = true
-charMap["C"]["3 1"] = true
-charMap["C"]["4 1"] = true
-charMap["C"]["1 2"] = true
-charMap["C"]["1 3"] = true
-charMap["C"]["1 4"] = true
-charMap["C"]["2 5"] = true
-charMap["C"]["3 5"] = true
-charMap["C"]["4 5"] = true
-
-charMap["D"] = {}
-
-charMap["D"]["width"] = 4
-charMap["D"]["height"] = 5
-charMap["D"]["1 1"] = true
-charMap["D"]["1 2"] = true
-charMap["D"]["1 3"] = true
-charMap["D"]["1 4"] = true
-charMap["D"]["1 5"] = true
-charMap["D"]["2 1"] = true
-charMap["D"]["3 1"] = true
-charMap["D"]["4 2"] = true
-charMap["D"]["4 3"] = true
-charMap["D"]["4 4"] = true
-charMap["D"]["2 5"] = true
-charMap["D"]["3 5"] = true
-
-charMap["E"] = {}
-
-charMap["E"]["width"] = 4
-charMap["E"]["height"] = 5
-charMap["E"]["1 1"] = true
-charMap["E"]["1 2"] = true
-charMap["E"]["1 3"] = true
-charMap["E"]["1 4"] = true
-charMap["E"]["1 5"] = true
-charMap["E"]["2 1"] = true
-charMap["E"]["3 1"] = true
-charMap["E"]["4 1"] = true
-charMap["E"]["2 3"] = true
-charMap["E"]["3 3"] = true
-charMap["E"]["2 5"] = true
-charMap["E"]["3 5"] = true
-charMap["E"]["4 5"] = true
-
-charMap["F"] = {}
-
-charMap["F"]["width"] = 4
-charMap["F"]["height"] = 5
-charMap["F"]["1 1"] = true
-charMap["F"]["1 2"] = true
-charMap["F"]["1 3"] = true
-charMap["F"]["1 4"] = true
-charMap["F"]["1 5"] = true
-charMap["F"]["2 1"] = true
-charMap["F"]["3 1"] = true
-charMap["F"]["4 1"] = true
-charMap["F"]["2 3"] = true
-charMap["F"]["3 3"] = true
-
-charMap["G"] = {}
-
-charMap["G"]["width"] = 4
-charMap["G"]["height"] = 5
-charMap["G"]["1 2"] = true
-charMap["G"]["1 3"] = true
-charMap["G"]["1 4"] = true
-charMap["G"]["2 1"] = true
-charMap["G"]["3 1"] = true
-charMap["G"]["4 1"] = true
-charMap["G"]["2 5"] = true
-charMap["G"]["3 5"] = true
-charMap["G"]["4 5"] = true
-charMap["G"]["4 4"] = true
-charMap["G"]["4 3"] = true
-charMap["G"]["3 3"] = true
-
-charMap["H"] = {}
-
-charMap["H"]["width"] = 4
-charMap["H"]["height"] = 5
-charMap["H"]["1 1"] = true
-charMap["H"]["1 2"] = true
-charMap["H"]["1 3"] = true
-charMap["H"]["1 4"] = true
-charMap["H"]["1 5"] = true
-charMap["H"]["2 3"] = true
-charMap["H"]["3 3"] = true
-charMap["H"]["4 1"] = true
-charMap["H"]["4 2"] = true
-charMap["H"]["4 3"] = true
-charMap["H"]["4 4"] = true
-charMap["H"]["4 5"] = true
-
-charMap["I"] = {}
-
-charMap["I"]["width"] = 3
-charMap["I"]["height"] = 5
-charMap["I"]["2 1"] = true
-charMap["I"]["2 2"] = true
-charMap["I"]["2 3"] = true
-charMap["I"]["2 4"] = true
-charMap["I"]["2 5"] = true
-
-charMap["J"] = {}
-
-charMap["J"]["width"] = 4
-charMap["J"]["height"] = 5
-charMap["J"]["4 1"] = true
-charMap["J"]["4 2"] = true
-charMap["J"]["4 3"] = true
-charMap["J"]["4 4"] = true
-charMap["J"]["1 4"] = true
-charMap["J"]["2 5"] = true
-charMap["J"]["3 5"] = true
-
-charMap["K"] = {}
-
-charMap["K"]["width"] = 4
-charMap["K"]["height"] = 5
-charMap["K"]["1 1"] = true
-charMap["K"]["1 2"] = true
-charMap["K"]["1 3"] = true
-charMap["K"]["1 4"] = true
-charMap["K"]["1 5"] = true
-charMap["K"]["2 3"] = true
-charMap["K"]["3 2"] = true
-charMap["K"]["4 1"] = true
-charMap["K"]["3 4"] = true
-charMap["K"]["4 5"] = true
-
-charMap["L"] = {}
-
-charMap["L"]["width"] = 4
-charMap["L"]["height"] = 5
-charMap["L"]["1 1"] = true
-charMap["L"]["1 2"] = true
-charMap["L"]["1 3"] = true
-charMap["L"]["1 4"] = true
-charMap["L"]["1 5"] = true
-charMap["L"]["2 5"] = true
-charMap["L"]["3 5"] = true
-charMap["L"]["4 5"] = true
-
-charMap["M"] = {}
-
-charMap["M"]["width"] = 5
-charMap["M"]["height"] = 5
-charMap["M"]["1 1"] = true
-charMap["M"]["1 2"] = true
-charMap["M"]["1 3"] = true
-charMap["M"]["1 4"] = true
-charMap["M"]["1 5"] = true
-charMap["M"]["5 1"] = true
-charMap["M"]["5 2"] = true
-charMap["M"]["5 3"] = true
-charMap["M"]["5 4"] = true
-charMap["M"]["5 5"] = true
-charMap["M"]["2 2"] = true
-charMap["M"]["3 3"] = true
-charMap["M"]["4 2"] = true
-
-charMap["N"] = {}
-
-charMap["N"]["width"] = 4
-charMap["N"]["height"] = 5
-charMap["N"]["1 1"] = true
-charMap["N"]["1 2"] = true
-charMap["N"]["1 3"] = true
-charMap["N"]["1 4"] = true
-charMap["N"]["1 5"] = true
-charMap["N"]["4 1"] = true
-charMap["N"]["4 2"] = true
-charMap["N"]["4 3"] = true
-charMap["N"]["4 4"] = true
-charMap["N"]["4 5"] = true
-charMap["N"]["2 2"] = true
-charMap["N"]["3 3"] = true
-
-charMap["O"] = {}
-
-charMap["O"]["width"] = 4
-charMap["O"]["height"] = 5
-charMap["O"]["2 1"] = true
-charMap["O"]["3 1"] = true
-charMap["O"]["1 2"] = true
-charMap["O"]["1 3"] = true
-charMap["O"]["1 4"] = true
-charMap["O"]["2 5"] = true
-charMap["O"]["3 5"] = true
-charMap["O"]["4 2"] = true
-charMap["O"]["4 3"] = true
-charMap["O"]["4 4"] = true
-
-charMap["P"] = {}
-
-charMap["P"]["width"] = 4
-charMap["P"]["height"] = 5
-charMap["P"]["1 1"] = true
-charMap["P"]["1 2"] = true
-charMap["P"]["1 3"] = true
-charMap["P"]["1 4"] = true
-charMap["P"]["1 5"] = true
-charMap["P"]["2 1"] = true
-charMap["P"]["3 1"] = true
-charMap["P"]["4 2"] = true
-charMap["P"]["3 3"] = true
-charMap["P"]["2 3"] = true
-
-charMap["Q"] = {}
-
-charMap["Q"]["width"] = 4
-charMap["Q"]["height"] = 5
-charMap["Q"]["2 1"] = true
-charMap["Q"]["3 1"] = true
-charMap["Q"]["1 2"] = true
-charMap["Q"]["1 3"] = true
-charMap["Q"]["1 4"] = true
-charMap["Q"]["2 5"] = true
-charMap["Q"]["3 5"] = true
-charMap["Q"]["4 2"] = true
-charMap["Q"]["4 3"] = true
-charMap["Q"]["4 4"] = true
-charMap["Q"]["3 4"] = true
-charMap["Q"]["4 5"] = true
-
-charMap["R"] = {}
-
-charMap["R"]["width"] = 4
-charMap["R"]["height"] = 5
-charMap["R"]["1 1"] = true
-charMap["R"]["1 2"] = true
-charMap["R"]["1 3"] = true
-charMap["R"]["1 4"] = true
-charMap["R"]["1 5"] = true
-charMap["R"]["2 1"] = true
-charMap["R"]["3 1"] = true
-charMap["R"]["4 2"] = true
-charMap["R"]["3 3"] = true
-charMap["R"]["2 3"] = true
-charMap["R"]["3 4"] = true
-charMap["R"]["4 5"] = true
-
-charMap["S"] = {}
-
-charMap["S"]["width"] = 4
-charMap["S"]["height"] = 5
-charMap["S"]["2 1"] = true
-charMap["S"]["3 1"] = true
-charMap["S"]["4 1"] = true
-charMap["S"]["1 2"] = true
-charMap["S"]["2 3"] = true
-charMap["S"]["3 3"] = true
-charMap["S"]["4 4"] = true
-charMap["S"]["1 5"] = true
-charMap["S"]["2 5"] = true
-charMap["S"]["3 5"] = true
-
-charMap["T"] = {}
-
-charMap["T"]["width"] = 3
-charMap["T"]["height"] = 5
-charMap["T"]["1 1"] = true
-charMap["T"]["2 1"] = true
-charMap["T"]["3 1"] = true
-charMap["T"]["2 2"] = true
-charMap["T"]["2 3"] = true
-charMap["T"]["2 4"] = true
-charMap["T"]["2 5"] = true
-
-charMap["U"] = {}
-
-charMap["U"]["width"] = 4
-charMap["U"]["height"] = 5
-charMap["U"]["1 1"] = true
-charMap["U"]["1 2"] = true
-charMap["U"]["1 3"] = true
-charMap["U"]["1 4"] = true
-charMap["U"]["1 5"] = true
-charMap["U"]["2 5"] = true
-charMap["U"]["3 5"] = true
-charMap["U"]["4 1"] = true
-charMap["U"]["4 2"] = true
-charMap["U"]["4 3"] = true
-charMap["U"]["4 4"] = true
-charMap["U"]["4 5"] = true
-
-charMap["V"] = {}
-
-charMap["V"]["width"] = 3
-charMap["V"]["height"] = 5
-charMap["V"]["1 1"] = true
-charMap["V"]["1 2"] = true
-charMap["V"]["1 3"] = true
-charMap["V"]["1 4"] = true
-charMap["V"]["2 5"] = true
-charMap["V"]["3 1"] = true
-charMap["V"]["3 2"] = true
-charMap["V"]["3 3"] = true
-charMap["V"]["3 4"] = true
-
-charMap["W"] = {}
-
-charMap["W"]["width"] = 5
-charMap["W"]["height"] = 5
-charMap["W"]["1 1"] = true
-charMap["W"]["1 2"] = true
-charMap["W"]["1 3"] = true
-charMap["W"]["1 4"] = true
-charMap["W"]["2 5"] = true
-charMap["W"]["5 1"] = true
-charMap["W"]["5 2"] = true
-charMap["W"]["5 3"] = true
-charMap["W"]["5 4"] = true
-charMap["W"]["3 4"] = true
-charMap["W"]["4 5"] = true
-
-charMap["X"] = {}
-
-charMap["X"]["width"] = 3
-charMap["X"]["height"] = 5
-charMap["X"]["1 1"] = true
-charMap["X"]["1 2"] = true
-charMap["X"]["1 4"] = true
-charMap["X"]["1 5"] = true
-charMap["X"]["3 1"] = true
-charMap["X"]["3 2"] = true
-charMap["X"]["3 4"] = true
-charMap["X"]["3 5"] = true
-charMap["X"]["2 3"] = true
-
-charMap["Y"] = {}
-
-charMap["Y"]["width"] = 3
-charMap["Y"]["height"] = 5
-charMap["Y"]["1 1"] = true
-charMap["Y"]["1 2"] = true
-charMap["Y"]["1 3"] = true
-charMap["Y"]["3 1"] = true
-charMap["Y"]["3 2"] = true
-charMap["Y"]["3 3"] = true
-charMap["Y"]["2 3"] = true
-charMap["Y"]["2 4"] = true
-charMap["Y"]["2 5"] = true
-
-charMap["Z"] = {}
-
-charMap["Z"]["width"] = 4
-charMap["Z"]["height"] = 5
-charMap["Z"]["1 1"] = true
-charMap["Z"]["2 1"] = true
-charMap["Z"]["3 1"] = true
-charMap["Z"]["4 1"] = true
-charMap["Z"]["4 2"] = true
-charMap["Z"]["3 3"] = true
-charMap["Z"]["2 4"] = true
-charMap["Z"]["1 5"] = true
-charMap["Z"]["2 5"] = true
-charMap["Z"]["3 5"] = true
-charMap["Z"]["4 5"] = true
-
-charMap["."] = {}
-
-charMap["."]["width"] = 1
-charMap["."]["height"] = 5
-charMap["."]["1 5"] = true
-
-charMap[","] = {}
-
-charMap[","]["width"] = 1
-charMap[","]["height"] = 5
-charMap[","]["1 4"] = true
-charMap[","]["1 5"] = true
-
-charMap["!"] = {}
-
-charMap["!"]["width"] = 1
-charMap["!"]["height"] = 5
-charMap["!"]["1 1"] = true
-charMap["!"]["1 2"] = true
-charMap["!"]["1 3"] = true
-charMap["!"]["1 5"] = true
-
-charMap["?"] = {}
-
-charMap["?"]["width"] = 3
-charMap["?"]["height"] = 5
-charMap["?"]["1 1"] = true
-charMap["?"]["2 1"] = true
-charMap["?"]["3 2"] = true
-charMap["?"]["1 3"] = true
-charMap["?"]["2 3"] = true
-charMap["?"]["1 5"] = true
-
-charMap[" "] = {}
-charMap[" "]["width"] = 4
-charMap[" "]["height"] = 5
-
-charMap["1"] = {}
-
-charMap["1"]["width"] = 3
-charMap["1"]["height"] = 5
-charMap["1"]["2 1"] = true
-charMap["1"]["2 2"] = true
-charMap["1"]["2 3"] = true
-charMap["1"]["2 4"] = true
-charMap["1"]["2 5"] = true
-charMap["1"]["1 5"] = true
-charMap["1"]["3 5"] = true
-charMap["1"]["1 2"] = true
-
-charMap[">"] = {}
-
-charMap[">"]["width"] = 3
-charMap[">"]["height"] = 5
-charMap[">"]["1 1"] = true
-charMap[">"]["1 5"] = true
-charMap[">"]["2 2"] = true
-charMap[">"]["2 4"] = true
-charMap[">"]["3 3"] = true
+-- from on https://github.com/dhepper/font8x8/blob/master/font8x8_basic.h (Public Domain)
+charMap[" "] = {w=8, h=8, b={0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}}
+charMap["!"] = {w=8, h=8, b={0x18, 0x3C, 0x3C, 0x18, 0x18, 0x00, 0x18, 0x00}}
+charMap["\""] = {w=8, h=8, b={0x36, 0x36, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}}
+charMap["#"] = {w=8, h=8, b={0x36, 0x36, 0x7F, 0x36, 0x7F, 0x36, 0x36, 0x00}}
+charMap["$"] = {w=8, h=8, b={0x0C, 0x3E, 0x03, 0x1E, 0x30, 0x1F, 0x0C, 0x00}}
+charMap["%"] = {w=8, h=8, b={0x00, 0x63, 0x33, 0x18, 0x0C, 0x66, 0x63, 0x00}}
+charMap["&"] = {w=8, h=8, b={0x1C, 0x36, 0x1C, 0x6E, 0x3B, 0x33, 0x6E, 0x00}}
+charMap["'"] = {w=8, h=8, b={0x06, 0x06, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00}}
+charMap["("] = {w=8, h=8, b={0x18, 0x0C, 0x06, 0x06, 0x06, 0x0C, 0x18, 0x00}}
+charMap[")"] = {w=8, h=8, b={0x06, 0x0C, 0x18, 0x18, 0x18, 0x0C, 0x06, 0x00}}
+charMap["*"] = {w=8, h=8, b={0x00, 0x66, 0x3C, 0xFF, 0x3C, 0x66, 0x00, 0x00}}
+charMap["+"] = {w=8, h=8, b={0x00, 0x0C, 0x0C, 0x3F, 0x0C, 0x0C, 0x00, 0x00}}
+charMap[","] = {w=8, h=8, b={0x00, 0x00, 0x00, 0x00, 0x00, 0x0C, 0x0C, 0x06}}
+charMap["-"] = {w=8, h=8, b={0x00, 0x00, 0x00, 0x3F, 0x00, 0x00, 0x00, 0x00}}
+charMap["."] = {w=8, h=8, b={0x00, 0x00, 0x00, 0x00, 0x00, 0x0C, 0x0C, 0x00}}
+charMap["/"] = {w=8, h=8, b={0x60, 0x30, 0x18, 0x0C, 0x06, 0x03, 0x01, 0x00}}
+charMap["0"] = {w=8, h=8, b={0x3E, 0x63, 0x73, 0x7B, 0x6F, 0x67, 0x3E, 0x00}}
+charMap["1"] = {w=8, h=8, b={0x0C, 0x0E, 0x0C, 0x0C, 0x0C, 0x0C, 0x3F, 0x00}}
+charMap["2"] = {w=8, h=8, b={0x1E, 0x33, 0x30, 0x1C, 0x06, 0x33, 0x3F, 0x00}}
+charMap["3"] = {w=8, h=8, b={0x1E, 0x33, 0x30, 0x1C, 0x30, 0x33, 0x1E, 0x00}}
+charMap["4"] = {w=8, h=8, b={0x38, 0x3C, 0x36, 0x33, 0x7F, 0x30, 0x78, 0x00}}
+charMap["5"] = {w=8, h=8, b={0x3F, 0x03, 0x1F, 0x30, 0x30, 0x33, 0x1E, 0x00}}
+charMap["6"] = {w=8, h=8, b={0x1C, 0x06, 0x03, 0x1F, 0x33, 0x33, 0x1E, 0x00}}
+charMap["7"] = {w=8, h=8, b={0x3F, 0x33, 0x30, 0x18, 0x0C, 0x0C, 0x0C, 0x00}}
+charMap["8"] = {w=8, h=8, b={0x1E, 0x33, 0x33, 0x1E, 0x33, 0x33, 0x1E, 0x00}}
+charMap["9"] = {w=8, h=8, b={0x1E, 0x33, 0x33, 0x3E, 0x30, 0x18, 0x0E, 0x00}}
+charMap[":"] = {w=8, h=8, b={0x00, 0x0C, 0x0C, 0x00, 0x00, 0x0C, 0x0C, 0x00}}
+charMap[";"] = {w=8, h=8, b={0x00, 0x0C, 0x0C, 0x00, 0x00, 0x0C, 0x0C, 0x06}}
+charMap["<"] = {w=8, h=8, b={0x18, 0x0C, 0x06, 0x03, 0x06, 0x0C, 0x18, 0x00}}
+charMap["="] = {w=8, h=8, b={0x00, 0x00, 0x3F, 0x00, 0x00, 0x3F, 0x00, 0x00}}
+charMap[">"] = {w=8, h=8, b={0x06, 0x0C, 0x18, 0x30, 0x18, 0x0C, 0x06, 0x00}}
+charMap["?"] = {w=8, h=8, b={0x1E, 0x33, 0x30, 0x18, 0x0C, 0x00, 0x0C, 0x00}}
+charMap["@"] = {w=8, h=8, b={0x3E, 0x63, 0x7B, 0x7B, 0x7B, 0x03, 0x1E, 0x00}}
+charMap["A"] = {w=8, h=8, b={0x0C, 0x1E, 0x33, 0x33, 0x3F, 0x33, 0x33, 0x00}}
+charMap["B"] = {w=8, h=8, b={0x3F, 0x66, 0x66, 0x3E, 0x66, 0x66, 0x3F, 0x00}}
+charMap["C"] = {w=8, h=8, b={0x3C, 0x66, 0x03, 0x03, 0x03, 0x66, 0x3C, 0x00}}
+charMap["D"] = {w=8, h=8, b={0x1F, 0x36, 0x66, 0x66, 0x66, 0x36, 0x1F, 0x00}}
+charMap["E"] = {w=8, h=8, b={0x7F, 0x46, 0x16, 0x1E, 0x16, 0x46, 0x7F, 0x00}}
+charMap["F"] = {w=8, h=8, b={0x7F, 0x46, 0x16, 0x1E, 0x16, 0x06, 0x0F, 0x00}}
+charMap["G"] = {w=8, h=8, b={0x3C, 0x66, 0x03, 0x03, 0x73, 0x66, 0x7C, 0x00}}
+charMap["H"] = {w=8, h=8, b={0x33, 0x33, 0x33, 0x3F, 0x33, 0x33, 0x33, 0x00}}
+charMap["I"] = {w=8, h=8, b={0x1E, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x1E, 0x00}}
+charMap["J"] = {w=8, h=8, b={0x78, 0x30, 0x30, 0x30, 0x33, 0x33, 0x1E, 0x00}}
+charMap["K"] = {w=8, h=8, b={0x67, 0x66, 0x36, 0x1E, 0x36, 0x66, 0x67, 0x00}}
+charMap["L"] = {w=8, h=8, b={0x0F, 0x06, 0x06, 0x06, 0x46, 0x66, 0x7F, 0x00}}
+charMap["M"] = {w=8, h=8, b={0x63, 0x77, 0x7F, 0x7F, 0x6B, 0x63, 0x63, 0x00}}
+charMap["N"] = {w=8, h=8, b={0x63, 0x67, 0x6F, 0x7B, 0x73, 0x63, 0x63, 0x00}}
+charMap["O"] = {w=8, h=8, b={0x1C, 0x36, 0x63, 0x63, 0x63, 0x36, 0x1C, 0x00}}
+charMap["P"] = {w=8, h=8, b={0x3F, 0x66, 0x66, 0x3E, 0x06, 0x06, 0x0F, 0x00}}
+charMap["Q"] = {w=8, h=8, b={0x1E, 0x33, 0x33, 0x33, 0x3B, 0x1E, 0x38, 0x00}}
+charMap["R"] = {w=8, h=8, b={0x3F, 0x66, 0x66, 0x3E, 0x36, 0x66, 0x67, 0x00}}
+charMap["S"] = {w=8, h=8, b={0x1E, 0x33, 0x07, 0x0E, 0x38, 0x33, 0x1E, 0x00}}
+charMap["T"] = {w=8, h=8, b={0x3F, 0x2D, 0x0C, 0x0C, 0x0C, 0x0C, 0x1E, 0x00}}
+charMap["U"] = {w=8, h=8, b={0x33, 0x33, 0x33, 0x33, 0x33, 0x33, 0x3F, 0x00}}
+charMap["V"] = {w=8, h=8, b={0x33, 0x33, 0x33, 0x33, 0x33, 0x1E, 0x0C, 0x00}}
+charMap["W"] = {w=8, h=8, b={0x63, 0x63, 0x63, 0x6B, 0x7F, 0x77, 0x63, 0x00}}
+charMap["X"] = {w=8, h=8, b={0x63, 0x63, 0x36, 0x1C, 0x1C, 0x36, 0x63, 0x00}}
+charMap["Y"] = {w=8, h=8, b={0x33, 0x33, 0x33, 0x1E, 0x0C, 0x0C, 0x1E, 0x00}}
+charMap["Z"] = {w=8, h=8, b={0x7F, 0x63, 0x31, 0x18, 0x4C, 0x66, 0x7F, 0x00}}
+charMap["["] = {w=8, h=8, b={0x1E, 0x06, 0x06, 0x06, 0x06, 0x06, 0x1E, 0x00}}
+charMap["\\"] = {w=8, h=8, b={0x03, 0x06, 0x0C, 0x18, 0x30, 0x60, 0x40, 0x00}}
+charMap["]"] = {w=8, h=8, b={0x1E, 0x18, 0x18, 0x18, 0x18, 0x18, 0x1E, 0x00}}
+charMap["^"] = {w=8, h=8, b={0x08, 0x1C, 0x36, 0x63, 0x00, 0x00, 0x00, 0x00}}
+charMap["_"] = {w=8, h=8, b={0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF}}
+charMap["`"] = {w=8, h=8, b={0x0C, 0x0C, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00}}
+charMap["a"] = {w=8, h=8, b={0x00, 0x00, 0x1E, 0x30, 0x3E, 0x33, 0x6E, 0x00}}
+charMap["b"] = {w=8, h=8, b={0x07, 0x06, 0x06, 0x3E, 0x66, 0x66, 0x3B, 0x00}}
+charMap["c"] = {w=8, h=8, b={0x00, 0x00, 0x1E, 0x33, 0x03, 0x33, 0x1E, 0x00}}
+charMap["d"] = {w=8, h=8, b={0x38, 0x30, 0x30, 0x3e, 0x33, 0x33, 0x6E, 0x00}}
+charMap["e"] = {w=8, h=8, b={0x00, 0x00, 0x1E, 0x33, 0x3f, 0x03, 0x1E, 0x00}}
+charMap["f"] = {w=8, h=8, b={0x1C, 0x36, 0x06, 0x0f, 0x06, 0x06, 0x0F, 0x00}}
+charMap["g"] = {w=8, h=8, b={0x00, 0x00, 0x6E, 0x33, 0x33, 0x3E, 0x30, 0x1F}}
+charMap["h"] = {w=8, h=8, b={0x07, 0x06, 0x36, 0x6E, 0x66, 0x66, 0x67, 0x00}}
+charMap["i"] = {w=8, h=8, b={0x0C, 0x00, 0x0E, 0x0C, 0x0C, 0x0C, 0x1E, 0x00}}
+charMap["j"] = {w=8, h=8, b={0x30, 0x00, 0x30, 0x30, 0x30, 0x33, 0x33, 0x1E}}
+charMap["k"] = {w=8, h=8, b={0x07, 0x06, 0x66, 0x36, 0x1E, 0x36, 0x67, 0x00}}
+charMap["l"] = {w=8, h=8, b={0x0E, 0x0C, 0x0C, 0x0C, 0x0C, 0x0C, 0x1E, 0x00}}
+charMap["m"] = {w=8, h=8, b={0x00, 0x00, 0x33, 0x7F, 0x7F, 0x6B, 0x63, 0x00}}
+charMap["n"] = {w=8, h=8, b={0x00, 0x00, 0x1F, 0x33, 0x33, 0x33, 0x33, 0x00}}
+charMap["o"] = {w=8, h=8, b={0x00, 0x00, 0x1E, 0x33, 0x33, 0x33, 0x1E, 0x00}}
+charMap["p"] = {w=8, h=8, b={0x00, 0x00, 0x3B, 0x66, 0x66, 0x3E, 0x06, 0x0F}}
+charMap["q"] = {w=8, h=8, b={0x00, 0x00, 0x6E, 0x33, 0x33, 0x3E, 0x30, 0x78}}
+charMap["r"] = {w=8, h=8, b={0x00, 0x00, 0x3B, 0x6E, 0x66, 0x06, 0x0F, 0x00}}
+charMap["s"] = {w=8, h=8, b={0x00, 0x00, 0x3E, 0x03, 0x1E, 0x30, 0x1F, 0x00}}
+charMap["t"] = {w=8, h=8, b={0x08, 0x0C, 0x3E, 0x0C, 0x0C, 0x2C, 0x18, 0x00}}
+charMap["u"] = {w=8, h=8, b={0x00, 0x00, 0x33, 0x33, 0x33, 0x33, 0x6E, 0x00}}
+charMap["v"] = {w=8, h=8, b={0x00, 0x00, 0x33, 0x33, 0x33, 0x1E, 0x0C, 0x00}}
+charMap["w"] = {w=8, h=8, b={0x00, 0x00, 0x63, 0x6B, 0x7F, 0x7F, 0x36, 0x00}}
+charMap["x"] = {w=8, h=8, b={0x00, 0x00, 0x63, 0x36, 0x1C, 0x36, 0x63, 0x00}}
+charMap["y"] = {w=8, h=8, b={0x00, 0x00, 0x33, 0x33, 0x33, 0x3E, 0x30, 0x1F}}
+charMap["z"] = {w=8, h=8, b={0x00, 0x00, 0x3F, 0x19, 0x0C, 0x26, 0x3F, 0x00}}
+charMap["{"] = {w=8, h=8, b={0x38, 0x0C, 0x0C, 0x07, 0x0C, 0x0C, 0x38, 0x00}}
+charMap["|"] = {w=8, h=8, b={0x18, 0x18, 0x18, 0x00, 0x18, 0x18, 0x18, 0x00}}
+charMap["}"] = {w=8, h=8, b={0x07, 0x0C, 0x0C, 0x38, 0x0C, 0x0C, 0x07, 0x00}}
+charMap["~"] = {w=8, h=8, b={0x6E, 0x3B, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}}
 
 function io.putChar(character, xPos, yPos, foreground, background)
-    if charMap[character] then
-        for x=0, charMap[character]["width"]-1 do
-            for y=0, charMap[character]["height"]-1 do
-                if charMap[character][tostring(x+1).." "..tostring(y+1)] then
-                    if charMap[character][tostring(x+1).." "..tostring(y+1)] then
-                        if io.screen then
-                            io.screen:setPixel(xPos + x, yPos + y, foreground)
-                        end
-                    end
+    if charMap[character] and io.screen then
+        local glyph = charMap[character]
+
+        for y=0, glyph["h"]-1 do
+            for x=0, glyph["w"]-1 do
+                if computer:crazyBitHack(glyph["b"][y+1], x) then
+                    io.screen:setPixel(xPos + x, yPos + y, foreground)
                 else
-                    if io.screen then
-                        io.screen:setPixel(xPos + x, yPos + y, background)
-                    end
+                    io.screen:setPixel(xPos + x, yPos + y, background)
                 end
             end
         end
@@ -516,7 +149,7 @@ function io.writeString(s, x, y, foreground, background)
         if s:sub(i, i) then
             if charMap[s:sub(i, i)] then
                 io.putChar(s:sub(i, i), x + cur, y, foreground, background)
-                prevWidth = charMap[s:sub(i, i)]["width"]
+                prevWidth = charMap[s:sub(i, i)]["w"]
                 cur = cur + prevWidth + 1
             end
         end
@@ -533,8 +166,8 @@ function io.print(s)
     local maxHeight = 0
     for i=0, #s do
         if charMap[s:sub(i, i)] then
-            if charMap[s:sub(i, i)]["height"] > maxHeight then
-                maxHeight = charMap[s:sub(i, i)]["height"]
+            if charMap[s:sub(i, i)]["h"] > maxHeight then
+                maxHeight = charMap[s:sub(i, i)]["h"]
             end
         end
     end
@@ -562,10 +195,10 @@ function io.write(s)
     local prevWidth = 0
     for i=0, #s do
         if charMap[s:sub(i, i)] then
-            prevWidth = charMap[s:sub(i, i)]["width"]
+            prevWidth = charMap[s:sub(i, i)]["w"]
             length = length + prevWidth + 1
-            if charMap[s:sub(i, i)]["height"] > maxHeight then
-                maxHeight = charMap[s:sub(i, i)]["height"]
+            if charMap[s:sub(i, i)]["h"] > maxHeight then
+                maxHeight = charMap[s:sub(i, i)]["h"]
             end
         end
     end
@@ -596,11 +229,11 @@ function io.getStringSize(s)
     for i=0, #s do
         local c = s:sub(i, i)
         if charMap[c] then
-            if charMap[c]["height"] > maxHeight then
-                maxHeight = charMap[c]["height"]
+            if charMap[c]["h"] > maxHeight then
+                maxHeight = charMap[c]["h"]
             end
 
-            width = width + charMap[c]["width"] + 1
+            width = width + charMap[c]["w"] + 1
         end
     end
 
