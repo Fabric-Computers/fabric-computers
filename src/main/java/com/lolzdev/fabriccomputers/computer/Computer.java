@@ -3,26 +3,19 @@ package com.lolzdev.fabriccomputers.computer;
 import com.lolzdev.fabriccomputers.api.IComponent;
 import com.lolzdev.fabriccomputers.blockentities.ComputerBlockEntity;
 import com.lolzdev.fabriccomputers.blockentities.DiskDriveBlockEntity;
-import com.lolzdev.fabriccomputers.common.packets.PixelBufferChangePacket;
-import com.lolzdev.fabriccomputers.computer.luaj.ComputerDebugLib;
 import com.lolzdev.fabriccomputers.items.FloppyDiskItem;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.chunk.WorldChunk;
-import org.luaj.vm2.Globals;
-import org.luaj.vm2.LuaTable;
-import org.luaj.vm2.LuaThread;
-import org.luaj.vm2.LuaValue;
-import org.luaj.vm2.lib.DebugLib;
-import org.luaj.vm2.lib.ZeroArgFunction;
-import org.luaj.vm2.lib.jse.CoerceJavaToLua;
-import org.luaj.vm2.lib.jse.JsePlatform;
+import org.carbon.vm2.Globals;
+import org.carbon.vm2.LuaTable;
+import org.carbon.vm2.LuaValue;
+import org.carbon.vm2.lib.jse.CoerceJavaToLua;
+import org.carbon.vm2.lib.jse.JsePlatform;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayDeque;
-import java.util.HashMap;
 import java.util.Queue;
 import java.util.UUID;
 
@@ -34,10 +27,10 @@ public class Computer {
     public boolean needSetup;
     public boolean halted;
     private final Queue<Event> queueEvents;
-    private Thread executor;
+    public Thread executor;
     private ComputerBlockEntity blockEntity;
     public boolean interrupted;
-
+    Globals globals;
 
 
     public Computer(ComputerBlockEntity blockEntity) {
@@ -48,15 +41,16 @@ public class Computer {
         this.queueEvents = new ArrayDeque<>(4);
         this.blockEntity = blockEntity;
         this.interrupted = true;
+        this.globals = JsePlatform.debugGlobals();
     }
 
     public void reboot() {
-        this.shudown();
+        this.shutdown();
         this.boot();
     }
 
-    public void shudown() {
-        this.interrupted = true;
+    public void shutdown() {
+        this.globals.interrupt();
 
         this.halted = true;
     }
@@ -114,7 +108,7 @@ public class Computer {
 
     public void boot() {
 
-        System.out.println("Booting");
+        this.globals = JsePlatform.debugGlobals();
         this.interrupted = false;
 
         this.loadBios();
@@ -130,7 +124,7 @@ public class Computer {
         switch (index) {
             case 0 -> {
                 if (this.blockEntity.getWorld().getWorldChunk(this.blockEntity.getPos().add(1, 0, 0)).getBlockEntity(this.blockEntity.getPos().add(1, 0, 0), WorldChunk.CreationType.IMMEDIATE) instanceof IComponent entity)  {
-                    return  entity.getComponent();
+                    return entity.getComponent();
                 }
             }
 
@@ -244,25 +238,18 @@ public class Computer {
                 }
             }
         }
-
         return LuaValue.NIL;
     }
 
     public void loadBios() {
-
         this.executor = new Thread(() -> {
             try {
-                Globals globals = JsePlatform.debugGlobals();
-                globals.load(new ComputerDebugLib(this));
                 globals.set("computer", CoerceJavaToLua.coerce(this));
                 globals.set("fs", CoerceJavaToLua.coerce(this.fs));
                 LuaValue chunk = globals.load(Files.readString(Path.of(this.getClass().getResource("/assets/fabriccomputers/rom/bios.lua").toURI())), "bios.lua");
 
-                try {
-                    chunk.call();
-                } catch (RuntimeException e) {
-                    //e.printStackTrace();
-                }
+                chunk.call();
+
 
             } catch (IOException | URISyntaxException e) {
                 e.printStackTrace();

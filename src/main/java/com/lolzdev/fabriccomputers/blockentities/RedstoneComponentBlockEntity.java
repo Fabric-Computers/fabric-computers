@@ -4,8 +4,8 @@ import com.lolzdev.fabriccomputers.api.IComponent;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
-import org.luaj.vm2.LuaValue;
-import org.luaj.vm2.lib.jse.CoerceJavaToLua;
+import org.carbon.vm2.LuaValue;
+import org.carbon.vm2.lib.jse.CoerceJavaToLua;
 
 import java.util.ArrayDeque;
 import java.util.Queue;

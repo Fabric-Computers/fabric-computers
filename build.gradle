@@ -12,9 +12,18 @@ repositories {
         url = "https://maven.vram.io"
     }
 
+    maven {
+        allowInsecureProtocol = true
+        url 'http://maven.darktree.net'
+    }
+
+    mavenCentral()
+
 }
 
 dependencies {
+
+
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
@@ -23,16 +32,15 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    // LuaJ
-    modImplementation 'org.luaj:luaj-jse:3.0.1'
-
     // FREX (required by JMX for now)
     modImplementation "io.vram:frex-fabric-${project.mc_tag}:${project.frex_version}.+"
 
     // JMX
     modImplementation "io.vram:jmx-fabric-${project.mc_tag}:${project.jmx_version}.+"
 
-    include 'org.luaj:luaj-jse:3.0.1'
+    // Carbon (Lua Engine)
+    implementation "net.darktree:carbon:1.1-SNAPSHOT"
+    include "net.darktree:carbon:1.1-SNAPSHOT"
 }
 
 processResources {

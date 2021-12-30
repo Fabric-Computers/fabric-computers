@@ -15,10 +15,9 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.chunk.WorldChunk;
-import org.jetbrains.annotations.Nullable;
-import org.luaj.vm2.LuaTable;
-import org.luaj.vm2.LuaValue;
-import org.luaj.vm2.lib.jse.CoerceJavaToLua;
+import org.carbon.vm2.LuaTable;
+import org.carbon.vm2.LuaValue;
+import org.carbon.vm2.lib.jse.CoerceJavaToLua;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -85,7 +84,6 @@ public class ScreenComponentBlockEntity extends BlockEntity implements IComponen
                 if (entity != null) {
 
                     if (blockEntity.isKeyDown(341) && blockEntity.isKeyDown(82)) {
-                        System.out.println("Rebooting");
                         entity.computer.reboot();
                     }
                 }

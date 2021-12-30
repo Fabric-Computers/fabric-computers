@@ -98,9 +98,18 @@ public class ComputerBlock extends BlockWithEntity {
     }
 
     @Override
+    public void onBlockBreakStart(BlockState state, World world, BlockPos pos, PlayerEntity player) {
+        if (world.getBlockEntity(pos) instanceof ComputerBlockEntity computer) {
+            computer.computer.shutdown();
+        }
+
+        super.onBlockBreakStart(state, world, pos, player);
+    }
+
+    @Override
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         if (world.getBlockEntity(pos) instanceof ComputerBlockEntity computer) {
-            computer.computer.shudown();
+            computer.computer.shutdown();
         }
 
         super.onBreak(world, pos, state, player);

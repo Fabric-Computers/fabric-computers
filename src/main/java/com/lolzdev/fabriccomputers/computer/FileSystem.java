@@ -2,9 +2,9 @@ package com.lolzdev.fabriccomputers.computer;
 
 import com.lolzdev.fabriccomputers.api.IFileSystem;
 import net.fabricmc.loader.api.FabricLoader;
-import org.luaj.vm2.LuaTable;
-import org.luaj.vm2.LuaValue;
-import org.luaj.vm2.lib.jse.JsePlatform;
+import org.carbon.vm2.LuaTable;
+import org.carbon.vm2.LuaValue;
+import org.carbon.vm2.lib.jse.JsePlatform;
 
 import java.io.File;
 import java.io.IOException;

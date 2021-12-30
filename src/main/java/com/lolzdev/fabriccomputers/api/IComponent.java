@@ -1,6 +1,7 @@
 package com.lolzdev.fabriccomputers.api;
 
-import org.luaj.vm2.LuaValue;
+
+import org.carbon.vm2.LuaValue;
 
 public interface IComponent {
     String getComponentType();

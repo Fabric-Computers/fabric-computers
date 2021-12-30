@@ -71,6 +71,17 @@ end
 
 local io = os.loadLibrary("io")
 
+if io.screen then
+    local size = io.screen:getScreenSize()
+    for x=0, size[1] do
+        for y=0, size[2] do
+            io.setPixel(x, y, 0x000000)
+        end
+    end
+end
+
+io.currentLine = 0
+
 --_G.print = io.print
 _G.error = io.error
 

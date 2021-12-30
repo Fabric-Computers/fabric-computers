@@ -1,6 +1,6 @@
 package com.lolzdev.fabriccomputers.api;
 
-import org.luaj.vm2.LuaTable;
+import org.carbon.vm2.LuaTable;
 
 import java.nio.file.Path;
 

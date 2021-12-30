@@ -16,7 +16,7 @@ local buffer = {}
 function initBuffer()
     local fontWidth, fontHeight = io.getGlyphSize(" ")
 
-    for i=0, math.floor(screenWidth / fontWidth) do
+    for i=0, math.floor(screenWidth / fontWidth-1) do
         for j=0, math.floor(screenHeight / fontHeight) do
             if not buffer[j] then
                 buffer[j] = {}
@@ -36,25 +36,39 @@ function clear()
             end
         end
     end
-    io.currentLine = 0
-    io.currentColumn = 0
+    _G.currentLine = 0
+    _G.currentColumn = 0
     cursorX = 0
     cursorY = 0
+end
+
+function putChar(c, x, y)
+    buffer[y][x] = c
 end
 
 function draw()
     while true do
         clear()
 
+        io.setCursor(0, 0)
+
         for i, k in pairs(buffer) do
             for j, v in pairs(buffer[i]) do
                 io.write(v)
             end
-            io.currentLine = io.currentLine + 1
+            _G.currentLine =_G.currentLine + 1
         end
 
         computer:sleep(500000000)
     end
 end
+
+initBuffer()
+
+putChar("H", 1, 1)
+putChar("E", 2, 1)
+putChar("L", 3, 1)
+putChar("L", 4, 1)
+putChar("O", 5, 1)
 
 draw()
