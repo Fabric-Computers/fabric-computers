@@ -1,6 +1,8 @@
 package com.lolzdev.fabriccomputers.blocks;
 
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.block.Block;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -15,5 +17,14 @@ public class Blocks {
         Registry.register(Registry.BLOCK, new Identifier("fabriccomputers", "disk_drive"), DISK_DRIVE_BLOCK);
         Registry.register(Registry.BLOCK, new Identifier("fabriccomputers", "redstone_component"), REDSTONE_COMPONENT_BLOCK);
         Registry.register(Registry.BLOCK, new Identifier("fabriccomputers", "screen_component"), SCREEN_COMPONENT_BLOCK);
+    }
+
+    public static void clientInit() {
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
+                COMPUTER_BLOCK,
+                DISK_DRIVE_BLOCK,
+                REDSTONE_COMPONENT_BLOCK,
+                SCREEN_COMPONENT_BLOCK
+        );
     }
 }

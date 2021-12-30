@@ -1,6 +1,7 @@
 package com.lolzdev.fabriccomputers.client;
 
 import com.lolzdev.fabriccomputers.FabricComputers;
+import com.lolzdev.fabriccomputers.blocks.Blocks;
 import com.lolzdev.fabriccomputers.client.screens.DiskDriveScreen;
 import com.lolzdev.fabriccomputers.client.screens.ScreenComponentScreen;
 import com.lolzdev.fabriccomputers.common.packets.PixelBufferChangePacket;
@@ -18,5 +19,7 @@ public class FabricComputersClient implements ClientModInitializer {
 
         ClientPlayNetworking.registerGlobalReceiver(ScreenSizePacket.ID, ScreenSizePacket::handle);
         ClientPlayNetworking.registerGlobalReceiver(PixelBufferChangePacket.ID, PixelBufferChangePacket::handle);
+
+        Blocks.clientInit();
     }
 }
