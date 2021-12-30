@@ -1,5 +1,10 @@
 _G.bios = {}
 
+print("Loading BIOS")
+
+local ARROW_DOWN = 264
+
+
 fs:mount(computer:getId())
 
 local screen

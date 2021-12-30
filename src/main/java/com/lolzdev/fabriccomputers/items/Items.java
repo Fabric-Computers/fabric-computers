@@ -17,5 +17,6 @@ public class Items {
 
         Registry.register(Registry.ITEM, new Identifier("fabriccomputers", "floppy_disk"), new FloppyDiskItem());
         Registry.register(Registry.ITEM, new Identifier("fabriccomputers", "fos_disk"), new FixedFloppyDiskItem("fos"));
+        Registry.register(Registry.ITEM, new Identifier("fabriccomputers", "snake_disk"), new FixedFloppyDiskItem("snake"));
     }
 }

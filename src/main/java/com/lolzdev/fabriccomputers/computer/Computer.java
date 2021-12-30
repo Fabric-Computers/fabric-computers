@@ -18,6 +18,7 @@ import java.nio.file.Path;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.UUID;
+import java.util.concurrent.LinkedBlockingDeque;
 
 public class Computer {
 
@@ -38,7 +39,7 @@ public class Computer {
 
         this.halted = true;
         this.needSetup = true;
-        this.queueEvents = new ArrayDeque<>(4);
+        this.queueEvents = new LinkedBlockingDeque<>(4);
         this.blockEntity = blockEntity;
         this.interrupted = true;
         this.globals = JsePlatform.debugGlobals();
@@ -68,6 +69,11 @@ public class Computer {
     }
 
     public void queueEvent(String name, Object[] args) {
+        if (this.queueEvents.size() > 1000) {
+            for (int i=0; i < 1000; i++) {
+                this.queueEvents.poll();
+            }
+        }
         this.queueEvents.offer(new Event(name, args));
     }
 

@@ -28,6 +28,7 @@ public class ComputerBlockEntity extends BlockEntity {
 
     public static void tick(ComputerBlockEntity blockEntity) {
         if (blockEntity.world != null && !blockEntity.world.isClient()) {
+            blockEntity.computer.queueEvent("tick", new Object[] {});
             if (blockEntity.computer.needSetup) {
                 blockEntity.computer.setup();
             }

@@ -1,5 +1,6 @@
 {
   "item.fabriccomputers.fos_disk": "Fabric OS",
+  "item.fabriccomputers.snake_disk": "Snake",
   "item.fabriccomputers.floppy_disk": "Floppy Disk",
 
   "block.fabriccomputers.computer": "Computer",
