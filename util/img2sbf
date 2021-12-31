@@ -1,0 +1,80 @@
+#!/usr/bin/python3
+
+from PIL import Image
+import sys
+
+try:
+	image = Image.open( sys.argv[1] ).convert("RGBA")
+	output = open(sys.argv[4], "w")
+
+	# glyph dimensions
+	gw = int( sys.argv[2] )
+	gh = int( sys.argv[3] )
+
+except:
+    print("Usage: img2sbf [filepath] [width] [height] [output]")
+    exit()
+
+
+# image dimensions
+iw, ih = image.size
+
+if iw % gw != 0 or ih % gh != 0:
+	print("Warning: Image is not divisible into the desired glyph size!")
+
+# glyph position
+gx = 0
+gy = 0
+
+id = 0
+
+print(f'Info: Parsing image data...')
+font = {}
+
+while gy < ih:
+
+	while gx < iw:
+
+		data = []
+		for y in range(gh):
+
+			line = 0
+			for x in range(gw):
+				line |= ((1 if image.getpixel((gx + x, gy + y))[3] > 0 else 0) << x)
+
+			data.append(line);
+
+		font[chr(id)] = {"w": gw, "h": gh, "b":data}
+
+		gx += gw
+		id += 1
+
+	gy += gh
+	gx = 0
+
+w = -1
+h = -1
+d = ""
+
+print(f'Info: Writing font data...')
+
+output.write("# Simple Bitmap Font 1.0\n")
+for c in font:
+
+	if( font[c]["w"] != w ):
+		w = font[c]["w"]
+		output.write(f'w {str(w)}\n')
+
+	if( font[c]["h"] != h ):
+		h = font[c]["h"]
+		output.write(f'h {str(h)}\n')
+	
+	dn = " ".join(hex(x) for x in font[c]["b"])
+
+	if dn != d:
+		d = dn
+		output.write(f'\nd {dn} \n')
+
+	output.write(f'c {str(ord(c))}\n')
+
+

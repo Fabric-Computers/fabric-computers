@@ -31,6 +31,9 @@ fstab["bin"]["content"] = {}
 fstab["bin"]["content"]["clear.lua"] = {}
 fstab["bin"]["content"]["clear.lua"]["isDirectory"] = false
 
+fstab["bin"]["content"]["font.lua"] = {}
+fstab["bin"]["content"]["font.lua"]["isDirectory"] = false
+
 fstab["bin"]["content"]["ls.lua"] = {}
 fstab["bin"]["content"]["ls.lua"]["isDirectory"] = false
 
@@ -51,5 +54,18 @@ fstab["bin"]["content"]["touch.lua"]["isDirectory"] = false
 
 fstab["bin"]["content"]["nano.lua"] = {}
 fstab["bin"]["content"]["nano.lua"]["isDirectory"] = false
+
+fstab["usr"] = {}
+fstab["usr"]["isDirectory"] = true
+fstab["usr"]["content"] = {}
+
+fstab["usr"]["content"]["font.sbf"] = {}
+fstab["usr"]["content"]["font.sbf"]["isDirectory"] = false
+
+fstab["usr"]["content"]["font8x8.sbf"] = {}
+fstab["usr"]["content"]["font8x8.sbf"]["isDirectory"] = false
+
+fstab["usr"]["content"]["init.sh"] = {}
+fstab["usr"]["content"]["init.sh"]["isDirectory"] = false
 
 return fstab

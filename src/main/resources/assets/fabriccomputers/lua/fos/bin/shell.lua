@@ -3,8 +3,6 @@ local VERSION = "1.0"
 
 _G.currentDirectory = "/"
 
-io.print("Fabric OS Shell v" .. VERSION)
-
 if io.screen then
     local size = io.screen:getScreenSize()
 end
@@ -22,6 +20,12 @@ function copyTable(t1, t2)
         table.insert(t2, i, k)
     end
 end
+
+-- for now just load the font
+-- in the future execute commands from the init script instead
+-- the font command prints the "Loaded font!" here
+os.run("font", {"/usr/font.sbf"})
+io.print("Fabric OS Shell v" .. VERSION)
 
 while true do
     _G.currentColumn = 0
