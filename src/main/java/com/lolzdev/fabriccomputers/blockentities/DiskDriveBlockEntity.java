@@ -16,7 +16,8 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 
-public class DiskDriveBlockEntity extends BlockEntity implements NamedScreenHandlerFactory, ImplementedInventory {
+public class DiskDriveBlockEntity /*extends BlockEntity implements NamedScreenHandlerFactory, ImplementedInventory*/ {
+    /*
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
 
     public void diskRemoved(String id) {
@@ -102,4 +103,6 @@ public class DiskDriveBlockEntity extends BlockEntity implements NamedScreenHand
     public DefaultedList<ItemStack> getItems() {
         return this.inventory;
     }
+
+     */
 }

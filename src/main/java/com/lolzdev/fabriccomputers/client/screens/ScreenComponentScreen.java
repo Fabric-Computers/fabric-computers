@@ -35,10 +35,10 @@ public class ScreenComponentScreen extends HandledScreen<ScreenHandler> {
     }
 
     @Override
-    public void onClose() {
+    public void close() {
         texture.close();
 
-        super.onClose();
+        super.close();
     }
 
     @Override

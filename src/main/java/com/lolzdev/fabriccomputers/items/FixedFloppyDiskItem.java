@@ -5,8 +5,8 @@ import com.lolzdev.fabriccomputers.computer.ResourceFileSystem;
 public class FixedFloppyDiskItem extends FloppyDiskItem{
 
     public FixedFloppyDiskItem(String resource) {
-        super();
+        super(12);
 
-        this.fileSystem = new ResourceFileSystem(resource);
+        //this.fileSystem = new ResourceFileSystem(resource);
     }
 }

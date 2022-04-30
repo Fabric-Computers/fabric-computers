@@ -38,7 +38,7 @@ public class DiskDriveBlock extends BlockWithEntity {
 
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new DiskDriveBlockEntity(pos, state);
+        return null;
     }
 
     @Override
@@ -68,12 +68,16 @@ public class DiskDriveBlock extends BlockWithEntity {
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (state.getBlock() != newState.getBlock()) {
+
             BlockEntity blockEntity = world.getBlockEntity(pos);
+            /*
             if (blockEntity instanceof DiskDriveBlockEntity) {
                 ItemScatterer.spawn(world, pos, (DiskDriveBlockEntity)blockEntity);
 
                 world.updateComparators(pos,this);
             }
+
+             */
             super.onStateReplaced(state, world, pos, newState, moved);
         }
     }

@@ -84,7 +84,7 @@ public class ScreenComponentBlockEntity extends BlockEntity implements IComponen
                 if (entity != null) {
 
                     if (blockEntity.isKeyDown(341) && blockEntity.isKeyDown(82)) {
-                        entity.computer.reboot();
+                        //entity.computer.reboot();
                     }
                 }
             }
@@ -97,7 +97,7 @@ public class ScreenComponentBlockEntity extends BlockEntity implements IComponen
         for (int i=0; i < 6; i++) {
             ComputerBlockEntity computer = this.getComputerAtIndex(i);
             if (computer != null) {
-                computer.computer.queueEvent(name, args);
+                //computer.computer.queueEvent(name, args);
             }
         }
     }

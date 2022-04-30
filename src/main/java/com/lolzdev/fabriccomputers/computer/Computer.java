@@ -1,26 +1,10 @@
 package com.lolzdev.fabriccomputers.computer;
 
-import com.lolzdev.fabriccomputers.api.IComponent;
 import com.lolzdev.fabriccomputers.blockentities.ComputerBlockEntity;
-import com.lolzdev.fabriccomputers.blockentities.DiskDriveBlockEntity;
-import com.lolzdev.fabriccomputers.items.FloppyDiskItem;
-import net.minecraft.world.chunk.WorldChunk;
-import org.carbon.vm2.Globals;
-import org.carbon.vm2.LuaTable;
-import org.carbon.vm2.LuaValue;
-import org.carbon.vm2.lib.jse.CoerceJavaToLua;
-import org.carbon.vm2.lib.jse.JsePlatform;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayDeque;
-import java.util.Queue;
-import java.util.UUID;
-import java.util.concurrent.LinkedBlockingDeque;
+import com.lolzdev.fabriccomputers.cpu.riscv.Rv64;
 
 public class Computer {
+    /*
 
     public boolean shouldUpdate = true;
     public FileSystem fs;
@@ -33,7 +17,9 @@ public class Computer {
     public boolean interrupted;
     Globals globals;
 
-
+    public boolean crazyBitHack(int value, int offset) {
+        return ((value >> offset) & 1) == 1;
+    }
     public Computer(ComputerBlockEntity blockEntity) {
         this.fs = new FileSystem();
 
@@ -276,8 +262,30 @@ public class Computer {
      *
      * @return true is the pixel should be set, and false otherwise
      */
-    public boolean crazyBitHack(int value, int offset) {
-        return ((value >> offset) & 1) == 1;
+
+    public Rv64 cpu;
+    public Drive drive;
+    ComputerBlockEntity blockEntity;
+
+    public boolean halted = true;
+
+    public Computer(ComputerBlockEntity blockEntity) {
+        this.cpu = new Rv64();
+        this.blockEntity = blockEntity;
     }
 
+    public Drive getDrive() {
+        return this.drive;
+    }
+
+    public void shutdown() {
+        this.halted = true;
+        this.cpu.halted = true;
+    }
+
+    public void boot() {
+        Thread executor = new Thread(() -> cpu.boot(drive.content));
+
+        executor.start();
+    }
 }

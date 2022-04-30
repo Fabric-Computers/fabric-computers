@@ -23,9 +23,9 @@ public class DiskDriveSlot extends Slot {
     public ItemStack takeStack(int amount) {
         if (this.entity != null) {
             if (this.current != null) {
-                this.entity.diskRemoved(
-                        this.current.fileSystem.getUUIDOrRandom()
-                );
+                //this.entity.diskRemoved(
+                //        this.current.fileSystem.getUUIDOrRandom()
+                //);
                 this.current = null;
             }
             System.out.println("Taken");

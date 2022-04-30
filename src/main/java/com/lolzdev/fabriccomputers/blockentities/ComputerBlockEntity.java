@@ -23,31 +23,25 @@ public class ComputerBlockEntity extends BlockEntity {
     public ComputerBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntities.COMPUTER_BLOCK_ENTITY, pos, state);
 
-        this.computer = new Computer(this);
+        computer = new Computer(this);
     }
 
     public static void tick(ComputerBlockEntity blockEntity) {
-        if (blockEntity.world != null && !blockEntity.world.isClient()) {
-            blockEntity.computer.queueEvent("tick", new Object[] {});
-            if (blockEntity.computer.needSetup) {
-                blockEntity.computer.setup();
-            }
-        }
+
     }
 
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
 
-        if (nbt.contains("uuid")) {
-            this.computer.setId(UUID.fromString(nbt.getString("uuid")));
-        }
+        if (nbt.contains("uuid")) {this.computer.getDrive().uuid = UUID.fromString(nbt.getString("uuid"));}
+
     }
 
     @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
 
-        nbt.putString("uuid", this.computer.id.toString());
+        nbt.putString("uuid", this.computer.getDrive().uuid.toString());
     }
 }

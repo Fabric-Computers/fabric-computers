@@ -4,6 +4,7 @@ import com.lolzdev.fabriccomputers.blockentities.ComputerBlockEntity;
 import com.lolzdev.fabriccomputers.common.packets.PixelBufferChangePacket;
 import com.lolzdev.fabriccomputers.common.packets.ScreenSizePacket;
 import com.lolzdev.fabriccomputers.computer.Computer;
+import com.lolzdev.fabriccomputers.computer.Drive;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -91,7 +92,12 @@ public class ComputerBlock extends BlockWithEntity {
             if (!world.isClient()) {
                 ComputerBlockEntity entity = (ComputerBlockEntity) world.getBlockEntity(pos);
                 if (entity != null && entity.computer != null) {
-                    entity.computer.setId(UUID.randomUUID());
+                    if (entity.computer.drive == null) {
+                        entity.computer.drive = new Drive(Short.MAX_VALUE * 2, UUID.randomUUID());
+                        for (int i=0; i < entity.computer.drive.content.size(); i++) {
+                            entity.computer.cpu.bus.dram.set(i, entity.computer.drive.content.get(i));
+                        }
+                    }
                 }
             }
         }

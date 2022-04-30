@@ -15,7 +15,7 @@ public class Items {
         Registry.register(Registry.ITEM, new Identifier("fabriccomputers", "redstone_component"), new BlockItem(Blocks.REDSTONE_COMPONENT_BLOCK, new FabricItemSettings().group(FabricComputers.ITEM_GROUP)));
         Registry.register(Registry.ITEM, new Identifier("fabriccomputers", "screen_component"), new BlockItem(Blocks.SCREEN_COMPONENT_BLOCK, new FabricItemSettings().group(FabricComputers.ITEM_GROUP)));
 
-        Registry.register(Registry.ITEM, new Identifier("fabriccomputers", "floppy_disk"), new FloppyDiskItem());
+        //Registry.register(Registry.ITEM, new Identifier("fabriccomputers", "floppy_disk"), new FloppyDiskItem());
         Registry.register(Registry.ITEM, new Identifier("fabriccomputers", "fos_disk"), new FixedFloppyDiskItem("fos"));
         Registry.register(Registry.ITEM, new Identifier("fabriccomputers", "snake_disk"), new FixedFloppyDiskItem("snake"));
     }
